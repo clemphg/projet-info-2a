@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from vues.session import Session
 
 
-class AbstractView(ABC):
+class AbstractVue(ABC):
 
     @abstractmethod
     def display_info(self):

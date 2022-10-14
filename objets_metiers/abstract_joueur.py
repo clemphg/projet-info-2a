@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-
 class AbstractJoueur(ABC):
 
     def __init__(self, pseudo, age):

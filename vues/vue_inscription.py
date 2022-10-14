@@ -21,7 +21,7 @@ class VueInscription(AbstractVue):
         ]
 
     def display_info(self):
-        print("S'inscrire")
+        print("Oups, cette page n'a pas encore été faite")
 
     def make_choice(self):
         pass

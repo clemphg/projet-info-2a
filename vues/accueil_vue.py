@@ -13,24 +13,22 @@ class VueAccueil(AbstractVue):
             {
                 'type': 'list',
                 'name': 'choix',
-                'message': 'Bienvenue sur cette application',
+                'message': 'Bienvenue !',
                 'choices': [
-                    'Next'
-                    , 'Inscription'
+                    'Inscription'
                     , 'Connexion'
-
                 ]
             }
         ]
 
     def display_info(self):
-        print("Hello there!")
+        with open('graphiques/nom_banniere.txt', 'r', encoding="utf-8") as asset:
+            print(asset.read())
+
 
     def make_choice(self):
         reponse = prompt(self.__questions)
-        if reponse['choix'] == 'Next':
-            pass
-        elif reponse['choix'] == 'Inscription':
+        if reponse['choix'] == 'Inscription':
             from vues.vue_inscription import VueInscription
             return VueInscription()
         elif reponse['choix'] == 'Connexion':

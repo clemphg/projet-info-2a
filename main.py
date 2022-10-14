@@ -6,13 +6,18 @@ if __name__ == '__main__':
     # run the StartView
     current_view = VueAccueil()
 
-    # while current_view is not none, the application is still running
+    # Tant que la vue actuelle n'est pas nulle, on continue à l'afficher
     while current_view:
-        # a border between view
-        print("***********************************************************")
-        # Display the info of the view
+        # séparateur entre les vues
+        with open('graphiques/separateur.txt', 'r', encoding="utf-8") as asset:
+            print(asset.read())
+        # infos de la vue
         current_view.display_info()
-        # ask user for a choice
+        
+        # demander à l'utilisateur de faire un choix
         current_view = current_view.make_choice()
 
-    print("A bientôt !")
+    # s affiche lorsqu'on quitte l'application
+    with open('graphiques/a_bientot.txt', 'r', encoding="utf-8") as asset:
+        print(asset.read())
+

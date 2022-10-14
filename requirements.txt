@@ -1,4 +1,5 @@
 abc
 os
+psycopg2
 PyInquirer
 requests

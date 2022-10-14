@@ -46,3 +46,15 @@ id_partie INT REFERENCES partie(id_partie) ,
 id_perso INT REFERENCES personnage(id_perso),
 PRIMARY KEY(id_partie,id_perso)
 );
+
+CREATE TABLE organisateur(
+pseudo_organisateur VARCHAR(25) PRIMARY KEY,
+motdepasse_organisateur TEXT
+);
+
+CREATE TABLE journal(
+id_message INT PRIMARY KEY ,
+pseudo VARCHAR(25),
+date DATE,
+msg TEXT
+);

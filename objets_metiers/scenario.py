@@ -1,17 +1,21 @@
+""" Classe Scenario
 
+Un scénario appartient à un maître de jeu. Une fois créé, il ne peut pas être modifié.
+
+"""
 class Scenario():
 
     def __init__(self, nom, description, niveau_min):
-        """Créer un
+        """Créer un scénario (par un maître de jeu).
 
         Parameters
         ----------
-        nom : _type_
-            _description_
-        description : _type_
-            _description_
-        niveau_min : _type_
-            _description_
+        nom : str
+            Nom (description courte) du scénario
+        description : str
+            Description longue du scénario
+        niveau_min : int
+            Niveau minimal requis pour jouer au scénario
         """
         self.nom = nom
         self.description = description

@@ -17,7 +17,10 @@ class Partie():
         self.__liste_persos = None
 
     def ajouter_perso(self, perso):
-        """Ajouter un personnage à la partie
+        """Ajouter un personnage à la partie.
+
+        Permet d'ajouter un personnage à une partie. Le personnage ne peut être ajouter que
+        s'il y a moins de 5 personnages déjà incrits à la partie.
 
         Parameters
         ----------
@@ -30,4 +33,17 @@ class Partie():
             self.__liste_persos = [perso]
 
     def supprimer_perso(self, perso):
-        pass
+        """Supprimer un personnage d'une partie.
+
+        Permet d'ajouter un personnage à une partie. Le personnage ne peut être ajouter que
+        s'il y a moins de 5 personnages déjà incrits à la partie.
+
+        Parameters
+        ----------
+        perso : Personnage
+            Personnage à ajouter à la partie
+        """
+        if self.__liste_persos and len(self.__liste_persos)<5 :
+            self.__liste_persos.append(perso)
+        elif len(self.__liste_persos)<5:
+            self.__liste_persos = [perso]

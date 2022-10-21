@@ -15,8 +15,9 @@ class VueAccueil(AbstractVue):
                 'name': 'choix',
                 'message': 'Bienvenue !',
                 'choices': [
-                    'Inscription'
-                    , 'Connexion'
+                    'Inscription',
+                    'Connexion',
+                    'Quitter'
                 ]
             }
         ]
@@ -34,3 +35,5 @@ class VueAccueil(AbstractVue):
         elif reponse['choix'] == 'Connexion':
             from vues.vue_connexion import VueConnexion
             return VueConnexion()
+        else:
+            pass

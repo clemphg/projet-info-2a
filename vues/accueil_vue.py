@@ -13,7 +13,7 @@ class VueAccueil(AbstractVue):
             {
                 'type': 'list',
                 'name': 'choix',
-                'message': 'Bienvenue !',
+                'message': 'Bienvenue ! Veuillez vous connecter si vous avez un compte, et le cas échéant vous inscrire.',
                 'choices': [
                     'Inscription',
                     'Connexion',

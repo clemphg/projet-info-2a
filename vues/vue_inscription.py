@@ -7,6 +7,28 @@ from prompt_toolkit.validation import ValidationError, Validator
 from vues.abstract_vue import AbstractVue
 from vues.session import Session
 
+
+class ValidationPseudo(Validator):
+    def validate(self, document):
+        ok = regex.match("^[A-Za-z][A-Za-z0-9_.]{6,25}$", document.text)
+        if not ok:
+            raise ValidationError(
+                message='Veuillez entrer un pseudo valide',
+                cursor_position=len(document.text)
+            )
+
+class ValidationAge(Validator):
+    def validate(self, document):
+        if regex.match("^\d{2,3}$", document.text):
+            ok = 13<document.text<120
+        else :
+            ok = False
+        if not ok:
+            raise ValidationError(
+                message='Veuillez entrer un age valide',
+                cursor_position=len(document.text)
+            )
+
 class ValidationMDP(Validator):
     def validate(self, document):
         ok = regex.match(
@@ -33,17 +55,19 @@ class VueInscription(AbstractVue):
             {
                 'type': 'input',
                 'name': 'pseudo',
-                'message': 'Pseudo (au moins 6 caractères en minuscules, sans caractères spéciaux)'
+                'message': 'Pseudo (de 6 à 25 caractères, caractères spéciaux autorisés : ._ )',
+                'validate': ValidationPseudo
             },
             {
                 'type': 'input',
                 'name': 'age',
-                'message': 'Age'
+                'message': 'Age',
+                'validate': ValidationAge
             },
             {
                 'type': 'password',
                 'name': 'mot_de_passe',
-                'message': 'Mot de passe (au moins 10 caractères, au moins une capitale, un nombre et un caractère spécial)',
+                'message': 'Mot de passe (au moins 10 caractères, une capitale, un nombre et un caractère spécial parmi @$!%*#?&)',
                 'validate': ValidationMDP
             }
         ]
@@ -53,6 +77,10 @@ class VueInscription(AbstractVue):
 
     def make_choice(self):
         reponses = prompt(self.__questions)
+
+        # ajouter l'utilisateur créé dans la base
+
+
         pprint("Inscription réussie !")
         from vues.accueil_vue import VueAccueil
         return VueAccueil()

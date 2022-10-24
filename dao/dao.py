@@ -61,7 +61,7 @@ class DAO(Singleton):
             row=cursor.fetchone()
             l=[]
             while row is not None:
-                l.append(Joueur(row[0],row[2]))
+                l.append(Joueur(row[0],row[1]))
                 row=cursor.fetchone()
         return l
 

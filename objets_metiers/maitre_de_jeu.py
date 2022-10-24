@@ -7,6 +7,10 @@ class MaitreDeJeu(AbstractJoueur):
         super().__init__(pseudo, age)
         self.__scenarios = scenarios
 
+    @property
+    def scenarios(self):
+        return self.__scenarios
+
     def creer_scenario(self, nom, description, niveau_min):
         """Création d'un scénario.
 

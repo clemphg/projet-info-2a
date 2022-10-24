@@ -82,5 +82,5 @@ class VueInscription(AbstractVue):
 
 
         pprint("Inscription réussie !")
-        from vues.accueil_vue import VueAccueil
+        from vues.vue_accueil import VueAccueil
         return VueAccueil()

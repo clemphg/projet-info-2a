@@ -1,4 +1,4 @@
-from vues.accueil_vue import VueAccueil
+from vues.vue_accueil import VueAccueil
 
 # This script is the entry point of your application
 
@@ -13,7 +13,7 @@ if __name__ == '__main__':
             print(asset.read())
         # infos de la vue
         current_view.display_info()
-        
+
         # demander à l'utilisateur de faire un choix
         current_view = current_view.make_choice()
 

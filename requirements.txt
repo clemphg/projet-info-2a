@@ -1,0 +1,6 @@
+abc
+dotenv
+os
+psycopg2
+PyInquirer
+requests

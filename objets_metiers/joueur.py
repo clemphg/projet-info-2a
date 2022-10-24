@@ -7,6 +7,10 @@ class Joueur(AbstractJoueur):
         super().__init__(pseudo, age)
         self.__personnages = personnages
 
+    @property
+    def personnages(self):
+        return self.__personnages
+
     def creer_personnage(self, nom, age, race, niveau, classe):
         """Création d'un personnage.
 

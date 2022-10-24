@@ -6,6 +6,14 @@ class AbstractJoueur(ABC):
         self.__pseudo = pseudo
         self.__age = age
 
-    @abstractmethod
-    def desistement():
-        pass
+    @property
+    def pseudo(self):
+        return self.__pseudo
+
+    @property
+    def age(self):
+        return self.__age
+
+    #@abstractmethod
+    #def desistement():
+    #    pass

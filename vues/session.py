@@ -7,4 +7,4 @@ class Session(metaclass=Singleton):
         Variables que l'on stocke en session.
 
         """
-        self.utilisateur: str = None
+        self.utilisateur = None

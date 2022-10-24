@@ -19,6 +19,7 @@ class VuePartiesJoueur(AbstractVue):
         ]
 
     def display_info(self):
+        # interroger la DAO pour extraire les parties du joueur
         pass
 
     def make_choice(self):

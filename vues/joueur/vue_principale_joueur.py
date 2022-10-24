@@ -8,6 +8,9 @@ from vues.joueur.vue_inscription_partie_joueur import VueInscriptionPartieJoueur
 from vues.joueur.vue_personnages_joueur import VuePersonnagesJoueur
 from vues.joueur.vue_parties_joueur import VuePartiesJoueur
 from vues.joueur.vue_notifs_joueur import VueNotificationsJoueur
+from vues.vue_accueil import VueAccueil
+
+from vues.session import Session
 
 class VuePrincipaleJoueur(AbstractVue):
     def __init__(self) -> None:
@@ -42,6 +45,9 @@ class VuePrincipaleJoueur(AbstractVue):
             return VuePartiesJoueur()
         elif reponse['choix'] == 'Mes messages':
             return VueNotificationsJoueur()
+        elif reponse['choix'] == 'Me déconnecter':
+            Session.pseudo = None
+            return VueAccueil()
         else:
             pass
 

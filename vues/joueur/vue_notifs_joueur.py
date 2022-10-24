@@ -22,4 +22,7 @@ class VueNotificationsJoueur(AbstractVue):
         pass
 
     def make_choice(self):
+
+        # utiliser la DAO pour récupérer les messages destinés au pseudo et les afficher
+
         reponse = prompt(self.__questions)

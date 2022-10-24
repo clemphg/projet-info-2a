@@ -14,6 +14,6 @@ class AbstractJoueur(ABC):
     def age(self):
         return self.__age
 
-    @abstractmethod
-    def desistement():
-        pass
+    #@abstractmethod
+    #def desistement():
+    #    pass

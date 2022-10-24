@@ -8,7 +8,6 @@ from vues.joueur.vue_inscription_partie_joueur import VueInscriptionPartieJoueur
 from vues.joueur.vue_personnages_joueur import VuePersonnagesJoueur
 from vues.joueur.vue_parties_joueur import VuePartiesJoueur
 from vues.joueur.vue_notifs_joueur import VueNotificationsJoueur
-from vues.vue_accueil import VueAccueil
 
 from vues.session import Session
 
@@ -31,7 +30,7 @@ class VuePrincipaleJoueur(AbstractVue):
         ]
 
     def display_info(self):
-        pass
+        print("Bienvenue",Session.utilisateur.pseudo,"!")
 
     def make_choice(self):
         reponse = prompt(self.__questions)
@@ -46,7 +45,8 @@ class VuePrincipaleJoueur(AbstractVue):
         elif reponse['choix'] == 'Mes messages':
             return VueNotificationsJoueur()
         elif reponse['choix'] == 'Me déconnecter':
-            Session.pseudo = None
+            Session.utilisateur = None
+            from vues.vue_accueil import VueAccueil
             return VueAccueil()
         else:
             pass

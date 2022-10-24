@@ -1,6 +1,7 @@
 from pprint import pprint
 
 from PyInquirer import Separator, prompt
+from objets_metiers.personnage import Personnage
 
 
 from vues.abstract_vue import AbstractVue
@@ -20,11 +21,14 @@ class VuePersonnagesJoueur(AbstractVue):
         ]
 
     def display_info(self):
-        pass
+        if Session.utilisateur.personnages:
+            for perso in Session.utilisateur.personnages:
+                print("personnage")
+        else:
+            print("Vous n'avez pas encore créé de personnage.")
 
     def make_choice(self):
-
-        for perso in Session.pseudo.personnages:
-            pass
-
         reponse = prompt(self.__questions)
+        if reponse['choix'] == 'Retourner au menu principal':
+            from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
+            return VuePrincipaleJoueur()

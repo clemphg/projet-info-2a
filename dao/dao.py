@@ -98,42 +98,56 @@ class DAO(Singleton):
     
 
 
+     def MaitreDeJeu(mj: MaitreDeJeu, mot_de_passe):
+        with CONNECTION.cursor() as cursor :
+            cursor.execute("INSERT INTO joueur (pseudo_j , mot_de_passe, age)"
+            "VALUES (%(pseudo)s, %(mdp)s,%(age)s) RETURNING id_joueur;"
+            ,{
+                "pseudo" : joueur.pseudo,
+                "mdp" : mot_de_passe,
+                "age" : joueur.age,
+                })
+            joueur.id = cursor.fetchone()[0]
+
+        for i in range len(joueur.personnage):
+            perso=joueur.personnage[i]
+            with CONNECTION.cursor() as cursor2 :
+                cursor2.execute("INSERT INTO personnage (nom , age, race, niveau,classe)"
+                "VALUES (%(nom)s, %(age)s,%(race)s,%(niveau)s,%(classe)s) RETURNING id_personnage;"
+                ,{
+                    "nom" : perso.nom,
+                    "age" :perso.age,
+                    "race" : perso.race,
+                    "niveau":perso.niveau,
+                    "classe":perso.classe
+                    })
     
     
     
     def creer_partie(partie: Partie):
-        with CONNECTION.cursor() as cursor :
-            cursor.execute("SELECT id_creneau"
-            "FROM creneaux"
-            "WHERE Date_debut=%(date)s"
-            , {"date": partie.date})
-            res=cursor.fetchone()
-        
-        with CONNECTION.cursor() as cursor2:
-            cursor2.execute("SELECT id_scenario"
+        with CONNECTION.cursor() as cursor:
+            cursor.execute("SELECT id_scenario"
             "FROM scenario"
             "WHERE nom=%(nom)s"
             , {"nom": partie.scenario})
-            res2=cursor2.fetchone()
+            res=cursor.fetchone()
         
-        if res is None:
-            print "pas de crenau corrspondant"
-        
-        elif res2 is None:
+        with CONNEXION.CURSOR 
+        if res2 is None:
             print "le scenario n'existe pas en base"
 
-        else :
-
-            with CONNECTION.cursor() as cursor3:
-                cursor3.execute("INSERT INTO partie (id_scenario, id_creneau)"
+        else:
+            with CONNECTION.cursor() as cursor2:
+                cursor2.execute("INSERT INTO partie (id_scenario, id_creneau)"
                 "VALUES (%(id_scen)s, %(id_cren)s) RETURNING id_partie;"
                 ,{
-                "id_scen" : res2[0],
-                "id_cren" : res[0]
+                "id_scen" : res[0],
+                "id_cren" : partie.date
                 })
                 partie.id = cursor3.fetchone()[0]
             return parie.id
 
+    
     
     
     

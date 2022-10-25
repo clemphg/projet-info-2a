@@ -4,6 +4,7 @@ from tkinter import E
 import dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from objets_metiers.maitre_de_jeu import MaitreDeJeu
 from utils.singleton import Singleton
 from objets_metiers.joueur import Joueur
 
@@ -26,10 +27,24 @@ class DAO(Singleton):
             "VALUES (%(pseudo)s, %(mdp)s,%(age)s) RETURNING id_joueur;"
             ,{
                 "pseudo" : joueur.pseudo,
-                "mdp" : mot_de_passe
-                "age" : joueur.age
+                "mdp" : mot_de_passe,
+                "age" : joueur.age,
                 })
             joueur.id = cursor.fetchone()[0]
+
+        for i in range len(joueur.personnage):
+            perso=joueur.personnage[i]
+            with CONNECTION.cursor() as cursor2 :
+                cursor2.execute("INSERT INTO personnage (nom , age, race, niveau,classe)"
+                "VALUES (%(nom)s, %(age)s,%(race)s,%(niveau)s,%(classe)s) RETURNING id_personnage;"
+                ,{
+                    "nom" : perso.nom,
+                    "age" :perso.age,
+                    "race" : perso.race,
+                    "niveau":perso.niveau,
+                    "classe":perso.classe
+                    })
+
         return joueur.id
 
     def chercher_par_pseudo(pseudo):
@@ -41,27 +56,28 @@ class DAO(Singleton):
             res=cursor.fetchone()
 
         with CONNECTION.cursor() as cursor2:
-            cursor2.execute("SELECT nom"
+            cursor2.execute("SELECT nom, age ,race , niveau, classe "
             "FROM personnage JOIN joueur ON personnage.pseudo_j=joueur.pseudo_j"
             "WHERE pseudo_j=%(pseudo)s"
             , {"pseudo": pseudo})
              res2=cursor2.fetchone()
 
-        if res is not None :
+         if res is not None :
             joueur=Joueur(pseudo,res[0],res2)
             return joueur
         else :
             print("pas de pseudo correspondant")
 
+
     def liste_joueur():
         with CONNECTION.cursor() as cursor :
-            cursor.execute("SELECT pseudo_j,age"
+            cursor.execute("SELECT pseudo_j"
             "FROM joueur"
             )
             row=cursor.fetchone()
             l=[]
             while row is not None:
-                l.append(Joueur(row[0],row[1]))
+                l.append(row[0])
                 row=cursor.fetchone()
         return l
 
@@ -87,14 +103,13 @@ class DAO(Singleton):
         elif res2 is None:
             print "le scenario n'existe pas en base"
 
-        else :
-
-            with CONNECTION.cursor() as cursor3:
-                cursor3.execute("INSERT INTO partie (id_scenario, id_creneau)"
+        else:
+            with CONNECTION.cursor() as cursor2:
+                cursor2.execute("INSERT INTO partie (id_scenario, id_creneau)"
                 "VALUES (%(id_scen)s, %(id_cren)s) RETURNING id_partie;"
                 ,{
-                "id_scen" : res2[0],
-                "id_cren" : res[0]
+                "id_scen" : res[0],
+                "id_cren" : partie.date
                 })
                 partie.id = cursor3.fetchone()[0]
             return parie.id

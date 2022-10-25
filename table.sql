@@ -37,7 +37,7 @@ CREATE TABLE personnage(
     age INT,
     niveau INT,
     race VARCHAR(15),
-    calsse VARCHAR(15),
+    classe VARCHAR(15),
     pseudo_j VARCHAR(25) REFERENCES joueur(pseudo_j)
 );
 

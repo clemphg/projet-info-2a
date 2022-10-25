@@ -5,7 +5,7 @@ import dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from utils.singleton import Singleton
-from joueur import Joueur 
+from objets_metiers.joueur import Joueur
 
 from utils.singleton import Singleton
 
@@ -39,15 +39,15 @@ class DAO(Singleton):
             "WHERE pseudo_j=%(pseudo)s"
             , {"pseudo": pseudo})
             res=cursor.fetchone()
-        
+
         with CONNECTION.cursor() as cursor2:
             cursor2.execute("SELECT nom"
             "FROM personnage JOIN joueur ON personnage.pseudo_j=joueur.pseudo_j"
             "WHERE pseudo_j=%(pseudo)s"
             , {"pseudo": pseudo})
              res2=cursor2.fetchone()
-        
-         if res is not None :
+
+        if res is not None :
             joueur=Joueur(pseudo,res[0],res2)
             return joueur
         else :
@@ -65,7 +65,7 @@ class DAO(Singleton):
                 row=cursor.fetchone()
         return l
 
-    
+
     def creer_partie(partie: Partie):
         with CONNECTION.cursor() as cursor :
             cursor.execute("SELECT id_creneau"
@@ -73,17 +73,17 @@ class DAO(Singleton):
             "WHERE Date_debut=%(date)s"
             , {"date": partie.date})
             res=cursor.fetchone()
-        
+
         with CONNECTION.cursor() as cursor2:
             cursor2.execute("SELECT id_scenario"
             "FROM scenario"
             "WHERE nom=%(nom)s"
             , {"nom": partie.scenario})
             res2=cursor2.fetchone()
-        
+
         if res is None:
             print "pas de crenau corrspondant"
-        
+
         elif res2 is None:
             print "le scenario n'existe pas en base"
 
@@ -98,7 +98,7 @@ class DAO(Singleton):
                 })
                 partie.id = cursor3.fetchone()[0]
             return parie.id
-    
-    
+
+
 
 

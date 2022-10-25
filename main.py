@@ -1,9 +1,9 @@
 from vues.vue_accueil import VueAccueil
 
-# This script is the entry point of your application
+# Point d'entrée de l'application
 
 if __name__ == '__main__':
-    # run the StartView
+    # lancer la vue d'accueil
     current_view = VueAccueil()
 
     # Tant que la vue actuelle n'est pas nulle, on continue à l'afficher

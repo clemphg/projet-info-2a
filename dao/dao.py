@@ -25,14 +25,20 @@ class DAO(Singleton):
 
     def creer_joueur(joueur: Joueur, mot_de_passe):
         with CONNECTION.cursor() as cursor :
-            cursor.execute("INSERT INTO joueur (pseudo_j , mot_de_passe, age)"
-            "VALUES (%(pseudo)s, %(mdp)s,%(age)s) RETURNING id_joueur;"
+            cursor.execute("INSERT INTO joueur (pseudo_j , age)"
+            "VALUES (%(pseudo)s,%(age)s) RETURNING id_joueur;"
             ,{
                 "pseudo" : joueur.pseudo,
-                "mdp" : mot_de_passe,
                 "age" : joueur.age,
                 })
             joueur.id = cursor.fetchone()[0]
+        with CONNECTION.cursor() as cursor :
+            cursor.execute("INSERT INTO mdp (pseudo, mdp)"
+            "VALUES (%(pseudo)s,%(mdp)s);"
+            ,{
+                "pseudo" : joueur.pseudo,
+                "mdp" : mot_de_passe,
+                })
         return joueur.id
 
 
@@ -48,18 +54,23 @@ class DAO(Singleton):
                 "niveau" : perso.classe,
                 "niveau" : pseudo_j
                 })
-            perso.id = cursor.fetchone()[0]
         return perso.id
     
     
     def creer_mj(mj: MaitreDeJeu, mot_de_passe):
         with CONNECTION.cursor() as cursor :
-            cursor.execute("INSERT INTO Maitre_de_jeu (pseudo_mj , motdepasse_mj, age)"
-            "VALUES (%(pseudo)s, %(mdp)s,%(age)s) RETURNING id_joueur;"
+            cursor.execute("INSERT INTO Maitre_de_jeu (pseudo_mj, age)"
+            "VALUES (%(pseudo)s, %(age)s) RETURNING id_joueur;"
+            ,{
+                "pseudo" : mj.pseudo,
+                "age" : mj.age,
+                })
+        with CONNECTION.cursor() as cursor :
+            cursor.execute("INSERT INTO mdp (pseudo, mdp)"
+            "VALUES (%(pseudo)s,%(mdp)s);"
             ,{
                 "pseudo" : mj.pseudo,
                 "mdp" : mot_de_passe,
-                "age" : mj.age,
                 })
             mj.id = cursor.fetchone()[0]
         return mj.id    
@@ -263,7 +274,6 @@ class DAO(Singleton):
             while row is not None:
                 l.append(row[0])
                 row=cursor.fetchone()
-
         
         liste_j=[]
         for pseudo in l:
@@ -274,9 +284,28 @@ class DAO(Singleton):
     def supprimer_joueur(pseudo):
         with CONNECTION.cursor() as cursor:
             cursor.execute("DELETE FROM joueur"
-            "WHERE pseudo_j=%(pseudo)s"
+            "WHERE pseudo_j=%(pseudo)s RETURNING TRUE"
             , {"pseudo": pseudo})
+            sup_joueur=cursor.fetchone()
+        with CONNECTION.cursor() as cursor:
+            cursor.execute("DELETE FROM mdp"
+            "WHERE pseudo=%(pseudo)s RETURNING TRUE"
+            , {"pseudo": pseudo})
+            sup_mdp=cursor.fetchone()
+        return sup_joueur,sup_mdp
     
+    def supprimer_mj(pseudo):
+        with CONNECTION.cursor() as cursor:
+            cursor.execute("DELETE FROM Maitre_de_jeu"
+            "WHERE pseudo_mj=%(pseudo)s RETURNING TRUE"
+            , {"pseudo": pseudo})
+            sup_mj=cursor.fetchone()
+        with CONNECTION.cursor() as cursor:
+            cursor.execute("DELETE FROM mdp"
+            "WHERE pseudo=%(pseudo)s RETURNING TRUE"
+            , {"pseudo": pseudo})
+            sup_mdp=cursor.fetchone()
+        return sup_mj,sup_mdp
    
 
 

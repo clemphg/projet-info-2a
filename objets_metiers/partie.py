@@ -2,11 +2,9 @@
 
 class Partie():
 
-<<<<<<< HEAD
-    def __init__(self, creneau, scenario):
-=======
+
     def __init__(self, id=None, creneau=None, scenario=None, liste_persos=None):
->>>>>>> 62d5dcf00a3890632b66d7f3d07a37b7e996a9a4
+
         """ Création d'une partie (par un maître de jeu)
 
         Parameters
@@ -16,12 +14,9 @@ class Partie():
         scenario : Scenario
             Scénario utilisé pour la partie
         """
-<<<<<<< HEAD
-        self.__creneau = date
-=======
+
         self.__id = id
         self.__creneau = creneau
->>>>>>> 62d5dcf00a3890632b66d7f3d07a37b7e996a9a4
         self.__scenario = scenario
         self.__liste_persos = liste_persos
 

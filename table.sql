@@ -11,7 +11,7 @@ CREATE TABLE Maitre_de_jeu(
 );
 
 CREATE TABLE scenario(
-    id_scenario INT PRIMARY KET NOT NULL ,
+    id_scenario INT PRIMARY KEY NOT NULL ,
     nom VARCHAR(40),
     descrip TEXT,
     niveau INT,
@@ -46,7 +46,7 @@ CREATE TABLE inscription_perso(
 );
 
 CREATE TABLE organisateur(
-    pseudo_organisateur VARCHAR(25) PRIMARY KEY,
+    pseudo_organisateur VARCHAR(25) PRIMARY KEY
 );
 
 CREATE TABLE journal(

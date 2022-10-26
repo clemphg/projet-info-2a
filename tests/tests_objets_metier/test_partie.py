@@ -1,5 +1,4 @@
 from unittest import TestCase
-import unittest
 
 from objets_metiers.partie import Partie
 from objets_metiers.scenario import Scenario

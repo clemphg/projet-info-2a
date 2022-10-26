@@ -63,3 +63,26 @@ class TestPartie(TestCase):
         status = partie.ajouter_perso(perso)
         # THEN
         self.assertFalse(status)
+
+    def test_supprimer_perso_possible(self):
+        # GIVEN
+        perso = Personnage(id=2)
+        partie = Partie(liste_persos=[Personnage(id=54),
+                                      Personnage(id=4),
+                                      perso])
+        # WHEN
+        status = partie.supprimer_perso(perso)
+        # THEN
+        self.assertTrue(status)
+
+    def test_supprimer_perso_impossible(self):
+        # GIVEN
+        perso = Personnage(id=3)
+        partie = Partie(liste_persos=[Personnage(id=1),
+                                      Personnage(id=2),
+                                      Personnage(id=35),
+                                      Personnage(id=32)])
+        # WHEN
+        status = partie.supprimer_perso(perso)
+        # THEN
+        self.assertFalse(status)

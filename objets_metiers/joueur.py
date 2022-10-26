@@ -41,6 +41,3 @@ class Joueur(AbstractJoueur):
         else:
             status = False
         return status
-
-    def inscription_partie():
-        pass

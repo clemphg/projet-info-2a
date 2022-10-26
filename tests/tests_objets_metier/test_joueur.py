@@ -25,3 +25,20 @@ class TestJoueur(TestCase):
         # THEN
         self.assertFalse(status)
 
+    def test_pseudo(self):
+        # GIVEN
+        pseudo = "riri"
+        # WHEN
+        joueur = Joueur(pseudo,20)
+        # THEN
+        self.assertEqual(pseudo, joueur.pseudo)
+
+    def test_age(self):
+        # GIVEN
+        age = 20
+        # WHEN
+        joueur = Joueur("riri",age)
+        # THEN
+        self.assertEqual(age, joueur.age)
+    
+

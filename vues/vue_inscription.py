@@ -78,7 +78,12 @@ class VueInscription(AbstractVue):
     def make_choice(self):
         reponses = prompt(self.__questions)
 
-        # ajouter l'utilisateur créé dans la base
+        if reponses['type_de_profil']=='Joueur':
+            pass
+        elif reponses['type_de_profil']=='Maître de jeu':
+            pass
+        elif reponses['type_de_profil']=='Organisateur':
+            pass
 
 
         pprint("Inscription réussie !")

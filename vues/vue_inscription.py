@@ -1,5 +1,7 @@
 from pprint import pprint
 
+import hashlib
+
 import regex
 from PyInquirer import Separator, prompt
 from prompt_toolkit.validation import ValidationError, Validator
@@ -7,6 +9,10 @@ from prompt_toolkit.validation import ValidationError, Validator
 from vues.abstract_vue import AbstractVue
 from vues.session import Session
 
+from dao.dao import DAO
+
+from objets_metiers.joueur import Joueur
+from objets_metiers.maitre_de_jeu import MaitreDeJeu
 
 class ValidationPseudo(Validator):
     def validate(self, document):
@@ -78,14 +84,18 @@ class VueInscription(AbstractVue):
     def make_choice(self):
         reponses = prompt(self.__questions)
 
+        # hachage du mot de passe
+        mdp_hache = hashlib.sha256(reponses['pseudo'].encode() + reponses['mot_de_passe'].encode()).hexdigest
+
         if reponses['type_de_profil']=='Joueur':
-            pass
+            DAO().creer_joueur(Joueur(pseudo=reponses['pseudo'],
+                                      age=reponses['age']),
+                               mot_de_passe=mdp_hache)
         elif reponses['type_de_profil']=='Maître de jeu':
-            pass
-        elif reponses['type_de_profil']=='Organisateur':
-            pass
+            DAO().creer_mj(MaitreDeJeu(pseudo=reponses['pseudo'],
+                                       age=reponses['age']),
+                           mot_de_passe=mdp_hache)
 
-
-        pprint("Inscription réussie !")
+        print("Inscription réussie ! Vous pouvez désormais vous connecter avec vos identifiants.")
         from vues.vue_accueil import VueAccueil
         return VueAccueil()

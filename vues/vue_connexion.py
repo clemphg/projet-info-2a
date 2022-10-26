@@ -1,6 +1,6 @@
 from pprint import pprint
-
 from PyInquirer import Separator, prompt
+import hashlib
 
 from vues.abstract_vue import AbstractVue
 from vues.session import Session
@@ -45,22 +45,50 @@ class VueConnexion(AbstractVue):
         print("Renseignez vos identifiants")
 
     def make_choice(self):
-        reponses = prompt(self.__questions)
+        nb_essais = 3 # nombre d'essais de couples pseudo+mdp à faire avant d'etre redirigé vers page d'accueil
+        vrai_pseudo = False
+        vrai_mdp = False
+        reponses = None
 
+        while nb_essais>0 and (not(vrai_pseudo) or not(vrai_mdp)):
+            nb_essais_ -= 1 # comptage du nombre d'essais
+
+            reponses = prompt(self.__questions)
+
+            # hachage du mot de passe
+            mdp_hache = hashlib.sha256(reponses['pseudo'].encode() + reponses['mot_de_passe'].encode()).hexdigest
+
+            # instanciation de l'utilisateur selon son type. si pseudo invalide pour le type on a None
+            if reponses['type_de_profil']=='Joueur':
+                utilisateur = DAO.chercher_par_pseudo_joueur(reponses['pseudo'])
+            elif reponses['type_de_profil']=='Maître de jeu':
+                utilisateur = DAO.chercher_par_pseudo_mj(reponses['pseudo'])
+            elif reponses['type_de_profil']=='Organisateur':
+                utilisateur = DAO.chercher_par_pseudo_organisateur(reponses['pseudo'])
+
+            if utilisateur:
+                vrai_pseudo = True
+                vrai_mdp = DAO.verifier_mdp(utilisateur.pseudo, mdp_hache)
+
+            if vrai_pseudo and vrai_mdp:
+                print("Authentification réussie")
+            elif vrai_pseudo and not(vrai_mdp):
+                print("Mot de passe incorrect")
+            elif not(vrai_pseudo) and vrai_mdp:
+                print("Mot de passe incorrect")
+            else:
+                print("Pseudo et mot de passe incorrects")
+
+        # Si l'authentification a échoué
+        if (not(vrai_pseudo) or not(vrai_mdp)):
+            from vues.vue_accueil import VueAccueil
+            return VueAccueil()
+
+        # si l'authentification est réussie
+        Session.utilisateur = utilisateur
         if reponses['type_de_profil']=='Joueur':
-            DAO.creer_joueur()
-        elif reponses['type_de_profil']=='Maître de jeu':
-            pass
-        elif reponses['type_de_profil']=='Organisateur':
-            pass
-
-
-        if reponses['type_de_profil']=='Joueur':
-            Session.utilisateur = Joueur("nono",12)
             return VuePrincipaleJoueur()
         elif reponses['type_de_profil']=='Maître de jeu':
-            Session.utilisateur = MaitreDeJeu("nono",12)
             return VuePrincipaleMJ()
         elif reponses['type_de_profil']=='Organisateur':
-            Session.utilisateur = Organisateur("nono",12)
             return VuePrincipaleOrganisateur()

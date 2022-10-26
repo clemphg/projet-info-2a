@@ -25,6 +25,14 @@ class Scenario():
         self.__niveau_min = niveau_min
 
     @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self,value):
+        self.__id = value
+
+    @property
     def nom(self):
         return self.__nom
 

@@ -33,9 +33,29 @@ class Personnage():
     def id(self):
         return self.__id
 
+    @id.setter
+    def id(self, value):
+        self.__id = value
+
     @property
     def nom(self):
         return self.__nom
+
+    @property
+    def age(self):
+        return self.__age
+
+    @property
+    def race(self):
+        return self.__race
+
+    @property
+    def niveau(self):
+        return self.__niveau
+
+    @property
+    def classe(self):
+        return self.__classe
 
     def modifier_classe(self, nvlle_classe: str) -> None:
         """Modifier la classe du personnage

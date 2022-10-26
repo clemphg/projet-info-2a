@@ -46,7 +46,6 @@ class TestJoueur(TestCase):
         personnages = [Personnage("A"),
                        Personnage("B")]
         # WHEN
-        joueur = Joueur("riri",20,[Personnage("A"),
-                                   Personnage("B")])
+        joueur = Joueur("riri",20,personnages)
         # THEN
         self.assertEqual(personnages, joueur.personnages)

@@ -2,19 +2,40 @@
 
 class Partie():
 
-    def __init__(self, date, scenario):
+    def __init__(self, id=None, creneau=None, scenario=None, liste_persos=None):
         """ Création d'une partie (par un maître de jeu)
 
         Parameters
         ----------
-        date : int
-            Date (creneau) à laquelle se tient la partie
+        creneau : int
+            Créneau sur lequel se tient la partie
         scenario : Scenario
             Scénario utilisé pour la partie
         """
-        self.__date = date
+        self.__id = id
+        self.__creneau = creneau
         self.__scenario = scenario
-        self.__liste_persos = None
+        self.__liste_persos = liste_persos
+
+    @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self, valeur):
+        self.__id = valeur
+
+    @property
+    def creneau(self):
+        return self.__creneau
+
+    @property
+    def scenario(self):
+        return self.__scenario
+
+    @property
+    def liste_persos(self):
+        return self.__liste_persos
 
     def ajouter_perso(self, personnage):
         """Ajouter un personnage à la partie.

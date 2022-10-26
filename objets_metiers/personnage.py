@@ -57,7 +57,8 @@ class Personnage():
     def classe(self):
         return self.__classe
 
-    def modifier_classe(self, nvlle_classe: str) -> None:
+    @classe.setter
+    def classe(self, nvlle_classe: str):
         """Modifier la classe du personnage
 
         Parameters

@@ -19,8 +19,7 @@ class ValidationPseudo(Validator):
         ok = regex.match("^[A-Za-z][A-Za-z0-9_.]{6,25}$", document.text)
         if ok:
             # vérifier que le pseudo n'est pas déjà dans la base
-            pseudos_base = DAO().liste_pseudos()
-            libre = document.text in pseudos_base
+            libre = DAO().test_pseudo_libre(document.text)
         if not ok:
             raise ValidationError(
                 message='Veuillez entrer un pseudo valide',

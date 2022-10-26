@@ -526,5 +526,27 @@ class DAO(Singleton):
                 "id" : personnage.id
                 })
 
+    def test_pseudo_libre(self, pseudo):
+        """Teste si un pseudo est déjà utilisé ou non
+
+        Parameters
+        ----------
+        pseudo : str
+            Pseudo à tester
+
+        Returns
+        -------
+        bool
+            True si le pseudo est libre, False s'il est déjà utilisé
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute("SELECT COUNT(*) FROM mdp WHERE pseudo=%(pseudo)s;")
+            test = cursor.fetchone()[0]
+        if test == 1:
+            return False
+        else:
+            return True
+
+
 
 

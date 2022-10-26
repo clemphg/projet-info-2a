@@ -294,6 +294,18 @@ class DAO(Singleton):
             sup_mdp=cursor.fetchone()
         return sup_joueur,sup_mdp
     
+    def supprimer_mj(pseudo):
+        with CONNECTION.cursor() as cursor:
+            cursor.execute("DELETE FROM Maitre_de_jeu"
+            "WHERE pseudo_mj=%(pseudo)s RETURNING TRUE"
+            , {"pseudo": pseudo})
+            sup_mj=cursor.fetchone()
+        with CONNECTION.cursor() as cursor:
+            cursor.execute("DELETE FROM mdp"
+            "WHERE pseudo=%(pseudo)s RETURNING TRUE"
+            , {"pseudo": pseudo})
+            sup_mdp=cursor.fetchone()
+        return sup_mj,sup_mdp
    
 
 

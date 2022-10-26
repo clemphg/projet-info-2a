@@ -8,7 +8,7 @@ from objets_metiers.maitre_de_jeu import MaitreDeJeu
 from objets_metiers.partie import Partie
 from objets_metiers.scenario import Scenario
 from utils.singleton import Singleton
-from joueur import Joueur 
+from objets_metiers.joueur import Joueur
 
 from utils.singleton import Singleton
 
@@ -34,6 +34,7 @@ class DAO(Singleton):
                 })
             joueur.id = cursor.fetchone()[0]
         return joueur.id
+
 
     def creer_perso(perso: Personnage, pseudo_j):
         with CONNECTION.cursor() as cursor :
@@ -84,9 +85,9 @@ class DAO(Singleton):
             , {"nom": partie.scenario})
             res=cursor.fetchone()
         
-        with CONNEXION.CURSOR 
         if res is None:
             print "le scenario n'existe pas en base"
+
 
         else:
             with CONNECTION.cursor() as cursor2:
@@ -106,7 +107,7 @@ class DAO(Singleton):
             "WHERE pseudo_j=%(pseudo)s"
             , {"pseudo": pseudo_j})
             res=cursor.fetchone()
-        
+
         with CONNECTION.cursor() as cursor2:
             cursor2.execute("SELECT nom, age ,niveau , race, classe "
             "FROM personnage "
@@ -118,8 +119,9 @@ class DAO(Singleton):
                 l.append(Personnage(row[0],row[1],row[3],row[2],row[4]))
                 row=cursor2.fetchone()
 
-        if res is not None :
-            joueur=Joueur(pseudo,res[0],l)
+
+         if res is not None :
+            joueur=Joueur(pseudo,res[0],res2)
             return joueur
         else :
             print("pas de pseudo correspondant")
@@ -250,6 +252,7 @@ class DAO(Singleton):
             p_c.append(partie)
     
     
+
     def liste_joueur():
         with CONNECTION.cursor() as cursor :
             cursor.execute("SELECT pseudo_j"
@@ -260,6 +263,7 @@ class DAO(Singleton):
             while row is not None:
                 l.append(row[0])
                 row=cursor.fetchone()
+
         
         liste_j=[]
         for pseudo in l:
@@ -274,5 +278,6 @@ class DAO(Singleton):
             , {"pseudo": pseudo})
     
    
+
 
 

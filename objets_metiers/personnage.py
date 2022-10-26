@@ -6,7 +6,7 @@ Un personnage est créé par un Joueur. Celui-ci en a au maximum trois.
 
 class Personnage():
 
-    def __init__(self, nom, age, race, niveau, classe ) -> None:
+    def __init__(self, id=None, nom=None, age=None, race=None, niveau=None, classe=None) -> None:
         """Créer un personnage
 
         Parameters
@@ -22,13 +22,43 @@ class Personnage():
         classe : str
             Classe du personnage
         """
+        self.__id = id
         self.__nom = nom
         self.__age = age
         self.__race = race
         self.__niveau = niveau
         self.__classe = classe
 
-    def modifier_classe(self, nvlle_classe: str) -> None:
+    @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self, value):
+        self.__id = value
+
+    @property
+    def nom(self):
+        return self.__nom
+
+    @property
+    def age(self):
+        return self.__age
+
+    @property
+    def race(self):
+        return self.__race
+
+    @property
+    def niveau(self):
+        return self.__niveau
+
+    @property
+    def classe(self):
+        return self.__classe
+
+    @classe.setter
+    def classe(self, nvlle_classe: str):
         """Modifier la classe du personnage
 
         Parameters

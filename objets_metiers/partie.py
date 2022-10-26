@@ -2,21 +2,50 @@
 
 class Partie():
 
+<<<<<<< HEAD
     def __init__(self, creneau, scenario):
+=======
+    def __init__(self, id=None, creneau=None, scenario=None, liste_persos=None):
+>>>>>>> 62d5dcf00a3890632b66d7f3d07a37b7e996a9a4
         """ Création d'une partie (par un maître de jeu)
 
         Parameters
         ----------
-        date : int
-            Date (creneau) à laquelle se tient la partie
+        creneau : int
+            Créneau sur lequel se tient la partie
         scenario : Scenario
             Scénario utilisé pour la partie
         """
+<<<<<<< HEAD
         self.__creneau = date
+=======
+        self.__id = id
+        self.__creneau = creneau
+>>>>>>> 62d5dcf00a3890632b66d7f3d07a37b7e996a9a4
         self.__scenario = scenario
-        self.__liste_persos = None
+        self.__liste_persos = liste_persos
 
-    def ajouter_perso(self, perso):
+    @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self, valeur):
+        self.__id = valeur
+
+    @property
+    def creneau(self):
+        return self.__creneau
+
+    @property
+    def scenario(self):
+        return self.__scenario
+
+    @property
+    def liste_persos(self):
+        return self.__liste_persos
+
+    def ajouter_perso(self, personnage):
         """Ajouter un personnage à la partie.
 
         Permet d'ajouter un personnage à une partie. Le personnage ne peut être ajouter que
@@ -26,24 +55,40 @@ class Partie():
         ----------
         perso : Personnage
             Personnage à ajouter à la partie
-        """
-        if self.__liste_persos and len(self.__liste_persos)<5 :
-            self.__liste_persos.append(perso)
-        elif len(self.__liste_persos)<5:
-            self.__liste_persos = [perso]
 
-    def supprimer_perso(self, perso):
+        Returns
+        -------
+        bool :
+            True si le personnage a été ajouté à la partie, False sinon
+        """
+        status = False
+        if self.__liste_persos and len(self.__liste_persos)<5 :
+            self.__liste_persos.append(personnage)
+            status = True
+        elif len(self.__liste_persos)==0:
+            self.__liste_persos = [personnage]
+            status = True
+
+        # ajouter en base via DAO
+        return status
+
+    def supprimer_perso(self, personnage):
         """Supprimer un personnage d'une partie.
 
-        Permet d'ajouter un personnage à une partie. Le personnage ne peut être ajouter que
-        s'il y a moins de 5 personnages déjà incrits à la partie.
+        Permet de supprimer un personnage d'une partie.
 
         Parameters
         ----------
         perso : Personnage
-            Personnage à ajouter à la partie
+            Personnage à supprimer de la partie
+
+        Returns
+        -------
+            True si le personnage a bien été supprimé de la partie, False sinon
         """
-        if self.__liste_persos and len(self.__liste_persos)<5 :
-            self.__liste_persos.append(perso)
-        elif len(self.__liste_persos)<5:
-            self.__liste_persos = [perso]
+        status = False
+        for perso in self.__liste_persos:
+            if perso.id == personnage.id:
+                self.__liste_persos.remove(perso)
+                status = True
+        return status

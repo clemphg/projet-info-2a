@@ -11,21 +11,26 @@ class Organisateur():
         """
         self.__pseudo = pseudo
 
-    def supprimer_joueur(self, joueur, partie):
-        pass
+    @property
+    def pseudo(self):
+        return self.__pseudo
 
-    def reaffecter_joueur(self, joueur, partie):
-        pass
+    def supprimer_personnage(self, personnage, partie):
+        partie.supprimer(personnage)
 
-    def supprimer_mj(self, mj, partie):
+    def reaffecter_personnage(self, personnage, prec_partie, nvlle_partie):
+        # si on peut l'ajouter à la nouvelle partie,
         pass
 
     def bannir_joueur(self, joueur):
+        # effacer le joueur, ses personnages et l'enlever de toutes les parties
         pass
 
     def bannir_mj(self, mj):
+        # effacer le mj, ses scénarios et toutes les parties qu'il menaient
+        # => supprimer les joueurs de ces parties
         pass
 
     def supprimer_partie(self, partie):
-        """Redondant avec supprimer mj non ?"""
+        # supprimer le maitre de jeu et tous les joueurs de la partie
         pass

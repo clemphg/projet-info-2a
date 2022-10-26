@@ -22,4 +22,7 @@ class VueNotificationsMJ(AbstractVue):
         pass
 
     def make_choice(self):
+
+        # utiliser la DAO pour trouver les messages
+        
         reponse = prompt(self.__questions)

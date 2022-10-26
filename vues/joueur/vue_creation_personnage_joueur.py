@@ -1,3 +1,5 @@
+import imp
+from pkgutil import ImpImporter
 from pprint import pprint
 import dotenv
 import os
@@ -8,8 +10,12 @@ from PyInquirer import Separator, prompt
 from prompt_toolkit.validation import ValidationError, Validator
 from utils.singleton import Singleton
 
-
+from vues.session import Session
 from vues.abstract_vue import AbstractVue
+
+from objets_metiers.personnage import Personnage
+
+from dao.dao import DAO
 
 
 class ValidationInput(Validator):
@@ -83,7 +89,7 @@ class VueCreationPersonnageJoueur(AbstractVue):
                 'name': 'validation',
                 'message': 'Classe',
                 'choices': [
-                    'Valider le personnage',
+                    'Créer le personnage',
                     'Abandonner'
                 ]
             }
@@ -93,4 +99,19 @@ class VueCreationPersonnageJoueur(AbstractVue):
         print("Création d'un personnage")
 
     def make_choice(self):
-        reponse = prompt(self.__questions)
+        reponses = prompt(self.__questions)
+
+        if reponses['validation'] == 'Créer le personnage':
+            perso = Personnage(nom=reponses['choix_nom'],
+                               age=reponses['choix_age'],
+                               race=reponses['choix_race'],
+                               niveau=reponses['choix_niveau'],
+                               classe=reponses['classe'])
+            id = DAO().creer_perso(perso,
+                                 Session().utilisateur.pseudo)
+            perso.id = id
+            Session().utilisateur.creer_personnage(perso)
+            print('Le personnage a bien été créé !')
+
+        from vues.vue_accueil import VueAccueil
+        return VueAccueil()

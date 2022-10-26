@@ -326,7 +326,7 @@ class DAO(Singleton):
         """
         with self.__connection.cursor() as cursor:
 
-            # liste des scénarios 
+            # liste des scénarios
             cursor.execute("SELECT id_scenario, nom, descrip, niveau"
             "FROM scenario JOIN scenario.id_scenario ON partie.id_scenario"
             "WHERE partie.id_creneau=%(creneau)s"
@@ -394,6 +394,13 @@ class DAO(Singleton):
 
 
     def liste_joueur(self):
+        """Liste des joueurs
+
+        Returns
+        -------
+        List[Joueur]
+            Liste de tous les joueurs
+        """
         with self.__connection.cursor() as cursor :
             cursor.execute("SELECT pseudo_j"
             "FROM joueur"
@@ -404,39 +411,66 @@ class DAO(Singleton):
                 l.append(row[0])
                 row=cursor.fetchone()
 
-        liste_j=[]
-        for pseudo in l:
-            liste_j.append(self.chercher_par_pseudo_j(pseudo))
+        liste_j=[self.chercher_par_pseudo_j(pseudo) for pseudo in l if pseudo is not None]
         return liste_j
 
 
-    def supprimer_joueur(self,pseudo):
+    def bannir_joueur(self,pseudo):
+        """Bannir un joueur (le supprimer définitivement)
+
+        Parameters
+        ----------
+        pseudo : str
+            Pseudo du joueur à bannir
+
+        Returns
+        -------
+        bool
+            True s'il est bien supprimé, False sinon
+        """
         with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM joueur"
             "WHERE pseudo_j=%(pseudo)s RETURNING TRUE"
             , {"pseudo": pseudo})
             sup_joueur=cursor.fetchone()
-        with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM mdp"
             "WHERE pseudo=%(pseudo)s RETURNING TRUE"
             , {"pseudo": pseudo})
             sup_mdp=cursor.fetchone()
-        return sup_joueur,sup_mdp
+        return sup_joueur and sup_mdp
 
-    def supprimer_mj(self,pseudo):
+    def bannir_mj(self,pseudo):
+        """Supprimer (bannir) un maitre de jeu
+
+        Parameters
+        ----------
+        pseudo : str
+            Pseudo du maitre de jeu à bannir
+
+        Returns
+        -------
+        bool
+            True si MJ bien supprimé, False sinon
+        """
         with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM Maitre_de_jeu"
             "WHERE pseudo_mj=%(pseudo)s RETURNING TRUE"
             , {"pseudo": pseudo})
             sup_mj=cursor.fetchone()
-        with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM mdp"
             "WHERE pseudo=%(pseudo)s RETURNING TRUE"
             , {"pseudo": pseudo})
             sup_mdp=cursor.fetchone()
-        return sup_mj,sup_mdp
+        return sup_mj and sup_mdp
 
     def liste_mj(self):
+        """Liste des maitres de jeu
+
+        Returns
+        -------
+        List[MaitreDeJeu]
+            Liste des maitres de jeu
+        """
         with self.__connection.cursor() as cursor :
             cursor.execute("SELECT pseudo_mj"
             "FROM Maitre_de_jeu"
@@ -447,12 +481,18 @@ class DAO(Singleton):
                 l.append(row[0])
                 row=cursor.fetchone()
 
-        liste_j=[]
-        for pseudo in l:
-            liste_j.append(self.chercher_par_pseudo_mj(pseudo))
+        liste_j=[self.chercher_par_pseudo_mj(pseudo) for pseudo in l if pseudo is not None]
+
         return liste_j
 
     def liste_personnage(self):
+        """_summary_
+
+        Returns
+        -------
+        _type_
+            _description_
+        """
         with self.__connection.cursor() as cursor :
             cursor.execute("SELECT name"
             "FROM personnage"
@@ -468,7 +508,16 @@ class DAO(Singleton):
             liste_j.append(self.chercher_par_nom_perso(name))
         return liste_j
 
-    def maj_classe(self,personnage,nvlle_classe):
+    def maj_classe(self, personnage, nvlle_classe):
+        """Changer la classe d'un personnage
+
+        Parameters
+        ----------
+        personnage : Personnage
+            Personnage dont il faut changer la classe
+        nvlle_classe : str
+            Nouvelle classe à attribuer
+        """
         with self.__connection.cursor() as cursor:
             cursor.execute("UPDATE personnage SET classe=%(nvlle_classe)s"
             "WHERE id_perso=%(id)s"

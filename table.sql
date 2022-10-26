@@ -14,7 +14,7 @@ CREATE TABLE Maitre_de_jeu(
 CREATE TABLE scenario(
     id_scenario INT PRIMARY KET NOT NULL ,
     nom VARCHAR(40),
-    description TEXT,
+    descrip TEXT,
     niveau INT,
     pseudo_mj VARCHAR(25) REFERENCES Maitre_de_jeu(pseudo_mj)
 );

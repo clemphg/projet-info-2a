@@ -21,3 +21,4 @@ if __name__ == '__main__':
     with open('graphiques/a_bientot.txt', 'r', encoding="utf-8") as asset:
         print(asset.read())
 
+

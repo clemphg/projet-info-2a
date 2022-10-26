@@ -1,6 +1,4 @@
 import os
-from pickle import TRUE
-from tkinter import E
 
 import dotenv
 import psycopg2
@@ -15,7 +13,7 @@ from objets_metiers.personnage import Personnage
 from utils.singleton import Singleton
 
 
-class DAO(Singleton):
+class DAO(metaclass=Singleton):
     def __init__(self):
         dotenv.load_dotenv(override=True)
         self.__connection=psycopg2.connect(
@@ -48,8 +46,6 @@ class DAO(Singleton):
                 "pseudo" : joueur.pseudo,
                 "age" : joueur.age,
                 })
-            joueur.id = cursor.fetchone()[0]
-        with self.__connection.cursor() as cursor :
             cursor.execute("INSERT INTO mdp (pseudo, mdp)"
             "VALUES (%(pseudo)s,%(mdp)s);"
             ,{
@@ -60,11 +56,11 @@ class DAO(Singleton):
         with self.__connection.cursor() as cursor :
             cursor.execute("SELECT COUNT(*) FROM joueur WHERE pseudo_j=%(pseudo)s;"
             ,{"pseudo" : joueur.pseudo})
-            test1 = cursor.fetchone()[0]
+            test1 = cursor.fetchone()['count']
 
             cursor.execute("SELECT COUNT(*) FROM mdp WHERE pseudo=%(pseudo)s;"
             ,{"pseudo" : joueur.pseudo})
-            test2 = cursor.fetchone()[0]
+            test2 = cursor.fetchone()['count']
 
         if test1==1 and test2==1:
             return True
@@ -89,16 +85,17 @@ class DAO(Singleton):
         """
         with self.__connection.cursor() as cursor :
             cursor.execute("INSERT INTO personnage (nom, age, niveau,race,classe,pseudo_j)"
-            "VALUES (%(nom)s, %(age)s,%(niveau)s,%(race)s,%(classe)s,%(pseudo_j)s,) RETURNING id_perso;"
+            "VALUES (%(nom)s, %(age)s,%(niveau)s,%(race)s,%(classe)s,%(pseudo_j)s) RETURNING id_perso;"
             ,{
                 "nom" : perso.nom,
                 "age" : perso.age,
                 "niveau" : perso.niveau,
-                "niveau" : perso.race,
-                "niveau" : perso.classe,
-                "niveau" : pseudo_j
+                "race" : perso.race,
+                "classe" : perso.classe,
+                "pseudo_j" : pseudo_j
                 })
-        return perso.id
+            res=cursor.fetchone()['id_perso']
+        return res
 
 
     def creer_mj(self, mj: MaitreDeJeu, mot_de_passe):
@@ -540,8 +537,11 @@ class DAO(Singleton):
             True si le pseudo est libre, False s'il est déjà utilisé
         """
         with self.__connection.cursor() as cursor:
-            cursor.execute("SELECT COUNT(*) FROM mdp WHERE pseudo=%(pseudo)s;")
-            test = cursor.fetchone()[0]
+            cursor.execute("SELECT COUNT(*) FROM mdp WHERE pseudo=%(pseudo)s;",
+                           {
+                               "pseudo":pseudo
+                           })
+            test = cursor.fetchone()['count']
         if test == 1:
             return False
         else:

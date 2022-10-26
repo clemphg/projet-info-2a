@@ -34,7 +34,7 @@ class ValidationPseudo(Validator):
 class ValidationAge(Validator):
     def validate(self, document):
         if regex.match("^\d{2,3}$", document.text):
-            ok = 13<document.text<120
+            ok = 13<int(document.text)<120
         else :
             ok = False
         if not ok:
@@ -93,7 +93,8 @@ class VueInscription(AbstractVue):
         reponses = prompt(self.__questions)
 
         # hachage du mot de passe
-        mdp_hache = hashlib.sha256(reponses['pseudo'].encode() + reponses['mot_de_passe'].encode()).hexdigest
+        mdp_hache = hashlib.sha256(reponses['pseudo'].encode() + reponses['mot_de_passe'].encode()).hexdigest()
+        print(mdp_hache)
 
         if reponses['type_de_profil']=='Joueur':
             DAO().creer_joueur(Joueur(pseudo=reponses['pseudo'],

@@ -40,5 +40,13 @@ class TestJoueur(TestCase):
         joueur = Joueur("riri",age)
         # THEN
         self.assertEqual(age, joueur.age)
-    
 
+    def test_personnages(self):
+        # GIVEN
+        personnages = [Personnage("A"),
+                       Personnage("B")]
+        # WHEN
+        joueur = Joueur("riri",20,[Personnage("A"),
+                                   Personnage("B")])
+        # THEN
+        self.assertEqual(personnages, joueur.personnages)

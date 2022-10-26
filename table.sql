@@ -7,7 +7,6 @@ CREATE TABLE Creneaux (
 
 CREATE TABLE Maitre_de_jeu(
     pseudo_mj VARCHAR(25) PRIMARY KEY,
-    motdepasse_mj TEXT,
     age INT
 );
 
@@ -27,7 +26,6 @@ CREATE TABLE partie(
 
 CREATE TABLE joueur(
     pseudo_j VARCHAR(25) PRIMARY KEY,
-    motdepasse_j TEXT,
     age INT
 );
 
@@ -49,7 +47,6 @@ CREATE TABLE inscription_perso(
 
 CREATE TABLE organisateur(
     pseudo_organisateur VARCHAR(25) PRIMARY KEY,
-    motdepasse_organisateur TEXT
 );
 
 CREATE TABLE journal(
@@ -57,4 +54,8 @@ CREATE TABLE journal(
     pseudo VARCHAR(25),
     date DATE,
     msg TEXT
+);
+CREATE TABLE mdp(
+    pseudo VARCHAR(25) PRIMARY KEY,
+    mdp TEXT
 );

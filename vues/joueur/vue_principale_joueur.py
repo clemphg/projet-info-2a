@@ -7,7 +7,7 @@ from vues.joueur.vue_creation_personnage_joueur import VueCreationPersonnageJoue
 from vues.joueur.vue_inscription_partie_joueur import VueInscriptionPartieJoueur
 from vues.joueur.vue_personnages_joueur import VuePersonnagesJoueur
 from vues.joueur.vue_parties_joueur import VuePartiesJoueur
-from vues.joueur.vue_notifs_joueur import VueNotificationsJoueur
+from vues.joueur.vue_notifications_joueur import VueNotificationsJoueur
 
 from vues.session import Session
 
@@ -42,7 +42,7 @@ class VuePrincipaleJoueur(AbstractVue):
             return VuePersonnagesJoueur()
         elif reponse['choix'] == 'Mes parties':
             return VuePartiesJoueur()
-        elif reponse['choix'] == 'Mes messages':
+        elif reponse['choix'] == 'Mes notifications':
             return VueNotificationsJoueur()
         elif reponse['choix'] == 'Me déconnecter':
             Session.utilisateur = None

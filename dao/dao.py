@@ -188,94 +188,121 @@ class DAO(Singleton):
             id de la partie
         """
         with self.__connection.cursor() as cursor:
-            cursor.execute("SELECT id_scenario"
-            "FROM scenario"
-            "WHERE nom=%(nom)s"
-            , {"nom": partie.scenario})
-            res=cursor.fetchone()
-
-        if res is None:
-            return None
-
-
-        else:
-            with self.__connection.cursor() as cursor2:
-                cursor2.execute("INSERT INTO partie (id_scenario, id_creneau)"
-                "VALUES (%(id_scen)s, %(id_cren)s) RETURNING id_partie;"
-                ,{
-                "id_scen" : res[0],
-                "id_cren" : partie.creneau
-                })
-                partie.id = cursor2.fetchone()[0]
-            return parie.id
+            cursor.execute("INSERT INTO partie (id_scenario, id_creneau)"
+            "VALUES (%(id_scen)s, %(id_cren)s) RETURNING id_partie;"
+            ,{
+            "id_scen" : partie.scenario.id,
+            "id_cren" : partie.creneau
+            })
+            partie.id = cursor.fetchone()[0]
+        return partie.id
 
     def chercher_par_pseudo_j(self,pseudo_j):
+        """Chercher un joueur selon son pseudo
+
+        Parameters
+        ----------
+        pseudo_j : str
+            Pseudo du joueur à chercher
+
+        Returns
+        -------
+        Joueur
+            Joueur si le joueur est trouvé, None sinon
+        """
         with self.__connection.cursor() as cursor:
             cursor.execute("SELECT age"
             "FROM joueur "
             "WHERE pseudo_j=%(pseudo)s"
             , {"pseudo": pseudo_j})
-            res=cursor.fetchone()
+            age=cursor.fetchone()
 
-        with self.__connection.cursor() as cursor2:
-            cursor2.execute("SELECT id, nom, age ,niveau , race, classe "
-            "FROM personnage "
-            "WHERE pseudo_j=%(pseudo)s"
-            , {"pseudo": pseudo_j})
-            row=cursor2.fetchone()
-            l=[]
-            while row is not None:
-                l.append(Personnage(row[0],row[1],row[2],row[4],row[3],row[5]))
-                row=cursor2.fetchone()
+            if age is not None :
+                cursor.execute("SELECT id, nom, age ,niveau , race, classe "
+                "FROM personnage "
+                "WHERE pseudo_j=%(pseudo)s"
+                , {"pseudo": pseudo_j})
+                row=cursor.fetchone()
+                l=[]
+                while row is not None:
+                    l.append(Personnage(row[0],row[1],row[2],row[4],row[3],row[5]))
+                    row=cursor.fetchone()
 
-
-        if res is not None :
-            joueur=Joueur(pseudo,res[0],res2)
-            return joueur
-        else :
-            print("pas de pseudo correspondant")
+                joueur=Joueur(pseudo_j,age[0],l)
+                return joueur
+        return None
 
     def chercher_par_pseudo_mj(self,pseudo_mj):
+        """Chercher un maitre de jeu par son pseudo
+
+        Parameters
+        ----------
+        pseudo_mj : str
+            Pseudo du maitre de jeu
+
+        Returns
+        -------
+        MaitreDeJeu
+            Retourne le MJ s'il existe, None sinon
+        """
         with self.__connection.cursor() as cursor:
             cursor.execute("SELECT age"
             "FROM Maitre_de_jeu "
-            "WHERE pseudo_j=%(pseudo)s"
-            , {"pseudo": pseudo_j})
-            res=cursor.fetchone()
-
-        with self.__connection.cursor() as cursor2:
-            cursor2.execute("SELECT id, nom , descrip, niveau "
-            "FROM scenario "
             "WHERE pseudo_mj=%(pseudo)s"
-            ,{"pseudo": pseudo_mj})
-            row=cursor2.fetchone()
-            l=[]
-            while row is not None:
-                l.append(Scenario(row[0],row[1],row[2],row[3]))
-                row=cursor2.fetchone()
+            , {"pseudo": pseudo_mj})
+            age=cursor.fetchone()
 
-        if res is not None :
-            mj=MaitreDeJeu(pseudo,res[0],l)
-            return mj
-        else :
-            return None
+            if age is not None :
+                cursor.execute("SELECT id, nom , descrip, niveau "
+                "FROM scenario "
+                "WHERE pseudo_mj=%(pseudo)s"
+                ,{"pseudo": pseudo_mj})
+                row=cursor.fetchone()
+                l=[]
+                while row is not None:
+                    l.append(Scenario(row[0],row[1],row[2],row[3]))
+                    row=cursor.fetchone()
 
-    def chercher_par_nom_perso(self,nom_perso):
+                mj=MaitreDeJeu(pseudo_mj,age[0],l)
+                return mj
+        return None
+
+    def chercher_par_id_perso(self, id_perso):
+        """Chercher un personnage par son
+
+        Parameters
+        ----------
+        id_perso : int
+            id du personnage
+
+        Returns
+        -------
+        Personnage
+            Personnage s'il existe, None sinon
+        """
         with self.__connection.cursor() as cursor:
-            cursor2.execute("SELECT id, nom, age ,niveau, race, classe "
+            cursor.execute("SELECT id, nom, age ,niveau, race, classe "
             "FROM personnage "
-            "WHERE nom=%(nom_perso)s"
-            , {"nom": nom_perso})
+            "WHERE id=%(id_perso)s"
+            , {"id_perso": id_perso})
             res=cursor.fetchone()
         if res is not None :
-            perso=Personnage(res[0],nom_perso,res[2],res[4],res[3],res[5])
+            perso=Personnage(id_perso, res[1],res[2],res[4],res[3],res[5])
             return perso
         else :
             return None
 
 
-    def inscription_personnage(self,perso,id_partie):
+    def inscription_personnage(self, perso, id_partie):
+        """Inscrire un personnage à une partie
 
+        Parameters
+        ----------
+        perso : Personnage
+            Personnage à inscrire
+        id_partie : int
+            id de la partie à laquelle inscrire le personnage
+        """
         with self.__connection.cursor() as cursor :
             cursor.execute("INSERT INTO inscription_perso (id_perso,id_partie)"
             "VALUES (%(id_perso)s, %(id_partie)s);"
@@ -284,10 +311,22 @@ class DAO(Singleton):
                 "id_partie" : id_partie,
                  })
 
+    def chercher_parties_creneaux(self,creneau):
+        """Chercher les parties se déroulant sur un creneau donné
 
+        Parameters
+        ----------
+        creneau : int
+            id du créneau
 
-    def chercher_partie_creneaux(self,creneau):
+        Returns
+        -------
+        List[Partie]
+            Liste de parties ou None si aucune partie
+        """
         with self.__connection.cursor() as cursor:
+
+            # liste des scénarios 
             cursor.execute("SELECT id_scenario, nom, descrip, niveau"
             "FROM scenario JOIN scenario.id_scenario ON partie.id_scenario"
             "WHERE partie.id_creneau=%(creneau)s"

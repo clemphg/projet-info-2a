@@ -15,3 +15,4 @@ class TestDaoJoueur(TestCase):
         test = DAO().test_pseudo_libre(pseudo_a_tester)
         #THEN
         self.assertTrue(test)
+

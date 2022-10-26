@@ -60,7 +60,7 @@ class VueConnexion(AbstractVue):
 
             # instanciation de l'utilisateur selon son type. si pseudo invalide pour le type on a None
             if reponses['type_de_profil']=='Joueur':
-                utilisateur = DAO().chercher_par_pseudo_joueur(reponses['pseudo'])
+                utilisateur = DAO().chercher_par_pseudo_j(reponses['pseudo'])
             elif reponses['type_de_profil']=='Maître de jeu':
                 utilisateur = DAO().chercher_par_pseudo_mj(reponses['pseudo'])
             elif reponses['type_de_profil']=='Organisateur':

@@ -547,6 +547,30 @@ class DAO(metaclass=Singleton):
         else:
             return True
 
+    def verifier_mdp(self, pseudo, mdp_a_tester):
+        """Vérifier qu'un mot de passe est bien le bon
+
+        Parameters
+        ----------
+        pseudo : str
+            Pseudo
+        mdp_a_tester : str
+            Mot de passe haché à tester
+
+        Returns
+        -------
+        bool
+            True si les mots de passe sont égaux, False sinon
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute("SELECT mdp FROM mdp WHERE pseudo=%(pseudo)s;",
+                           {
+                               "pseudo":pseudo
+                           })
+            mdp_base = cursor.fetchone()['mdp']
+        return mdp_a_tester == mdp_base
+
+
 
 
 

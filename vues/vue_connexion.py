@@ -51,7 +51,7 @@ class VueConnexion(AbstractVue):
         reponses = None
 
         while nb_essais>0 and (not(vrai_pseudo) or not(vrai_mdp)):
-            nb_essais_ -= 1 # comptage du nombre d'essais
+            nb_essais -= 1 # comptage du nombre d'essais
 
             reponses = prompt(self.__questions)
 
@@ -60,15 +60,15 @@ class VueConnexion(AbstractVue):
 
             # instanciation de l'utilisateur selon son type. si pseudo invalide pour le type on a None
             if reponses['type_de_profil']=='Joueur':
-                utilisateur = DAO.chercher_par_pseudo_joueur(reponses['pseudo'])
+                utilisateur = DAO().chercher_par_pseudo_joueur(reponses['pseudo'])
             elif reponses['type_de_profil']=='Maître de jeu':
-                utilisateur = DAO.chercher_par_pseudo_mj(reponses['pseudo'])
+                utilisateur = DAO().chercher_par_pseudo_mj(reponses['pseudo'])
             elif reponses['type_de_profil']=='Organisateur':
-                utilisateur = DAO.chercher_par_pseudo_organisateur(reponses['pseudo'])
+                utilisateur = DAO().chercher_par_pseudo_organisateur(reponses['pseudo'])
 
             if utilisateur:
                 vrai_pseudo = True
-                vrai_mdp = DAO.verifier_mdp(utilisateur.pseudo, mdp_hache)
+                vrai_mdp = DAO().verifier_mdp(utilisateur.pseudo, mdp_hache)
 
             if vrai_pseudo and vrai_mdp:
                 print("Authentification réussie")
@@ -85,7 +85,7 @@ class VueConnexion(AbstractVue):
             return VueAccueil()
 
         # si l'authentification est réussie
-        Session.utilisateur = utilisateur
+        Session().utilisateur = utilisateur
         if reponses['type_de_profil']=='Joueur':
             return VuePrincipaleJoueur()
         elif reponses['type_de_profil']=='Maître de jeu':

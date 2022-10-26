@@ -12,23 +12,36 @@ class VuePersonnagesJoueur(AbstractVue):
         self.__questions = [
             {
                 'type': 'list',
-                'name': 'choix',
+                'name': 'choix_menu',
                 'message': 'Sélectionner un choix',
                 'choices': [
+                    "Modifier la classe de l'un de mes personnages",
                     'Retourner au menu principal'
                 ]
+            },
+            {
+                'type': 'list',
+                'name': 'choix_perso',
+                'message': 'Sélectionner un personnage',
+                'choices':
+                    [perso.nom for perso in Session().utilisateur.personnages]
             }
         ]
 
     def display_info(self):
-        if Session.utilisateur.personnages:
-            for perso in Session.utilisateur.personnages:
-                print("personnage")
+        if Session().utilisateur.personnages:
+            for perso in Session().utilisateur.personnages:
+                print("Nom :",perso.nom,"\nAge :",perso.age,"\nNiveau :",perso.niveau,"\nRace :",perso.race,"\nClasse :",perso.classe)
         else:
             print("Vous n'avez pas encore créé de personnage.")
 
     def make_choice(self):
-        reponse = prompt(self.__questions)
-        if reponse['choix'] == 'Retourner au menu principal':
-            from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
-            return VuePrincipaleJoueur()
+
+        # si le joueur a des personnages il peut modifier leur classe
+        if Session().utilisateur.personnages:
+            reponse = prompt(self.__questions[0])
+            if reponse['choix_menu'] == "Modifier la classe de l'un de mes personnages":
+                pass
+
+        from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
+        return VuePrincipaleJoueur()

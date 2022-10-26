@@ -24,29 +24,4 @@ class TestMaitreDeJeu(TestCase):
         # THEN
         self.assertFalse(status)
 
-    def test_nom(self):
-        # GIVEN
-        pseudo = "riri"
-        # WHEN
-        mj = MaitreDeJeu(pseudo,20)
-        # THEN
-        self.assertEqual(pseudo, mj.pseudo)
-
-    def test_age(self):
-        # GIVEN
-        age = 16
-        # WHEN
-        mj = MaitreDeJeu("riri",age)
-        # THEN
-        self.assertEqual(age, mj.age)
-
-    def test_scenarios(self):
-        # GIVEN
-        scenarios = [Scenario(nom="nom",description="hello",niveau_min=10),
-                     Scenario(nom="nom2",description="hello2",niveau_min=5)]
-        # WHEN
-        mj = MaitreDeJeu("riri",20,scenarios)
-        # THEN
-        self.assertEqual(scenarios, mj.scenarios)
-
 

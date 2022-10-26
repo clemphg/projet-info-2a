@@ -8,11 +8,10 @@ class TestDaoJoueur(TestCase):
 
     def test_creer_joueur(self):
         # GIVEN
-        j = Joueur("riri",20)
 
         # WHEN
-        DAO().cr
 
         #THEN
+        pass
 
 

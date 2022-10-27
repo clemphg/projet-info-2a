@@ -11,7 +11,7 @@ class Joueur(AbstractJoueur):
     def personnages(self):
         return self.__personnages
 
-    def creer_personnage(self, nom, age, race, niveau, classe):
+    def creer_personnage(self, id, nom, age, race, niveau, classe):
         """Création d'un personnage.
 
         Un joueur possède des personnages. Il peut en créer jusqu'à trois. Il s'inscrit sur
@@ -19,6 +19,8 @@ class Joueur(AbstractJoueur):
 
         Parameters
         ----------
+        id : int
+            Id du personnage
         nom : str
             Nom du personnage.
         age : int
@@ -35,8 +37,8 @@ class Joueur(AbstractJoueur):
         bool
             True si le personnage a bien été ajouté, False sinon
         """
-        if len(self.__personnages)<2:
-            self.__personnages.append(Personnage(nom, age, race, niveau, classe))
+        if len(self.__personnages)<3:
+            self.__personnages.append(Personnage(id, nom, age, race, niveau, classe))
             status = True
         else:
             status = False

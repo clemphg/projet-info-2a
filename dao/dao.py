@@ -596,5 +596,12 @@ class DAO(metaclass=Singleton):
             return Organisateur(pseudo_o)
         return None
 
+    def supprimer_partie(self,partie:Partie):
+        with self.__connection.cursor() as cursor:
+            cursor.execute("DELETE FROM partie"
+            "WHERE id=%(id)s RETURNING TRUE"
+            , {"id": partie.id})
+            sup_partie=cursor.fetchone()  
+        return sup_partie
 
-
+    def maj_joueurs_parties(self,partie:Partie):

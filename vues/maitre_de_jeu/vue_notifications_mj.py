@@ -26,7 +26,7 @@ class VueNotificationsMJ(AbstractVue):
         messages = DAO().chercher_messages_par_pseudo(Session().utilisateur.pseudo)
         if messages:
             for message in messages:
-                print("Message du ",message['date'],"\n>>> ",message['date'],"\n")
+                print("Message du ",message['date'],"\n>>> ",message['message'],"\n")
         else:
             print("Pas de notifications\n")
 

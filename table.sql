@@ -73,6 +73,7 @@ CREATE TABLE mdp(
     mdp TEXT
 )
 
+
 INSERT INTO joueur (pseudo_j, motdepasse_j, age)
  VALUES
  ('Rébecca70', 24),
@@ -167,3 +168,4 @@ VALUES
 ('Amira100', 'ece4fae69e8b664a484893153f40ecfc58bb33695785cb50defe30d91d713702'),
 ('Maria180', 'ecd61231077f53d46f51ae6826a6c595f0d10591458d3883531c26a4f3c88a53'),
 ('Hihi100', 'f45ee875ec85143d36410b2bae622e6bbcef9e344e7528d219cb112a0116cc63');
+

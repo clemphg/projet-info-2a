@@ -74,7 +74,8 @@ CREATE TABLE journal(
     date DATE,
     msg TEXT
 );
- 
+
+
 INSERT INTO joueur (pseudo_j, motdepasse_j, age)
  VALUES
  ('Rébecca70', 'Armandblabla34', 24),
@@ -154,4 +155,5 @@ VALUES
 (4,5 ),
 (4,8 ),
 (4,12);
+ 
  

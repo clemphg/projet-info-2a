@@ -393,7 +393,7 @@ class DAO(metaclass=Singleton):
 
 
 
-    def liste_joueur(self):
+    def liste_joueurs(self):
         """Liste des joueurs
 
         Returns
@@ -402,13 +402,13 @@ class DAO(metaclass=Singleton):
             Liste de tous les joueurs
         """
         with self.__connection.cursor() as cursor :
-            cursor.execute("SELECT pseudo_j"
+            cursor.execute("SELECT pseudo_j "
             "FROM joueur"
             )
             row=cursor.fetchone()
             l=[]
             while row is not None:
-                l.append(row[0])
+                l.append(row['pseudo_j'])
                 row=cursor.fetchone()
 
         liste_j=[self.chercher_par_pseudo_j(pseudo) for pseudo in l if pseudo is not None]
@@ -463,7 +463,7 @@ class DAO(metaclass=Singleton):
             sup_mdp=cursor.fetchone()
         return sup_mj and sup_mdp
 
-    def liste_mj(self):
+    def liste_mjs(self):
         """Liste des maitres de jeu
 
         Returns
@@ -472,13 +472,13 @@ class DAO(metaclass=Singleton):
             Liste des maitres de jeu
         """
         with self.__connection.cursor() as cursor :
-            cursor.execute("SELECT pseudo_mj"
+            cursor.execute("SELECT pseudo_mj "
             "FROM Maitre_de_jeu"
             )
             row=cursor.fetchone()
             l=[]
             while row is not None:
-                l.append(row[0])
+                l.append(row['pseudo_mj'])
                 row=cursor.fetchone()
 
         liste_j=[self.chercher_par_pseudo_mj(pseudo) for pseudo in l if pseudo is not None]

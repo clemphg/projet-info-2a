@@ -1,6 +1,20 @@
 
 --CREATE SCHEMA D_and_D;
 
+DROP TABLE inscription_perso CASCADE;
+DROP TABLE partie CASCADE;
+DROP TABLE creneaux CASCADE;
+DROP TABLE personnage CASCADE;
+DROP TABLE scenario CASCADE;
+DROP TABLE joueur CASCADE;
+DROP TABLE maitre_de_jeu CASCADE;
+DROP TABLE organisateur CASCADE;
+DROP TABLE mdp;
+DROP TABLE journal;
+
+DROP SEQUENCE partie_seq, personnage_seq, journal_seq, scenario_seq;
+
+
 CREATE SEQUENCE partie_seq;
 CREATE SEQUENCE personnage_seq;
 CREATE SEQUENCE journal_seq;
@@ -71,19 +85,19 @@ CREATE TABLE journal(
 CREATE TABLE mdp(
     pseudo VARCHAR(25) PRIMARY KEY,
     mdp TEXT
-)
+);
 
 
-INSERT INTO joueur (pseudo_j, motdepasse_j, age)
+INSERT INTO joueur (pseudo_j, age)
  VALUES
- ('Rébecca70', 24),
- ('Aimée20', 36),
+ ('Rebecca70', 24),
+ ('Aimee20', 36),
  ('Marielle90', 27),
  ('Hilaire100', 58);
 
 INSERT INTO maitre_de_jeu (pseudo_mj, age)
  VALUES
- ('GiGi', 25),
+ ('GiGigigi', 25),
  ('Amy10', 22),
  ('Marie18', 28),
  ('Hil100', 60);
@@ -97,12 +111,12 @@ INSERT INTO organisateur (pseudo_organisateur)
 
 INSERT INTO personnage (nom, age, niveau, race, classe, pseudo_j)
  VALUES
- ('Elyanna', 200, 200,'elf', 'enchantresse','Rébecca70'),
- ( 'Emir', 18, 200, 'humain','épéiste','Rébecca70'),
- ( 'Elliot', 500, 200, 'démon','épéiste','Rébecca70'),
- ('Blondinet', 200, 50, 'nain', 'enchanteur','Aimée20'),
- ('Erys', 30, 100, 'humain','roi','Aimée20'),
- ( 'Lucifer', 800, 300, 'démon','enchanteur','Aimée20'),
+ ('Elyanna', 200, 200,'elf', 'enchantresse','Rebecca70'),
+ ( 'Emir', 18, 200, 'humain','épéiste','Rebecca70'),
+ ( 'Elliot', 500, 200, 'démon','épéiste','Rebecca70'),
+ ('Blondinet', 200, 50, 'nain', 'enchanteur','Aimee20'),
+ ('Erys', 30, 100, 'humain','roi','Aimee20'),
+ ( 'Lucifer', 800, 300, 'démon','enchanteur','Aimee20'),
  ('Elodie', 200, 20,'elf', 'enchantresse','Marielle90'),
  ( 'Aymen', 180, 200, 'dragon','combattant','Marielle90'),
  ( 'Amor', 20, 200, 'humain','enchantresse','Marielle90'),
@@ -112,8 +126,8 @@ INSERT INTO personnage (nom, age, niveau, race, classe, pseudo_j)
 
 INSERT INTO scenario (nom, descrip, niveau, pseudo_mj)
  VALUES
- ('Désert de cadavres','Le jeu se déroulera dans un désert infesté de scorpions mortels', 200,'GiGi'),
- ('Volcan enflammé',' Le jeu se déroulera dans un volcan en éruption', 200,'GiGi'),
+ ('Désert de cadavres','Le jeu se déroulera dans un désert infesté de scorpions mortels', 200,'GiGigigi'),
+ ('Volcan enflammé',' Le jeu se déroulera dans un volcan en éruption', 200,'GiGigigi'),
  ('Mer enchantée','Le jeu se déroulera dans une mer infestée de sirènes croqueuses d hommes', 200,'Amy10'),
  ('Montagne à dents de scie', 'Le jeu se déroulera dans une montagne infestée d ours mutants', 50,'Amy10'),
  ('Bataille navale', 'Le jeu se déroulera sous l eau',100,'Marie18'),
@@ -157,7 +171,7 @@ VALUES
 INSERT INTO mdp (pseudo,mdp)
 VALUES
 ('Rebecca70', 'bf2974666f328dbf43b4f624c62e0fbfe99ac61b551a437db581b0d57f96ee08'),
-('Aimée20', '5d08112296cdfb40ece55f7c492076b79db5fd83f286c9d0ed238a6bd9d0f890'),
+('Aimee20', '15067c616e3f58863396a2acdc81c2f0cc224bd49d7be3b2059d2afdc551c9a0'),
 ('Marielle90', '5cb1db588988ff1217768c74be9a7cf102cb7034d1f37ebd9978ae1d18f62c1a'),
 ('Hilaire100', 'f7dc98d348d95012795b68b120e39ee078d22cbbfd7b64acd93395a75cae2459'),
 ('GiGigigi', '3253e1229e98a4db730bf95d81acb3e66a6d6f863265d609a8dcf77cfcdcc953'),

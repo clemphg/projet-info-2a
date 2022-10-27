@@ -3,7 +3,10 @@ from pprint import pprint
 from PyInquirer import Separator, prompt
 
 
+from vues.session import Session
 from vues.abstract_vue import AbstractVue
+
+from dao.dao import DAO
 
 class VueNotificationsJoueur(AbstractVue):
     def __init__(self) -> None:
@@ -19,10 +22,15 @@ class VueNotificationsJoueur(AbstractVue):
         ]
 
     def display_info(self):
-        pass
+        messages = DAO().chercher_messages_par_pseudo(Session().utilisateur.pseudo)
+        if messages:
+            for message in messages:
+                print("Message du ",message['date'],"\n>",message['date'],"\n")
+        else :
+            print("Pas de notifications\n")
 
     def make_choice(self):
-
-        # utiliser la DAO pour récupérer les messages destinés au pseudo et les afficher
-
         reponse = prompt(self.__questions)
+        if reponse['choix']=='Retourner au menu principal':
+            from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
+            return VuePrincipaleJoueur()

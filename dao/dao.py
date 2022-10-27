@@ -608,7 +608,7 @@ class DAO(metaclass=Singleton):
         Returns
         -------
         List[Dict]
-            Liste de dictionnaires ayant deux clés ('date' et 'message')
+            Liste de dictionnaires ayant deux clés ('date' et 'message'), None si pas de message pour l'utilisateur
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("SELECT *"
@@ -616,14 +616,17 @@ class DAO(metaclass=Singleton):
             " WHERE pseudo=%(pseudo)s"
             , {"pseudo": pseudo})
 
-        row=cursor.fetchone()
-        messages = []
-
-        while row is not None:
-            messages.append({"date":row['date'], "message":row['msg']})
             row=cursor.fetchone()
+            messages = []
 
-        return messages
+            while row is not None:
+                messages.append({"date":row['date'], "message":row['msg']})
+                row=cursor.fetchone()
+
+        if len(messages)>0:
+            return messages
+        else:
+            return None
 
     def supprimer_partie(self,partie:Partie):
         """Suprimer une partie de la table de donnée

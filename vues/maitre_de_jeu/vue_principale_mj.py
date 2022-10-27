@@ -42,10 +42,10 @@ class VuePrincipaleMJ(AbstractVue):
             return VueScenariosMJ()
         elif reponse['choix'] == 'Mes parties':
             return VuePartiesMJ()
-        elif reponse['choix'] == 'Mes notification':
+        elif reponse['choix'] == 'Mes notifications':
             return VueNotificationsMJ()
         elif reponse['choix'] == 'Me déconnecter':
-            Session.utilisateur = None
+            Session().utilisateur = None
             from vues.vue_accueil import VueAccueil
             return VueAccueil()
         else:

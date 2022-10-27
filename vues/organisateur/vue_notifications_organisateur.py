@@ -9,7 +9,7 @@ from vues.session import Session
 from dao.dao import DAO
 
 
-class VueNotificationsMJ(AbstractVue):
+class VueNotificationsOrganisateur(AbstractVue):
     def __init__(self) -> None:
         self.__questions = [
             {
@@ -36,5 +36,5 @@ class VueNotificationsMJ(AbstractVue):
 
         reponse = prompt(self.__questions)
         if reponse['choix']=='Retourner au menu principal':
-            from vues.maitre_de_jeu.vue_principale_mj import VuePrincipaleMJ
-            return VuePrincipaleMJ()
+            from vues.organisateur.vue_principale_organisateur import VuePrincipaleOrganisateur
+            return VuePrincipaleOrganisateur()

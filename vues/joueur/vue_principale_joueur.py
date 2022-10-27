@@ -45,7 +45,7 @@ class VuePrincipaleJoueur(AbstractVue):
         elif reponse['choix'] == 'Mes notifications':
             return VueNotificationsJoueur()
         elif reponse['choix'] == 'Me déconnecter':
-            Session.utilisateur = None
+            Session().utilisateur = None
             from vues.vue_accueil import VueAccueil
             return VueAccueil()
         else:

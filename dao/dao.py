@@ -601,7 +601,5 @@ class DAO(metaclass=Singleton):
             cursor.execute("DELETE FROM partie"
             "WHERE id=%(id)s RETURNING TRUE"
             , {"id": partie.id})
-            sup_partie=cursor.fetchone()  
+            sup_partie=cursor.fetchone()
         return sup_partie
-
-    def maj_joueurs_parties(self,partie:Partie):

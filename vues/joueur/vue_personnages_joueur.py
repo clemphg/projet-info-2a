@@ -31,7 +31,7 @@ class VuePersonnagesJoueur(AbstractVue):
     def display_info(self):
         if Session().utilisateur.personnages:
             for perso in Session().utilisateur.personnages:
-                print("Nom :",perso.nom,"\nAge :",perso.age,"\nNiveau :",perso.niveau,"\nRace :",perso.race,"\nClasse :",perso.classe)
+                print("Nom :",perso.nom,"\nAge :",perso.age,"\nNiveau :",perso.niveau,"\nRace :",perso.race,"\nClasse :",perso.classe,"\n")
         else:
             print("Vous n'avez pas encore créé de personnage.")
 

@@ -9,6 +9,7 @@ from objets_metiers.scenario import Scenario
 from utils.singleton import Singleton
 from objets_metiers.joueur import Joueur
 from objets_metiers.personnage import Personnage
+from objets_metiers.organisateur import Organisateur
 
 from utils.singleton import Singleton
 
@@ -134,12 +135,12 @@ class DAO(metaclass=Singleton):
             ,{
                 "pseudo" : mj.pseudo,
                 })
-            test1 = cursor.fetchone()[0]
+            test1 = cursor.fetchone()['count']
             cursor.execute("SELECT COUNT(*) FROM mdp WHERE pseudo = %(pseudo)s;"
             ,{
                 "pseudo" : mj.pseudo,
                 })
-            test2 = cursor.fetchone()[0]
+            test2 = cursor.fetchone()['count']
         if test1==1 and test2==1:
             return True
         else:
@@ -245,8 +246,8 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("SELECT age"
-            "FROM Maitre_de_jeu "
-            "WHERE pseudo_mj=%(pseudo)s"
+            " FROM Maitre_de_jeu "
+            " WHERE pseudo_mj=%(pseudo)s"
             , {"pseudo": pseudo_mj})
             age=cursor.fetchone()
 
@@ -261,7 +262,7 @@ class DAO(metaclass=Singleton):
                     l.append(Scenario(row[0],row[1],row[2],row[3]))
                     row=cursor.fetchone()
 
-                mj=MaitreDeJeu(pseudo_mj,age[0],l)
+                mj=MaitreDeJeu(pseudo_mj,age['age'],l)
                 return mj
         return None
 
@@ -571,7 +572,40 @@ class DAO(metaclass=Singleton):
             mdp_base = cursor.fetchone()['mdp']
         return mdp_base
 
+    def chercher_par_pseudo_org(self,pseudo_o):
+        """Chercher un organisateur selon son pseudo
 
+        Parameters
+        ----------
+        pseudo_o : str
+            Pseudo de l'organisateur à chercher
+
+        Returns
+        -------
+        Organisateur
+            Organisateur si l'organisateur est trouvé, None sinon
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute("SELECT age"
+            " FROM organisateur "
+            " WHERE pseudo_j=%(pseudo)s"
+            , {"pseudo": pseudo_o})
+            age=cursor.fetchone()
+
+            if age is not None :
+                cursor.execute("SELECT id_perso, nom, age ,niveau , race, classe "
+                "FROM personnage "
+                "WHERE pseudo_j=%(pseudo)s"
+                , {"pseudo": pseudo_j})
+                row=cursor.fetchone()
+                l=[]
+                while row is not None:
+                    l.append(Personnage(row[0],row[1],row[2],row[4],row[3],row[5]))
+                    row=cursor.fetchone()
+
+                joueur=Joueur(pseudo_j,age['age'],l)
+                return joueur
+        return None
 
 
 

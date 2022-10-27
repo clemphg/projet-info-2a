@@ -60,16 +60,21 @@ CREATE TABLE inscription_perso(
 
 /* Création table organisateur */
 CREATE TABLE organisateur(
-    pseudo_organisateur VARCHAR(25) PRIMARY KEY,
-    motdepasse_organisateur TEXT
+    pseudo_organisateur VARCHAR(25) PRIMARY KEY
 );
 
-/* Création table journal: inventaire des messages envoyés aux organisateurs*/
+/* Création table journal: inventaire des messages envoyés aux utilisateurs*/
 CREATE TABLE journal(
     id_message INT PRIMARY KEY ,
     pseudo VARCHAR(25),
     date DATE,
     msg TEXT
+);
+
+/* Création table mdp: pseudos et mots de passe des utilisateurs*/
+CREATE TABLE mdp(
+    pseudo VARCHAR(25) PRIMARY KEY ,
+    mdp TEXT
 );
 
 INSERT INTO joueur (pseudo_j, motdepasse_j, age)
@@ -78,14 +83,14 @@ INSERT INTO joueur (pseudo_j, motdepasse_j, age)
  ('Aimée20', 'Hebertblublu20', 36),
  ('Marielle90', 'Ribeiro38', 27),
  ('Hilaire100', 'Savary86', 58);
- 
+
 INSERT INTO maitre_de_jeu (pseudo_mj, motdepasse_mj, age)
  VALUES
  ('GiGi', 'Armand38', 25),
  ('Amy10', 'Heb2000', 22),
  ('Marie18', 'Rib380', 28),
  ('Hil100', 'Sava86', 60);
- 
+
 INSERT INTO organisateur (pseudo_organisateur, motdepasse_organisateur)
  VALUES
  ('Amima20', 'Arm380'),
@@ -141,13 +146,13 @@ VALUES
 (1,12 ),
 (2,3),
 (2,6),
-(2,9 ), 
+(2,9 ),
 (2,11 ),
 (3, 2),
-(3, 4), 
-(3,7 ), 
+(3, 4),
+(3,7 ),
 (3,11 ),
-(4, 1), 
+(4, 1),
 (4,5 ),
 (4,8 ),
 (4,12);

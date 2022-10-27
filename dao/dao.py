@@ -1,4 +1,5 @@
 import os
+from tkinter import INSERT
 
 import dotenv
 import psycopg2
@@ -597,6 +598,17 @@ class DAO(metaclass=Singleton):
         return None
 
     def supprimer_partie(self,partie:Partie):
+        """Suprimer une partie de la table de donnée
+        Parameters
+        ------------
+        partie: Partie
+            la partie à supprimer
+        
+        Returns
+        -----------
+        booléen
+            True si la partie à bien été supprimée
+        """
         with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM partie"
             "WHERE id=%(id)s RETURNING TRUE"
@@ -604,4 +616,43 @@ class DAO(metaclass=Singleton):
             sup_partie=cursor.fetchone()  
         return sup_partie
 
-    def maj_joueurs_parties(self,partie:Partie):
+    def supprimer_scenario(self,scenario:Scenario):
+        """Suprimer un scenario de la table de donnée
+        Parameters
+        ------------
+        scenario: Partie
+            la partie à supprimer
+        
+        Returns
+        -----------
+        booléen
+            True si le scenario à bien été supprimé
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute("DELETE FROM scenario"
+            "WHERE id=%(id)s RETURNING TRUE"
+            , {"id": scenario.id})
+            sup_scenario=cursor.fetchone()  
+        return sup_scenario
+    
+    def ajouter_joueur_partie(self,partie:Partie,perso:Personnage):
+        """Rajoute à la base de données les joueurs inscrits dans la partie;
+        Parameters
+        ------------
+        partie:Partie
+            la partie qu'il faut mettre à jour dans la bdd
+        
+        Returns
+        -----------
+        booléen
+            retourne True si la maj à bien été faite
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute("INSERT INTO inscription_perso (id_partie , id_perso)"
+            "VALUES (%(id_partie)s,%(id_perso)s) RETURNING TRUE;"
+            ,{
+                "id_partie" : partie.id,
+                "id_perso" : perso.id,
+                })
+            inscription=cursor.fetchone()
+        return inscription

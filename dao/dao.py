@@ -586,25 +586,14 @@ class DAO(metaclass=Singleton):
             Organisateur si l'organisateur est trouvé, None sinon
         """
         with self.__connection.cursor() as cursor:
-            cursor.execute("SELECT age"
+            cursor.execute("SELECT COUNT(*)"
             " FROM organisateur "
-            " WHERE pseudo_j=%(pseudo)s"
+            " WHERE pseudo_organisateur=%(pseudo)s"
             , {"pseudo": pseudo_o})
-            age=cursor.fetchone()
+            res=cursor.fetchone()
 
-            if age is not None :
-                cursor.execute("SELECT id_perso, nom, age ,niveau , race, classe "
-                "FROM personnage "
-                "WHERE pseudo_j=%(pseudo)s"
-                , {"pseudo": pseudo_j})
-                row=cursor.fetchone()
-                l=[]
-                while row is not None:
-                    l.append(Personnage(row[0],row[1],row[2],row[4],row[3],row[5]))
-                    row=cursor.fetchone()
-
-                joueur=Joueur(pseudo_j,age['age'],l)
-                return joueur
+        if res['count'] == 1:
+            return Organisateur(pseudo_o)
         return None
 
 

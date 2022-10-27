@@ -64,7 +64,7 @@ class VueConnexion(AbstractVue):
             elif reponses['type_de_profil']=='Maître de jeu':
                 utilisateur = DAO().chercher_par_pseudo_mj(reponses['pseudo'])
             elif reponses['type_de_profil']=='Organisateur':
-                utilisateur = DAO().chercher_par_pseudo_organisateur(reponses['pseudo'])
+                utilisateur = DAO().chercher_par_pseudo_org(reponses['pseudo'])
 
             if utilisateur:
                 vrai_pseudo = True

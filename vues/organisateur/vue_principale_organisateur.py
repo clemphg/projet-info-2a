@@ -3,13 +3,28 @@ from pprint import pprint
 from PyInquirer import Separator, prompt
 
 from vues.abstract_vue import AbstractVue
-from vues.joueur.vue_creation_personnage_joueur import VueCreationPersonnageJoueur
-from vues.joueur.vue_inscription_partie_joueur import VueInscriptionPartieJoueur
-from vues.joueur.vue_personnages_joueur import VuePersonnagesJoueur
-from vues.joueur.vue_parties_joueur import VuePartiesJoueur
-from vues.joueur.vue_notifications_joueur import VueNotificationsJoueur
 
 from vues.session import Session
 
 class VuePrincipaleOrganisateur(AbstractVue):
-    pass
+    def __init__(self) -> None:
+        self.__questions = [
+            {
+                'type': 'list',
+                'name': 'choix',
+                'message': 'Sélectionner un sous-menu',
+                'choices': [
+                    'Me déconnecter'
+                ]
+            }
+        ]
+
+    def display_info(self):
+        print("Bienvenue",Session().utilisateur.pseudo,"!")
+
+    def make_choice(self):
+        reponse = prompt(self.__questions)
+        if reponse['choix'] == 'Me déconnecter':
+            Session.utilisateur = None
+            from vues.vue_accueil import VueAccueil
+            return VueAccueil()

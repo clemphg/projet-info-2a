@@ -224,7 +224,7 @@ class DAO(metaclass=Singleton):
                 row=cursor.fetchone()
                 l=[]
                 while row is not None:
-                    l.append(Personnage(row[0],row[1],row[2],row[4],row[3],row[5]))
+                    l.append(Personnage(row['id_perso'],row['nom'],row['age'],row['race'],row['niveau'],row['classe']))
                     row=cursor.fetchone()
 
                 joueur=Joueur(pseudo_j,age['age'],l)
@@ -259,7 +259,7 @@ class DAO(metaclass=Singleton):
                 row=cursor.fetchone()
                 l=[]
                 while row is not None:
-                    l.append(Scenario(row[0],row[1],row[2],row[3]))
+                    l.append(Scenario(row['id_scenario'],row['nom'],row['descrip'],row['niveau']))
                     row=cursor.fetchone()
 
                 mj=MaitreDeJeu(pseudo_mj,age['age'],l)
@@ -570,7 +570,7 @@ class DAO(metaclass=Singleton):
                                "pseudo":pseudo
                            })
             mdp_base = cursor.fetchone()['mdp']
-        return mdp_base
+        return mdp_base==mdp_a_tester
 
     def chercher_par_pseudo_org(self,pseudo_o):
         """Chercher un organisateur selon son pseudo

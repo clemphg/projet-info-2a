@@ -1,9 +1,5 @@
 
 
-from pickle import TRUE
-from dao.dao import DAO
-
-
 class Partie():
 
 
@@ -60,16 +56,17 @@ class Partie():
         bool :
             True si le personnage a été ajouté à la partie, False sinon
         """
+        from dao.dao import DAO
         status = False
         if self.__liste_persos and len(self.__liste_persos)<5 :
             self.__liste_persos.append(personnage)
-            DAO.ajouter_joueur_partie(self,personnage)
-            if DAO.ajouter_joueur_partie(self,personnage)==TRUE:
+            DAO().ajouter_joueur_partie(self,personnage)
+            if DAO().ajouter_joueur_partie(self,personnage)==True:
                 status=True
         elif len(self.__liste_persos)==0:
             self.__liste_persos = [personnage]
-            DAO.ajouter_joueur_partie(self,personnage)
-            if DAO.ajouter_joueur_partie(self,personnage)==TRUE:
+            DAO().ajouter_joueur_partie(self,personnage)
+            if DAO().ajouter_joueur_partie(self,personnage)==True:
                 status=True
         return status
 

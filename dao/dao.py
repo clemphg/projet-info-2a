@@ -597,6 +597,34 @@ class DAO(metaclass=Singleton):
             return Organisateur(pseudo_o)
         return None
 
+    def chercher_messages_par_pseudo(self, pseudo:str):
+        """Obtenir les messages destinés à un certain utilisateur
+
+        Parameters
+        ----------
+        pseudo : str
+            Pseudo de l'utilisateur
+
+        Returns
+        -------
+        List[Dict]
+            Liste de dictionnaires ayant deux clés ('date' et 'message')
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute("SELECT *"
+            " FROM journal "
+            " WHERE pseudo=%(pseudo)s"
+            , {"pseudo": pseudo})
+
+        row=cursor.fetchone()
+        messages = []
+
+        while row is not None:
+            messages.append({"date":row['date'], "message":row['msg']})
+            row=cursor.fetchone()
+
+        return messages
+
     def supprimer_partie(self,partie:Partie):
         """Suprimer une partie de la table de donnée
         Parameters

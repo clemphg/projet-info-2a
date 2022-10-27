@@ -16,7 +16,7 @@ from objets_metiers.maitre_de_jeu import MaitreDeJeu
 
 class ValidationPseudo(Validator):
     def validate(self, document):
-        ok = regex.match("^[A-Za-z][A-Za-z0-9_.]{6,25}$", document.text)
+        ok = regex.match("^[A-Za-z0-9_.]{6,25}$", document.text)
         if ok:
             # vérifier que le pseudo n'est pas déjà dans la base
             libre = DAO().test_pseudo_libre(document.text)

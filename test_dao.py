@@ -15,6 +15,8 @@ connection=psycopg2.connect(
     password=os.environ["PASSWORD"],
     cursor_factory=RealDictCursor)
 
+connection.autocommit = True
+
 def test_pseudo_libre(pseudo):
     with connection.cursor() as cursor:
         cursor.execute("SELECT COUNT(*) FROM mdp WHERE pseudo=%(pseudo)s;",
@@ -28,10 +30,12 @@ def test_pseudo_libre(pseudo):
         return True
 
 with connection.cursor() as cursor :
-    cursor.execute("INSERT INTO joueur (pseudo_j , age) VALUES (%(pseudo)s,%(age)s);"
-            ,{
-                "pseudo" : "clem",
-                "age" : 17,
-            })
+    cursor.execute("DELETE FROM joueur;")
+
+
+with connection.cursor() as cursor :
+    cursor.execute("SELECT * FROM joueur")
+    print(cursor.fetchall())
+
 
 print(test_pseudo_libre("clementine"))

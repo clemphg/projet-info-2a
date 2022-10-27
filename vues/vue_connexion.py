@@ -56,7 +56,7 @@ class VueConnexion(AbstractVue):
             reponses = prompt(self.__questions)
 
             # hachage du mot de passe
-            mdp_hache = hashlib.sha256(reponses['pseudo'].encode() + reponses['mot_de_passe'].encode()).hexdigest
+            mdp_hache = hashlib.sha256(reponses['pseudo'].encode() + reponses['mot_de_passe'].encode()).hexdigest()
 
             # instanciation de l'utilisateur selon son type. si pseudo invalide pour le type on a None
             if reponses['type_de_profil']=='Joueur':

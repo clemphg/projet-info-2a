@@ -30,7 +30,7 @@ class VuePrincipaleJoueur(AbstractVue):
         ]
 
     def display_info(self):
-        print("Bienvenue",Session.utilisateur.pseudo,"!")
+        print("Bienvenue",Session().utilisateur.pseudo,"!")
 
     def make_choice(self):
         reponse = prompt(self.__questions)

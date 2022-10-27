@@ -23,6 +23,7 @@ class DAO(metaclass=Singleton):
             user=os.environ["USER"],
             password=os.environ["PASSWORD"],
             cursor_factory=RealDictCursor)
+        self.__connection.autocommit = True
 
     def creer_joueur(self, joueur: Joueur, mot_de_passe):
         """Ajouter un joueur dans la base de données
@@ -209,13 +210,13 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("SELECT age"
-            "FROM joueur "
-            "WHERE pseudo_j=%(pseudo)s"
+            " FROM joueur "
+            " WHERE pseudo_j=%(pseudo)s"
             , {"pseudo": pseudo_j})
             age=cursor.fetchone()
 
             if age is not None :
-                cursor.execute("SELECT id, nom, age ,niveau , race, classe "
+                cursor.execute("SELECT id_perso, nom, age ,niveau , race, classe "
                 "FROM personnage "
                 "WHERE pseudo_j=%(pseudo)s"
                 , {"pseudo": pseudo_j})
@@ -225,7 +226,7 @@ class DAO(metaclass=Singleton):
                     l.append(Personnage(row[0],row[1],row[2],row[4],row[3],row[5]))
                     row=cursor.fetchone()
 
-                joueur=Joueur(pseudo_j,age[0],l)
+                joueur=Joueur(pseudo_j,age['age'],l)
                 return joueur
         return None
 
@@ -250,7 +251,7 @@ class DAO(metaclass=Singleton):
             age=cursor.fetchone()
 
             if age is not None :
-                cursor.execute("SELECT id, nom , descrip, niveau "
+                cursor.execute("SELECT id_scenario, nom , descrip, niveau "
                 "FROM scenario "
                 "WHERE pseudo_mj=%(pseudo)s"
                 ,{"pseudo": pseudo_mj})
@@ -568,7 +569,7 @@ class DAO(metaclass=Singleton):
                                "pseudo":pseudo
                            })
             mdp_base = cursor.fetchone()['mdp']
-        return mdp_a_tester == mdp_base
+        return mdp_base
 
 
 

@@ -15,7 +15,7 @@ from dao.dao import DAO
 
 class ValidationNom(Validator):
     def validate(self, document):
-        ok = regex.match("^[A-Za-z'eèàù]{5,25}$", document.text)
+        ok = regex.match("^[A-Za-z'eèàù ]{5,25}$", document.text)
         if not ok:
             raise ValidationError(
                 message='Veuillez entrer un nom valide (entre 5 et 25 caractères, sans caractères spéciaux)',
@@ -33,7 +33,7 @@ class ValidationDescription(Validator):
 
 class ValidationEntier(Validator):
     def validate(self, document):
-        ok = regex.match("^\d{2,3}$", document.text)
+        ok = regex.match("^\d{1,}$", document.text)
         if not ok:
             raise ValidationError(
                 message='Veuillez entrer un entier',
@@ -64,7 +64,7 @@ class VueCreationScenarioMJ(AbstractVue):
             {
                 'type': 'list',
                 'name': 'validation',
-                'message': 'Classe',
+                'message': 'Sélectionner une choix',
                 'choices': [
                     'Créer le scénario',
                     'Abandonner'
@@ -73,7 +73,7 @@ class VueCreationScenarioMJ(AbstractVue):
             {
                 'type': 'list',
                 'name': 'retour',
-                'message': 'Classe',
+                'message': '',
                 'choices': [
                     "Retour à l'accueil"
                 ]
@@ -81,27 +81,30 @@ class VueCreationScenarioMJ(AbstractVue):
         ]
 
     def display_info(self):
-        print("Création d'un scénario")
+        print("Création d'un scénario.\n")
 
     def make_choice(self):
-        if len(Session.utilsateur.scenarios)<2:
+        if len(Session().utilisateur.scenarios)<2:
             reponses = prompt(self.__questions[0:4])
 
-            if reponses['validation'] == 'Créer le personnage':
+            if reponses['validation'] == 'Créer le scénario':
                 scenar = Scenario(nom=reponses['choix_nom'],
-                                age=reponses['choix_description'],
-                                niveau_min=reponses['choix_niveau'])
-                id = DAO.creer_scenario(scenar,
-                                        Session.utilisateur.pseudo)
+                                description=reponses['choix_description'],
+                                niveau_min=reponses['choix_niveau_min'])
+                id = DAO().creer_scenario(scenar,
+                                        Session().utilisateur.pseudo)
                 scenar.id = id
-                Session.utilisateur.creer_scenario(scenar)
+                Session().utilisateur.creer_scenario(id = id,
+                                                   nom=reponses['choix_nom'],
+                                                   description=reponses['choix_description'],
+                                                   niveau_min=reponses['choix_niveau_min'])
                 print('Le scénario a bien été créé !')
         else:
-            print("Vous avez déjà deux scénarios, vous ne pouvez plus en créer.")
+            print("Vous avez déjà deux scénarios, vous ne pouvez pas en créer plus.\n")
 
         choix_retour = prompt(self.__questions[4])
         if choix_retour['retour'] == "Retour à l'accueil":
-            from vues.vue_accueil import VueAccueil
-            return VueAccueil()
+            from vues.maitre_de_jeu.vue_principale_mj import VuePrincipaleMJ
+            return VuePrincipaleMJ()
         else:
             pass

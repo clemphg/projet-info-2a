@@ -167,11 +167,11 @@ class DAO(metaclass=Singleton):
             "VALUES (%(nom)s, %(descrip)s,%(niveau)s,%(pseudo_mj)s) RETURNING id_scenario;"
             ,{
                 "nom" : scenario.nom,
-                "descripp" : scenario.description,
+                "descrip" : scenario.description,
                 "niveau" : scenario.niveau_min,
                 "pseudo_mj" : pseudo_mj
                 })
-            scenario.id = cursor.fetchone()[0]
+            scenario.id = cursor.fetchone()['id_scenario']
         return scenario.id
 
     def creer_partie(self, partie: Partie):

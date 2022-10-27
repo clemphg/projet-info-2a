@@ -1,5 +1,9 @@
 
 
+from pickle import TRUE
+from dao.dao import DAO
+
+
 class Partie():
 
 
@@ -59,12 +63,14 @@ class Partie():
         status = False
         if self.__liste_persos and len(self.__liste_persos)<5 :
             self.__liste_persos.append(personnage)
-            status = True
+            DAO.ajouter_joueur_partie(self,personnage)
+            if DAO.ajouter_joueur_partie(self,personnage)==TRUE:
+                status=True
         elif len(self.__liste_persos)==0:
             self.__liste_persos = [personnage]
-            status = True
-
-        # ajouter en base via DAO
+            DAO.ajouter_joueur_partie(self,personnage)
+            if DAO.ajouter_joueur_partie(self,personnage)==TRUE:
+                status=True
         return status
 
     def supprimer_perso(self, personnage):

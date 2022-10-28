@@ -17,7 +17,8 @@ connection.autocommit = True
 
 with connection.cursor() as cursor:
     cursor.execute(
-        "SELECT id_creneau, inscription_perso.id_partie, scenario.nom AS nom_scenario, maitre_de_jeu.pseudo_mj, personnage.nom AS nom_perso"
+        "SELECT id_creneau, inscription_perso.id_partie, scenario.nom AS nom_scenario, scenario.niveau AS niv_min_scenario,"
+        " maitre_de_jeu.pseudo_mj, personnage.nom AS nom_perso, personnage.niveau AS niv_perso"
         " FROM personnage"
         " JOIN inscription_perso ON personnage.id_perso=inscription_perso.id_perso"
         " JOIN partie ON partie.id_partie=inscription_perso.id_partie"
@@ -37,9 +38,11 @@ with connection.cursor() as cursor:
         inscriptions.append({
                 "id_creneau": row['id_creneau'],
                 "id_partie": row['id_partie'],
-                "scenario": row['nom_scenario'],
                 "pseudo_mj": row['pseudo_mj'],
-                "nom_perso": row['nom_perso']
+                "scenario": row['nom_scenario'],
+                "niv_min_scenario": row['niv_min_scenario'],
+                "nom_perso": row['nom_perso'],
+                "niv_perso": row['niv_perso']
             })
         row=cursor.fetchone()
 print(inscriptions)

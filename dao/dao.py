@@ -699,11 +699,13 @@ class DAO(metaclass=Singleton):
         Returns
         -------
         List[Dict]
-            Chaque élément de la liste est un dictionnaire décrivant l'inscription (id_creneau, id_partie, nom_scenario, pseudo_mj, nom_perso)
+            Chaque élément de la liste est un dictionnaire décrivant l'inscription (id_creneau, id_partie, nom_scenario, niv_min_scenario, pseudo_mj, nom_perso, niv_perso).
+            Retourne None si pas d'inscriptions.
         """
         with self.__connection.cursor() as cursor:
             cursor.execute(
-                "SELECT id_creneau, inscription_perso.id_partie, scenario.nom AS nom_scenario, maitre_de_jeu.pseudo_mj, personnage.nom AS nom_perso"
+                "SELECT id_creneau, inscription_perso.id_partie, scenario.nom AS nom_scenario, scenario.niveau AS niv_min_scenario,"
+                " maitre_de_jeu.pseudo_mj, personnage.nom AS nom_perso, personnage.niveau AS niv_perso"
                 " FROM personnage"
                 " JOIN inscription_perso ON personnage.id_perso=inscription_perso.id_perso"
                 " JOIN partie ON partie.id_partie=inscription_perso.id_partie"
@@ -720,10 +722,15 @@ class DAO(metaclass=Singleton):
                 inscriptions.append({
                     "id_creneau": row['id_creneau'],
                     "id_partie": row['id_partie'],
-                    "nom_scenario": row['nom_scenario'],
                     "pseudo_mj": row['pseudo_mj'],
-                    "nom_perso": row['nom_perso']
+                    "nom_scenario": row['nom_scenario'],
+                    "niv_min_scenario": row['niv_min_scenario'],
+                    "nom_perso": row['nom_perso'],
+                    "niv_perso": row['niv_perso']
                 })
                 row=cursor.fetchone()
-        return inscriptions
+        if len(inscriptions)>0:
+            return inscriptions
+        else:
+            return None
 

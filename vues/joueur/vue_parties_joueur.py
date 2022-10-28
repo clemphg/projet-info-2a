@@ -21,7 +21,7 @@ class VuePartiesJoueur(AbstractVue):
         ]
 
     def display_info(self):
-        print(DAO().liste_inscriptions_joueur(Session().utilisateur.pseudo))
+        pprint(DAO().liste_inscriptions_joueur(Session().utilisateur.pseudo))
 
     def make_choice(self):
         reponse = prompt(self.__questions)

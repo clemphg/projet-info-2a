@@ -41,4 +41,5 @@ with connection.cursor() as cursor:
                 "pseudo_mj": row['pseudo_mj'],
                 "nom_perso": row['nom_perso']
             })
+        row=cursor.fetchone()
 print(inscriptions)

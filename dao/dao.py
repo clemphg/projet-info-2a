@@ -724,5 +724,6 @@ class DAO(metaclass=Singleton):
                     "pseudo_mj": row['pseudo_mj'],
                     "nom_perso": row['nom_perso']
                 })
+                row=cursor.fetchone()
         return inscriptions
 

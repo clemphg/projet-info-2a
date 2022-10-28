@@ -194,7 +194,7 @@ class DAO(metaclass=Singleton):
             "id_scen" : partie.scenario.id,
             "id_cren" : partie.creneau
             })
-            partie.id = cursor.fetchone()[0]
+            partie.id = cursor.fetchone()['id_partie']
         return partie.id
 
     def chercher_par_pseudo_j(self,pseudo_j):
@@ -287,7 +287,7 @@ class DAO(metaclass=Singleton):
             , {"id_perso": id_perso})
             res=cursor.fetchone()
         if res is not None :
-            perso=Personnage(id_perso, res[1],res[2],res[4],res[3],res[5])
+            perso=Personnage(id_perso, res['nom'],res['age'],res['race'],res['niveau'],res['classe'])
             return perso
         else :
             return None
@@ -334,7 +334,7 @@ class DAO(metaclass=Singleton):
             row=cursor.fetchone()
             l=[]
             while row is not None:
-                l.append([row[0],Scenario(row[1],row[2],row[3])])
+                l.append([row['id_scenario'],Scenario(row['nom'],row['descrip'],row['niveau'])])
                 row=cursor.fetchone()
 
         d=[]
@@ -349,16 +349,16 @@ class DAO(metaclass=Singleton):
                     cursor3.execute("SELECT id_personnage"
                     "FROM inscription perso "
                     "WHERE id_partie=%(id_partie)s"
-                    , {"id_partie": res[0]})
+                    , {"id_partie": res['id_partie']})
                     idperso=cursor3.fetchone()
-                    while perso is not None:
+                    while idperso is not None:
                         with self.__connection.cursor() as cursor4:
                             cursor4.execute("SELECT id,nom, age ,niveau, race, classe"
                             "FROM inscription perso "
                             "WHERE id_perso=%(id_perso)s"
-                            , {"id_perso": idperso[0]})
+                            , {"id_perso": idperso['id_personnage']})
                             perso=cursor4.fetchone()
-                            d.apppend([res[0],Personnage(perso[0],perso[1],perso[3],perso[2],perso[4],perso[5])])
+                            d.apppend([res['id_partie'],Personnage(perso['id'],perso['nom'],perso['niveau'],perso['age'],perso['race'],perso["classe"])])
                         idperso=cursor3.fetchone()
                 res=cursor2.fetchone()
         p=[] #on intialise la liste qui va contenir des couples (id_partie,listes des perso de la partie)
@@ -381,7 +381,7 @@ class DAO(metaclass=Singleton):
             , {"creneau": creneau})
             res=cursor2.fetchone()
             while res is not None:
-                s.append(res)
+                s.append([res['id_partie',res['id_scenari']]])
                 res=cursor2.fetchone()
         p_c=[]
         for i in l:

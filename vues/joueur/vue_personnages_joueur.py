@@ -31,6 +31,14 @@ class VuePersonnagesJoueur(AbstractVue):
                 'message': 'Sélectionner une nouvelle classe',
                 'choices':
                     AppelAPI().classes_possibles()
+            },
+            {
+                'type': 'list',
+                'name': 'choix_menu',
+                'message': 'Sélectionner un choix',
+                'choices': [
+                    'Retourner au menu principal'
+                ]
             }
         ]
 
@@ -71,7 +79,11 @@ class VuePersonnagesJoueur(AbstractVue):
 
                 # on repose la question : modifier classe ou retour au menu principal
                 reponse = prompt(self.__questions[0])
+            from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
+            return VuePrincipaleJoueur()
 
-
-        from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
-        return VuePrincipaleJoueur()
+        else:
+            reponse = prompt(self.__questions[2])
+            if reponse['choix_menu']=='Retourner au menu principal':
+                    from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
+                    return VuePrincipaleJoueur()

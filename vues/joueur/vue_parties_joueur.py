@@ -59,7 +59,7 @@ class VuePartiesJoueur(AbstractVue):
                     {
                         'type': 'list',
                         'name': 'choix',
-                        'message': 'Sélectionner une partie',
+                        'message': 'Sélectionner une partie (selon son ID)',
                         'choices': [str(ins['id_partie']) for ins in inscriptions]
                     }
                 )

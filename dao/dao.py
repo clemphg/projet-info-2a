@@ -768,4 +768,34 @@ class DAO(metaclass=Singleton):
         else:
             return None
 
+    def desinscription_joueur(self, joueur:Joueur, id_partie):
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT personnage.id_perso AS id"
+                " FROM inscription_perso"
+                " JOIN personnage ON inscription_perso.id_perso=personnage.id_perso"
+                " WHERE id_partie=%(id_partie)s AND personnage.pseudo_j=%(pseudo)s;",
+                {
+                    "id_partie": id_partie,
+                    "pseudo": joueur.pseudo
+
+                }
+            )
+            id_perso = cursor.fetchone()['id']
+            cursor.execute(
+                "DELETE FROM inscription_perso "
+                "WHERE id_perso = %(id_perso)s AND id_partie = %(id_partie)s "
+                "RETURNING TRUE AS status",
+                {
+                    "id_perso": id_perso,
+                    "id_partie": id_partie
+                }
+            )
+            status = cursor.fetchone()['status']
+        if status:
+            return status
+        else:
+            return False
+
+
 

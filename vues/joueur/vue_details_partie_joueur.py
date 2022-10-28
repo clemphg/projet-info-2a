@@ -17,7 +17,7 @@ class VueDetailsPartieJoueur(AbstractVue):
                 'name': 'choix',
                 'message': 'Sélectionner un choix',
                 'choices': [
-                    "Se désinscrire d'une partie",
+                    "Se désinscrire de la partie",
                     'Retour à la liste des inscriptions',
                     'Retourner au menu principal'
                 ]
@@ -51,9 +51,10 @@ class VueDetailsPartieJoueur(AbstractVue):
 
     def make_choice(self):
         reponse = prompt(self.__questions)
-        if reponse['choix']=="Se désinscrire d'une partie":
-            from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
-            return VuePrincipaleJoueur()
+        if reponse['choix']=="Se désinscrire de la partie":
+            res = DAO().desinscription_joueur(Session().utilisateur, self.__id_partie)
+            from vues.joueur.vue_parties_joueur import VuePartiesJoueur
+            return VuePartiesJoueur()
         elif reponse['choix']=='Retour à la liste des inscriptions':
             from vues.joueur.vue_parties_joueur import VuePartiesJoueur
             return VuePartiesJoueur()

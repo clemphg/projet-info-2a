@@ -21,7 +21,18 @@ class VuePartiesJoueur(AbstractVue):
         ]
 
     def display_info(self):
-        pprint(DAO().liste_inscriptions_joueur(Session().utilisateur.pseudo))
+
+        # à remplacer par un appel à un service
+        inscriptions = DAO().liste_inscriptions_joueur(Session().utilisateur.pseudo)
+
+        for ins in inscriptions:
+            print(
+                ">  Créneau           :",ins['id_creneau'],"\n",
+                "  ID de partie      :",ins['id_partie'],"\n",
+                "  Maître de jeu     :",ins['pseudo_mj'],"\n",
+                "  Scénario          :",ins['nom_scenario'],"\n",
+                "  Nom du personnage :",ins['nom_perso'],"\n"
+                )
 
     def make_choice(self):
         reponse = prompt(self.__questions)

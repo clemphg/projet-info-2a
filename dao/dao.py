@@ -720,7 +720,7 @@ class DAO(metaclass=Singleton):
                 inscriptions.append({
                     "id_creneau": row['id_creneau'],
                     "id_partie": row['id_partie'],
-                    "scenario": row['nom_scenario'],
+                    "nom_scenario": row['nom_scenario'],
                     "pseudo_mj": row['pseudo_mj'],
                     "nom_perso": row['nom_perso']
                 })

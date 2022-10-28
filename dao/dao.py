@@ -1,4 +1,5 @@
 import os
+from sqlite3 import Cursor
 from tkinter import INSERT
 
 import dotenv
@@ -733,4 +734,37 @@ class DAO(metaclass=Singleton):
             return inscriptions
         else:
             return None
+
+    def chercher_partie_par_id(self, id_partie:int):
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT partie.id_partie, partie.id_creneau, scenario.id_scenario, scenario.pseudo_mj, scenario.nom AS nom_scenario,"
+                " scenario.descrip AS des_scenario, scenario.niveau AS niv_min_scenario, id_perso"
+                " FROM partie"
+                " JOIN scenario ON partie.id_scenario = scenario.id_scenario"
+                " WHERE partie.id_partie = %(id_partie)s;"
+            ,{
+                "id_partie" : id_partie
+                })
+            row=cursor.fetchone()
+            if row:
+
+                id=row['id_partie'],
+                creneau=row['id_creneau'],
+                scenario=Scenario(id=row['id_scenario'], nom=row['nom_scenario'], description=row['des_scenario'])
+                id_persos = [row['id_perso']]
+                while row is not None:
+                    id_persos.append(row['id_perso'])
+
+                persos = [self.chercher_par_id_perso(id) for id in id_persos]
+                partie = Partie(id=id,
+                                creneau=creneau,
+                                scenario=scenario,
+                                liste_persos=persos)
+
+        if partie:
+            return partie
+        else:
+            return None
+
 

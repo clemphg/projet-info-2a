@@ -58,16 +58,12 @@ class Partie():
         """
         from dao.dao import DAO
         status = False
-        if self.__liste_persos and len(self.__liste_persos)<5 :
+        if self.__liste_persos and len(self.__liste_persos)<4 :
             self.__liste_persos.append(personnage)
-            DAO().ajouter_joueur_partie(self,personnage)
-            if DAO().ajouter_joueur_partie(self,personnage)==True:
-                status=True
-        elif len(self.__liste_persos)==0:
+            status = DAO().ajouter_joueur_partie(self,personnage)
+        elif not self.__liste_perso or len(self.__liste_persos)==0:
             self.__liste_persos = [personnage]
-            DAO().ajouter_joueur_partie(self,personnage)
-            if DAO().ajouter_joueur_partie(self,personnage)==True:
-                status=True
+            status = DAO().ajouter_joueur_partie(self,personnage)
         return status
 
     def supprimer_perso(self, personnage):

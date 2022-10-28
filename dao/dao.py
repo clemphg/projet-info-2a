@@ -4,6 +4,8 @@ from tkinter import INSERT
 import dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
+
+
 from objets_metiers.maitre_de_jeu import MaitreDeJeu
 from objets_metiers.partie import Partie
 from objets_metiers.scenario import Scenario
@@ -485,28 +487,26 @@ class DAO(metaclass=Singleton):
 
         return liste_j
 
-    def liste_personnage(self):
-        """_summary_
+    def liste_personnages(self):
+        """Liste des personnages
 
         Returns
         -------
-        _type_
-            _description_
+        List[Personnage]
+            Liste des personnages
         """
         with self.__connection.cursor() as cursor :
-            cursor.execute("SELECT name"
+            cursor.execute("SELECT id_perso "
             "FROM personnage"
             )
             row=cursor.fetchone()
             l=[]
             while row is not None:
-                l.append(row[0])
+                l.append(row['id_perso'])
                 row=cursor.fetchone()
 
-        liste_j=[]
-        for name in l:
-            liste_j.append(self.chercher_par_nom_perso(name))
-        return liste_j
+        l_perso=[self.chercher_par_id_perso(id) for id in l]
+        return l_perso
 
     def maj_classe(self, personnage, nvlle_classe):
         """Changer la classe d'un personnage
@@ -687,4 +687,42 @@ class DAO(metaclass=Singleton):
                 })
             inscription=cursor.fetchone()
         return inscription
+
+    def liste_inscriptions_joueur(self, pseudo):
+        """Liste des inscriptions d'un joueur
+
+        Parameters
+        ----------
+        pseudo : str
+            Pseudo du joueur en question
+
+        Returns
+        -------
+        List[Dict]
+            Chaque élément de la liste est un dictionnaire décrivant l'inscription (id_creneau, id_partie, nom_scenario, pseudo_mj, nom_perso)
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id_creneau, inscription_perso.id_partie, scenario.nom AS nom_scenario, maitre_de_jeu.pseudo_mj, personnage.nom AS nom_perso"
+                " FROM personnage"
+                " JOIN inscription_perso ON personnage.id_perso=inscription_perso.id_perso"
+                " JOIN partie ON partie.id_partie=inscription_perso.id_partie"
+                " JOIN scenario ON partie.id_scenario=scenario.id_scenario"
+                " JOIN maitre_de_jeu ON scenario.pseudo_mj=maitre_de_jeu.pseudo_mj"
+                " WHERE pseudo_j=%(pseudo)s"
+                " ORDER BY id_creneau ASC;"
+            ,{
+                "pseudo" : pseudo
+                })
+            row=cursor.fetchone()
+            inscriptions = []
+            while row is not None:
+                inscriptions.append({
+                    "id_creneau": row['id_creneau'],
+                    "id_partie": row['id_partie'],
+                    "scenario": row['nom_scenario'],
+                    "pseudo_mj": row['pseudo_mj'],
+                    "nom_perso": row['nom_perso']
+                })
+        return inscriptions
 

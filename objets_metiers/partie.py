@@ -1,9 +1,11 @@
 
+from objets_metiers.personnage import Personnage
+from objets_metiers.scenario import Scenario
 
 class Partie():
 
 
-    def __init__(self, id=None, creneau=None, scenario=None, liste_persos=None):
+    def __init__(self, id:int=None, creneau:int=None, scenario:Scenario=None, liste_persos:list[Personnage]=None):
 
         """ Création d'une partie (par un maître de jeu)
 

@@ -284,9 +284,9 @@ class DAO(metaclass=Singleton):
             Personnage s'il existe, None sinon
         """
         with self.__connection.cursor() as cursor:
-            cursor.execute("SELECT id, nom, age ,niveau, race, classe "
+            cursor.execute("SELECT id_perso, nom, age ,niveau, race, classe "
             "FROM personnage "
-            "WHERE id=%(id_perso)s"
+            "WHERE id_perso=%(id_perso)s"
             , {"id_perso": id_perso})
             res=cursor.fetchone()
         if res is not None :
@@ -742,19 +742,20 @@ class DAO(metaclass=Singleton):
                 " scenario.descrip AS des_scenario, scenario.niveau AS niv_min_scenario, id_perso"
                 " FROM partie"
                 " JOIN scenario ON partie.id_scenario = scenario.id_scenario"
+                " JOIN inscription_perso ON partie.id_partie = inscription_perso.id_partie"
                 " WHERE partie.id_partie = %(id_partie)s;"
             ,{
                 "id_partie" : id_partie
                 })
             row=cursor.fetchone()
             if row:
-
-                id=row['id_partie'],
-                creneau=row['id_creneau'],
+                id=row['id_partie']
+                creneau=row['id_creneau']
                 scenario=Scenario(id=row['id_scenario'], nom=row['nom_scenario'], description=row['des_scenario'])
-                id_persos = [row['id_perso']]
+                id_persos = []
                 while row is not None:
                     id_persos.append(row['id_perso'])
+                    row = cursor.fetchone()
 
                 persos = [self.chercher_par_id_perso(id) for id in id_persos]
                 partie = Partie(id=id,

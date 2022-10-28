@@ -15,7 +15,7 @@ class VuePartiesJoueur(AbstractVue):
                 'name': 'choix',
                 'message': 'Sélectionner un choix',
                 'choices': [
-                    'Voir une partie en détail'
+                    'Voir une partie en détail',
                     'Retourner au menu principal'
                 ]
             },
@@ -55,8 +55,16 @@ class VuePartiesJoueur(AbstractVue):
         if inscriptions:
             reponse = prompt(self.__questions[0])
             if reponse['choix']=='Voir une partie en détail':
+                q_partie = prompt(
+                    {
+                        'type': 'list',
+                        'name': 'choix',
+                        'message': 'Sélectionner une partie',
+                        'choices': [str(ins['id_partie']) for ins in inscriptions]
+                    }
+                )
                 from vues.joueur.vue_details_partie_joueur import VueDetailsPartieJoueur
-                return VueDetailsPartieJoueur()
+                return VueDetailsPartieJoueur(int(q_partie['choix']))
             elif reponse['choix']=='Retourner au menu principal':
                 from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
                 return VuePrincipaleJoueur()

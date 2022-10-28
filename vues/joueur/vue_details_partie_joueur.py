@@ -1,6 +1,7 @@
+from pprint import pprint
 
+from PyInquirer import Separator, prompt
 
-from vues.abstract_vue import AbstractVue
 from vues.abstract_vue import AbstractVue
 
 from dao.dao import DAO
@@ -16,7 +17,8 @@ class VueDetailsPartieJoueur(AbstractVue):
                 'name': 'choix',
                 'message': 'Sélectionner un choix',
                 'choices': [
-                    "Se désinscrire d'un partie"
+                    "Se désinscrire d'une partie",
+                    'Retour à la liste des inscriptions',
                     'Retourner au menu principal'
                 ]
             }
@@ -27,26 +29,36 @@ class VueDetailsPartieJoueur(AbstractVue):
         # à remplacer par un appel à un service
         partie = DAO().chercher_partie_par_id(self.__id_partie)
 
-        print()
-
+        print(
+            "    ID          :",partie.id,"\n",
+            "   Créneau     :", partie.creneau,"\n",
+            "   Scénario    :\n",
+            "       Nom            :",partie.scenario.nom,"\n",
+            "       Niveau minimum :",partie.scenario.niveau_min,"\n",
+            "       Description    :",partie.scenario.description,"\n",
+            "   Personnages :\n"
+        )
+        for perso in partie.liste_persos:
+            print(
+                "      > ID :",perso.id,"\n",
+                "       Nom :",perso.nom,"\n",
+                "       Age :",perso.age,"\n",
+                "       Niveau :",perso.niveau,"\n",
+                "       Race :",perso.race,"\n",
+                "       Classe :",perso.classe,"\n"
+            )
 
 
     def make_choice(self):
-        inscriptions = DAO().liste_inscriptions_joueur(Session().utilisateur.pseudo)
-        if inscriptions:
-            reponse = prompt(self.__questions[0])
-            if reponse['choix']=='Voir une partie en détail':
-                from vues.joueur.vue_details_partie_joueur import VueDetailsPartieJoueur
-                return VueDetailsPartieJoueur()
-            elif reponse['choix']=='Retourner au menu principal':
-                from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
-                return VuePrincipaleJoueur()
-            else:
-                pass
-        else :
-            reponse = prompt(self.__questions[1])
-            if reponse['choix']=='Retourner au menu principal':
-                from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
-                return VuePrincipaleJoueur()
-            else:
-                pass
+        reponse = prompt(self.__questions)
+        if reponse['choix']=="Se désinscrire d'une partie":
+            from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
+            return VuePrincipaleJoueur()
+        elif reponse['choix']=='Retour à la liste des inscriptions':
+            from vues.joueur.vue_parties_joueur import VuePartiesJoueur
+            return VuePartiesJoueur()
+        elif reponse['choix']=='Retourner au menu principal':
+            from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
+            return VuePrincipaleJoueur()
+        else:
+            pass

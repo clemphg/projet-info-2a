@@ -2,8 +2,22 @@ from objets_metiers.abstract_joueur import AbstractJoueur
 from objets_metiers.personnage import Personnage
 
 class Joueur(AbstractJoueur):
-    ''' Un joueur est un abstract joueur défini par son pseudo, son âge et la liste de personnages qu'il possède'''
-
+    ''' Un joueur est un abstract joueur défini par son pseudo, son âge et la liste de personnages qu'il possède
+        Attributes
+        ----------
+        pseudo : str
+            Le pseudo du joueur
+        age : int
+            L'âge du joueur
+        personnages : liste
+            Liste de personnages que possède le joueur, il peut en avoir maximum 3, au départ elle est vide
+        
+        Examples
+        ----------
+        Exemple d'utilisation
+        >>> c = Joueur()
+        >>> c.creer_personnage()
+        '''
     def __init__(self, pseudo, age, personnages = []):
         super().__init__(pseudo, age)
         self.__personnages = personnages

@@ -3,20 +3,27 @@ from objets_metiers.personnage import Personnage
 from objets_metiers.scenario import Scenario
 
 class Partie():
+    ''' Une partie est jouée par 4 personnages et met en scène un des scénarios des maîtres du jeu, elle est donc créee par le maître du jeu
+       id : int
+           Id de la partie
+       creneau : str
+           Le créneau durant lequel se déroulera la partie
+       scenario : Scenario
+           Le scénario utilisé pour la partie 
+        liste_persos: list[Personnage]
+           La liste des personnages qui participent à la partie 
+      
+       Examples
+       ----------
+       Exemple d'utilisation
+       >>> c = Partie()
+       >>> c.ajouter_perso()
+       >>> c.supprimer_perso
+'''
 
 
-    def __init__(self, id:int=None, creneau:int=None, scenario:Scenario=None, liste_persos:list[Personnage]=None):
-
-        """ Création d'une partie (par un maître de jeu)
-
-        Parameters
-        ----------
-        creneau : int
-            Créneau sur lequel se tient la partie
-        scenario : Scenario
-            Scénario utilisé pour la partie
-        """
-
+    def __init__(self, id:int=None, creneau:str=None, scenario:Scenario=None, liste_persos:list[Personnage]=None):
+        ''' Constructeur'''
         self.__id = id
         self.__creneau = creneau
         self.__scenario = scenario
@@ -24,6 +31,7 @@ class Partie():
 
     @property
     def id(self):
+        ''' Retourne l'id de la partie'''
         return self.__id
 
     @id.setter
@@ -32,14 +40,17 @@ class Partie():
 
     @property
     def creneau(self):
+        ''' Retourne le créneau de la partie '''
         return self.__creneau
 
     @property
     def scenario(self):
+        ''' Retourne le scénario choisi pour la partie'''
         return self.__scenario
 
     @property
     def liste_persos(self):
+        ''' Retourne la liste des personnages participant à la partie'''
         return self.__liste_persos
 
     def ajouter_perso(self, personnage):

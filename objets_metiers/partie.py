@@ -6,7 +6,7 @@ class Partie():
     ''' Une partie est jouée par 4 personnages et met en scène un des scénarios des maîtres du jeu, elle est donc créee par le maître du jeu
        id : int
            Id de la partie
-       creneau : str
+       creneau : int
            Le créneau durant lequel se déroulera la partie
        scenario : Scenario
            Le scénario utilisé pour la partie 
@@ -22,7 +22,7 @@ class Partie():
 '''
 
 
-    def __init__(self, id:int=None, creneau:str=None, scenario:Scenario=None, liste_persos:list[Personnage]=None):
+    def __init__(self, id:int=None, creneau:int=None, scenario:Scenario=None, liste_persos:list[Personnage]=None):
         ''' Constructeur'''
         self.__id = id
         self.__creneau = creneau

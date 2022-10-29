@@ -19,6 +19,7 @@ class Joueur(AbstractJoueur):
         >>> c.creer_personnage()
         '''
     def __init__(self, pseudo, age, personnages = []):
+        ''' Constructeur'''
         super().__init__(pseudo, age)
         self.__personnages = personnages
 

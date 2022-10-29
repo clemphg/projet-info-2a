@@ -735,6 +735,45 @@ class DAO(metaclass=Singleton):
         else:
             return None
 
+    def liste_inscriptions_mj(self, pseudo):
+        """Liste des inscriptions d'un mj
+
+        Parameters
+        ----------
+        pseudo : str
+            Pseudo du mj en question
+
+        Returns
+        -------
+        List[Dict]
+            Chaque élément de la liste est un dictionnaire décrivant l'inscription (id_creneau, id_partie, nom_scenario, niv_min_scenario).
+            Retourne None si pas d'inscriptions.
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id_creneau, partie.id_partie, scenario.nom AS nom_scenario, scenario.niveau AS niv_min_scenario"
+                " FROM scenario"
+                " JOIN partie ON partie.id_scenario=scenario.id_scenario"
+                " WHERE pseudo_mj=%(pseudo)s"
+                " ORDER BY id_creneau ASC;"
+            ,{
+                "pseudo" : pseudo
+                })
+            row=cursor.fetchone()
+            inscriptions = []
+            while row is not None:
+                inscriptions.append({
+                    "id_creneau": row['id_creneau'],
+                    "id_partie": row['id_partie'],
+                    "nom_scenario": row['nom_scenario'],
+                    "niv_min_scenario": row['niv_min_scenario']
+                })
+                row=cursor.fetchone()
+        if len(inscriptions)>0:
+            return inscriptions
+        else:
+            return None
+
     def chercher_partie_par_id(self, id_partie:int):
         with self.__connection.cursor() as cursor:
             cursor.execute(
@@ -796,6 +835,83 @@ class DAO(metaclass=Singleton):
             return status
         else:
             return False
+
+    def liste_creneaux_dispos_joueur(self, joueur):
+        """Liste des creneaux
+
+        Returns
+        -------
+        List[int]
+            Liste des créneaux
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id_creneau"
+                " FROM creneaux"
+                " EXCEPT"
+                " SELECT creneaux.id_creneau"
+                " FROM creneaux"
+                " JOIN partie ON partie.id_creneau=creneaux.id_creneau"
+                " JOIN inscription_perso ON partie.id_partie=inscription_perso.id_partie"
+                " JOIN personnage ON inscription_perso.id_perso=personnage.id_perso"
+                " WHERE pseudo_j=%(pseudo)s"
+                " ORDER BY id_creneau ASC",
+                {
+                    "pseudo": joueur.pseudo
+                }
+            )
+            l_creneaux = []
+            res = cursor.fetchone()
+            if res:
+                while res is not None:
+                    l_creneaux.append(res['id_creneau'])
+                    res = cursor.fetchone()
+        return l_creneaux
+
+    def chercher_persos_par_partie(self, id_partie):
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id_perso, nom, age, race, niveau, classe"
+                " FROM inscription_perso"
+                " JOIN personnage ON inscription_perso.id_perso=personnage.id_perso"
+                "WHERE id_partie=%(id_partie)s;",
+                {
+                    "id_partie": id_partie
+                }
+            )
+            l_persos = []
+            res = cursor.fetchone()
+            if res:
+                while res is not None:
+                    l_persos.append(Personnage(res['id_perso'], res['nom'],res['age'],res['race'],res['niveau'],res['classe']))
+                    res = cursor.fetchone()
+            return res
+
+
+    def chercher_parties_par_creneau(self, id_creneau):
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT partie.id_partie, scenario.id_scenario, om, descrip, niveau"
+                " FROM partie"
+                " JOIN scenario ON partie.id_scenario=scenario.id_scenario"
+                " WHERE id_creneau=%(creneau)s;",
+                {
+                    "creneau": id_creneau
+                }
+            )
+            res = cursor.fetchone()
+            if res:
+                l_persos = self.chercher_persos_par_partie(res['id_partie'])
+                partie = Partie(id=res['id_partie'],
+                                creneau=id_creneau,
+                                scenario = Scenario(id=res['id_scenario'],
+                                                    nom=res['nom'],
+                                                    description=res['descrip'],
+                                                    niveau_min=res['niveau']),
+                                liste_persos=l_persos)
+                return partie
+            else:
+                return None
 
 
 

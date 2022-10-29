@@ -17,15 +17,24 @@ from dao.dao import DAO
 from appel_api import AppelAPI
 
 class ValidationInput(Validator):
+
     def validate(self, document):
+
+        ''' Permet de vérifier que le texte rentré ici défini comme document ait bien un nombre de caractères compris entre 5 et 25 avec une majuscule uniquement pour la première lettre, et affiche un message d'erreur si ce n'est pas le cas  '''
+
         ok = regex.match("^[A-Z]{0,1}[a-z]{5,25}$", document.text)
         if not ok:
             raise ValidationError(
                 message='Veuillez entrer un nom valide (entre 5 et 25 caractères, majuscule uniquement pour la première lettre)',
                 cursor_position=len(document.text)
             )
+
 class ValidationEntier(Validator):
+
     def validate(self, document):
+
+        ''' Permet de vérifier que le nombre rentré ici défini comme document soit bien un entier, et affiche un message d'erreur si ce n'est pas le cas  '''
+
         ok = regex.match("^\d{1,}$", document.text)
         if not ok:
             raise ValidationError(
@@ -37,6 +46,10 @@ class ValidationEntier(Validator):
 
 class VueCreationPersonnageJoueur(AbstractVue):
     def __init__(self) -> None:
+    
+    ''' Création de la vue avec la définition d'une variable questions qui va stocker les intéractions du joueur, qui consitent à pouvoir choisir le nom de son personnage, son âge, son niveau et sa classe s'il sélectionne 'Créer le personnage'. Il pourra également abandonner la création de son personnage en sélectionnant 'Abandonner' et/ou retourner sur le menu principal en sélectionnant 'Retourner au menu principal' '''
+
+
         self.__questions = [
             {
                 'type': 'input',
@@ -88,9 +101,13 @@ class VueCreationPersonnageJoueur(AbstractVue):
         ]
 
     def display_info(self):
+        ''' Permet d'afficher sur la console 'Création d'un personnage' '''
         print("Création d'un personnage")
 
     def make_choice(self):
+
+        ''' Permet d'afficher le menu à partir de la variable question. Ce qui s'affichera dépendra du choix sélectionné par le joueur. Si le joueur décide de sélectionner 'Créer le personnage' sur le menu, il pourra créer le personnage de son choix à condition que le nombre de personnages qu'il possède déjà ne dépasse pas 3, ainsi un message s'affichera comme quoi le création a bien eu lieu. De plus, le personnage nouvellement créé sera stocké dans la base de données. Dans le cas contraire, un message d'erreur s'affichera. Le joueur pourra ensuite choisir de retourner au menu principal. Si c'est le cas, la vue principale du joueur sera retournée  '''
+
         if len(Session().utilisateur.personnages)<3:
             reponses = prompt(self.__questions[0:6])
 

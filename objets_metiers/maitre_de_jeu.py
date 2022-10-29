@@ -21,6 +21,7 @@ class MaitreDeJeu(AbstractJoueur):
         '''
 
     def __init__(self, pseudo, age, scenarios = []):
+        ''' Constructeur'''
         super().__init__(pseudo, age)
         self.__scenarios = scenarios
 

@@ -2,6 +2,7 @@ from pprint import pprint
 from PyInquirer import Separator, prompt
 import hashlib
 
+# import vues
 from vues.abstract_vue import AbstractVue
 from vues.session import Session
 
@@ -9,12 +10,7 @@ from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
 from vues.maitre_de_jeu.vue_principale_mj import VuePrincipaleMJ
 from vues.organisateur.vue_principale_organisateur import VuePrincipaleOrganisateur
 
-from objets_metiers.joueur import Joueur
-from objets_metiers.maitre_de_jeu import MaitreDeJeu
-from objets_metiers.organisateur import Organisateur
-
-from dao.dao import DAO
-
+# import services
 from service.service_inscription_connexion import ServiceInscriptionConnexion
 
 class VueConnexion(AbstractVue):
@@ -58,12 +54,7 @@ class VueConnexion(AbstractVue):
             reponses = prompt(self.__questions)
 
             # instanciation de l'utilisateur selon son type. si pseudo invalide pour le type on a None
-            if reponses['type_de_profil']=='Joueur':
-                utilisateur = DAO().chercher_par_pseudo_j(reponses['pseudo'])
-            elif reponses['type_de_profil']=='Maître de jeu':
-                utilisateur = DAO().chercher_par_pseudo_mj(reponses['pseudo'])
-            elif reponses['type_de_profil']=='Organisateur':
-                utilisateur = DAO().chercher_par_pseudo_org(reponses['pseudo'])
+            utilisateur = ServiceInscriptionConnexion().instancier_utilisateur(reponses['pseudo'],reponses['type_de_profil'])
 
             if utilisateur:
                 vrai_pseudo = True
@@ -72,11 +63,11 @@ class VueConnexion(AbstractVue):
             if vrai_pseudo and vrai_mdp:
                 print("Authentification réussie")
             elif vrai_pseudo and not(vrai_mdp):
-                print("Mot de passe incorrect")
+                print("Mot de passe incorrect. Il vous reste",nb_essais,"essais.")
             elif not(vrai_pseudo) and vrai_mdp:
-                print("Mot de passe incorrect")
+                print("Mot de passe incorrect. Il vous reste",nb_essais,"essais.")
             else:
-                print("Pseudo et mot de passe incorrects")
+                print("Pseudo et mot de passe incorrects. Il vous reste",nb_essais,"essais.")
 
         # Si l'authentification a échoué
         if (not(vrai_pseudo) or not(vrai_mdp)):

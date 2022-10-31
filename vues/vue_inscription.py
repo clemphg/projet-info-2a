@@ -1,17 +1,15 @@
 from pprint import pprint
 
-import hashlib
-
 import regex
 from PyInquirer import Separator, prompt
 from prompt_toolkit.validation import ValidationError, Validator
 
+# import des vues
 from vues.abstract_vue import AbstractVue
 from vues.session import Session
 
+# import des services
 from service.service_inscription_connexion import ServiceInscriptionConnexion
-from objets_metiers.joueur import Joueur
-from objets_metiers.maitre_de_jeu import MaitreDeJeu
 
 class ValidationPseudo(Validator):
     def validate(self, document):

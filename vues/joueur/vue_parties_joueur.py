@@ -5,8 +5,7 @@ from PyInquirer import Separator, prompt
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
-from dao.dao import DAO
-
+from service.service_joueur import ServiceJoueur
 class VuePartiesJoueur(AbstractVue):
     def __init__(self) -> None:
         self.__questions = [
@@ -32,7 +31,7 @@ class VuePartiesJoueur(AbstractVue):
     def display_info(self):
         print("--- Liste des inscriptions de mes personnages ---\n")
         # à remplacer par un appel à un service
-        inscriptions = DAO().liste_inscriptions_joueur(Session().utilisateur.pseudo)
+        inscriptions = ServiceJoueur().liste_parties(Session().utilisateur.pseudo)
 
         if inscriptions :
             for ins in inscriptions:
@@ -51,7 +50,7 @@ class VuePartiesJoueur(AbstractVue):
                 "Vous pouvez en inscrire un via l'onglet 'M'inscrire à une partie' du menu principal.\n")
 
     def make_choice(self):
-        inscriptions = DAO().liste_inscriptions_joueur(Session().utilisateur.pseudo)
+        inscriptions = ServiceJoueur().liste_parties(Session().utilisateur.pseudo)
         if inscriptions:
             reponse = prompt(self.__questions[0])
             if reponse['choix']=='Voir une partie en détail':

@@ -891,7 +891,7 @@ class DAO(metaclass=Singleton):
     def chercher_parties_par_creneau(self, id_creneau):
         with self.__connection.cursor() as cursor:
             cursor.execute(
-                "SELECT partie.id_partie, scenario.id_scenario, om, descrip, niveau"
+                "SELECT partie.id_partie, scenario.id_scenario, nom, descrip, niveau"
                 " FROM partie"
                 " JOIN scenario ON partie.id_scenario=scenario.id_scenario"
                 " WHERE id_creneau=%(creneau)s;",

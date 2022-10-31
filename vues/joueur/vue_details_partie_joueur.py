@@ -2,11 +2,10 @@ from pprint import pprint
 
 from PyInquirer import Separator, prompt
 
+from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
-from dao.dao import DAO
-
-from vues.session import Session
+from service.service_joueur import ServiceJoueur
 
 class VueDetailsPartieJoueur(AbstractVue):
     def __init__(self, id_partie) -> None:
@@ -27,7 +26,7 @@ class VueDetailsPartieJoueur(AbstractVue):
     def display_info(self):
         print("--- Vue détaillée d'une partie ---\n")
         # à remplacer par un appel à un service
-        partie = DAO().chercher_partie_par_id(self.__id_partie)
+        partie = ServiceJoueur().details_partie(self.__id_partie)
 
         print(
             "    ID          :",partie.id,"\n",
@@ -52,7 +51,7 @@ class VueDetailsPartieJoueur(AbstractVue):
     def make_choice(self):
         reponse = prompt(self.__questions)
         if reponse['choix']=="Se désinscrire de la partie":
-            res = DAO().desinscription_joueur(Session().utilisateur, self.__id_partie)
+            res = ServiceJoueur().desinscription_joueur(Session().utilisateur, self.__id_partie)
             from vues.joueur.vue_parties_joueur import VuePartiesJoueur
             return VuePartiesJoueur()
         elif reponse['choix']=='Retour à la liste des inscriptions':

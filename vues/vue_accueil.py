@@ -1,10 +1,6 @@
 from PyInquirer import Separator, prompt
 
 from vues.abstract_vue import AbstractVue
-from vues.session import Session
-
-from vues.vue_connexion import VueConnexion
-from vues.vue_inscription import VueInscription
 
 class VueAccueil(AbstractVue):
 

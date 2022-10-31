@@ -527,7 +527,7 @@ class DAO(metaclass=Singleton):
                 "id" : personnage.id
                 })
 
-    def test_pseudo_libre(self, pseudo):
+    def verifier_pseudo_libre(self, pseudo):
         """Teste si un pseudo est déjà utilisé ou non
 
         Parameters

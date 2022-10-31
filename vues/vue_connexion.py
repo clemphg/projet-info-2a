@@ -15,6 +15,8 @@ from objets_metiers.organisateur import Organisateur
 
 from dao.dao import DAO
 
+from service.service_inscription_connexion import ServiceInscriptionConnexion
+
 class VueConnexion(AbstractVue):
 
     def __init__(self) -> None:
@@ -55,9 +57,6 @@ class VueConnexion(AbstractVue):
 
             reponses = prompt(self.__questions)
 
-            # hachage du mot de passe
-            mdp_hache = hashlib.sha256(reponses['pseudo'].encode() + reponses['mot_de_passe'].encode()).hexdigest()
-
             # instanciation de l'utilisateur selon son type. si pseudo invalide pour le type on a None
             if reponses['type_de_profil']=='Joueur':
                 utilisateur = DAO().chercher_par_pseudo_j(reponses['pseudo'])
@@ -68,7 +67,7 @@ class VueConnexion(AbstractVue):
 
             if utilisateur:
                 vrai_pseudo = True
-                vrai_mdp = DAO().verifier_mdp(utilisateur.pseudo, mdp_hache)
+                vrai_mdp = ServiceInscriptionConnexion().verifier_mdp_correct(utilisateur.pseudo, reponses['mot_de_passe'])
 
             if vrai_pseudo and vrai_mdp:
                 print("Authentification réussie")

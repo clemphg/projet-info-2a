@@ -9,8 +9,7 @@ from prompt_toolkit.validation import ValidationError, Validator
 from vues.abstract_vue import AbstractVue
 from vues.session import Session
 
-from dao.dao import DAO
-
+from service.service_inscription_connexion import ServiceInscriptionConnexion
 from objets_metiers.joueur import Joueur
 from objets_metiers.maitre_de_jeu import MaitreDeJeu
 
@@ -19,7 +18,7 @@ class ValidationPseudo(Validator):
         ok = regex.match("^[A-Za-z0-9_.]{6,25}$", document.text)
         if ok:
             # vérifier que le pseudo n'est pas déjà dans la base
-            libre = DAO().test_pseudo_libre(document.text)
+            libre = ServiceInscriptionConnexion().verifier_pseudo_libre(document.text)
         if not ok:
             raise ValidationError(
                 message='Veuillez entrer un pseudo valide',
@@ -92,18 +91,10 @@ class VueInscription(AbstractVue):
     def make_choice(self):
         reponses = prompt(self.__questions)
 
-        # hachage du mot de passe
-        mdp_hache = hashlib.sha256(reponses['pseudo'].encode() + reponses['mot_de_passe'].encode()).hexdigest()
-        print(mdp_hache)
-
-        if reponses['type_de_profil']=='Joueur':
-            DAO().creer_joueur(Joueur(pseudo=reponses['pseudo'],
-                                      age=reponses['age']),
-                               mot_de_passe=mdp_hache)
-        elif reponses['type_de_profil']=='Maître de jeu':
-            DAO().creer_mj(MaitreDeJeu(pseudo=reponses['pseudo'],
-                                       age=reponses['age']),
-                           mot_de_passe=mdp_hache)
+        ServiceInscriptionConnexion().creer_utilisateur(reponses['pseudo'],
+                                                        reponses['age'],
+                                                        reponses['mot_de_passe'],
+                                                        reponses['type_de_profil'])
 
         print("Inscription réussie ! Vous pouvez désormais vous connecter avec vos identifiants.")
         from vues.vue_accueil import VueAccueil

@@ -1,7 +1,4 @@
 import os
-from sqlite3 import Cursor
-from tkinter import INSERT
-
 import dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -926,6 +923,19 @@ class DAO(metaclass=Singleton):
                     parties.append(partie)
                     res = cursor.fetchone()
             return parties
+
+    def ajouter_message(self, pseudo, date, msg):
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO journal (pseudo , date, msg)"
+                " VALUES (%(pseudo)s, %(date)s,%(msg)s);",
+                {
+                    "pseudo": pseudo,
+                    "date": date,
+                    "msg": msg
+                }
+            )
+
 
 
 

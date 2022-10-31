@@ -71,6 +71,10 @@ class ServiceInscriptionConnexion(metaclass=Singleton):
                                        age=age),
                            mot_de_passe=mdp_hache)
 
+        from service.service_messages import ServiceMessages
+        ServiceMessages().message_inscription(pseudo)
+
+
     def instancier_utilisateur(self, pseudo, type_de_profil):
         """Instancier un utilisateur qui deviendra l'utilisateur courant de la session
 

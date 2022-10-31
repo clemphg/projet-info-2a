@@ -2,7 +2,7 @@
 
 class Personnage():
     ''' Un personnage est créé par un joueur et est choisi par ce même joueur lorsqu'il participe à une partie de jeu de rôle, il en a au maximum 3
-    
+
         Attributes
         ----------
         id: int
@@ -80,3 +80,5 @@ class Personnage():
             Nouvelle classe à donner au personnage
         """
         self.__classe = nvlle_classe
+        from dao.dao import DAO
+        DAO().maj_classe(self, nvlle_classe)

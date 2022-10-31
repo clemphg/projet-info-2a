@@ -8,8 +8,6 @@ from utils.singleton import Singleton
 from vues.abstract_vue import AbstractVue
 from vues.session import Session
 
-from dao.dao import DAO
-
 from service.service_appel_api import ServiceAppelAPI
 
 
@@ -69,9 +67,7 @@ class VuePersonnagesJoueur(AbstractVue):
                 id = rep_perso['choix_perso'].split(' ')[2]
                 for perso in Session().utilisateur.personnages:
                     if perso.id == int(id):
-                        cur_perso = perso
-                        DAO().maj_classe(cur_perso, rep_classe['choix_nvlle_classe'])
-                cur_perso.classe = rep_classe['choix_nvlle_classe']
+                        perso.classe = rep_classe['choix_nvlle_classe']
 
                 # on affiche la nouvelle liste des personnages
                 for perso in Session().utilisateur.personnages:

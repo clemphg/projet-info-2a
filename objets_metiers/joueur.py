@@ -27,7 +27,7 @@ class Joueur(AbstractJoueur):
     def personnages(self):
         return self.__personnages
 
-    def creer_personnage(self, id, nom, age, race, niveau, classe):
+    def creer_personnage(self, nom, age, race, niveau, classe):
         """Création d'un personnage.
 
         Un joueur possède des personnages. Il peut en créer jusqu'à trois. Il s'inscrit sur
@@ -61,7 +61,7 @@ class Joueur(AbstractJoueur):
                                niveau=niveau,
                                classe=classe)
             id = DAO().creer_perso(perso,
-                                   self.__pseudo)
+                                   self.pseudo)
             perso.id = id
             self.__personnages.append(perso)
             status = True

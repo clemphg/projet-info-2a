@@ -6,7 +6,8 @@ from PyInquirer import Separator, prompt
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
-from dao.dao import DAO
+from service.service_messages import ServiceMessages
+
 
 class VueNotificationsJoueur(AbstractVue):
     def __init__(self) -> None:
@@ -22,7 +23,7 @@ class VueNotificationsJoueur(AbstractVue):
         ]
 
     def display_info(self):
-        messages = DAO().chercher_messages_par_pseudo(Session().utilisateur.pseudo)
+        messages = ServiceMessages().chercher_messages(Session().utilisateur.pseudo)
         if messages:
             for message in messages:
                 print("Message du ",message['date'],"\n>>>",message['message'],"\n")

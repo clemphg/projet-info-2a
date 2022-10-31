@@ -54,56 +54,61 @@ class VueInscriptionPartieJoueur(AbstractVue):
 
             # choix de la partie
             parties = ServiceJoueur().parties_dispos_creneau(creneau)
-            for partie in parties:
-                "    ID          :",partie.id,"\n",
-                "   Créneau     :", partie.creneau,"\n",
-                "   Scénario    :\n",
-                "       Nom            :",partie.scenario.nom,"\n",
-                "       Niveau minimum :",partie.scenario.niveau_min,"\n",
-                "       Description    :",partie.scenario.description,"\n"
+            if len(parties)>0:
+                for partie in parties:
+                    "    ID          :",partie.id,"\n",
+                    "   Créneau     :", partie.creneau,"\n",
+                    "   Scénario    :\n",
+                    "       Nom            :",partie.scenario.nom,"\n",
+                    "       Niveau minimum :",partie.scenario.niveau_min,"\n",
+                    "       Description    :",partie.scenario.description,"\n"
 
-            reponse = prompt(
-                {
-                'type': 'list',
-                'name': 'choix_partie',
-                'message': 'Sélectionner une partie (selon leur ID)',
-                'choices': [str(partie.id) for partie in parties]
-                }
-            )
-
-            id_partie = reponse['choix_partie']
-            partie_sel = [partie for partie in parties if partie.id==int(id_partie)][0]
-
-            # choix du personnage
-            persos_ok = ServiceJoueur().persos_niv_sup_a(Session().utilisateur, partie_sel.scenario.niveau_min)
-
-            if persos_ok:
                 reponse = prompt(
                     {
                     'type': 'list',
-                    'name': 'choix_perso',
-                    'message': 'Sélectionner un personnage',
-                    'choices': [str(perso.id) for perso in persos_ok]
+                    'name': 'choix_partie',
+                    'message': 'Sélectionner une partie (selon leur ID)',
+                    'choices': [str(partie.id)+" \n   Scénario : "+
+                                partie.scenario.nom+"\n   Description : "+
+                                partie.scenario.description+"\n   Niveau minimum : "+
+                                str(partie.scenario.niveau_min) for partie in parties]
                     }
                 )
 
-                q_val = prompt(self.__questions[2])
-                if q_val['validation']=="Valider l'inscription":
-                    ServiceJoueur().inscription_perso(int(reponse['choix_perso']), id_partie)
-                elif q_val['validation']=='Abandonner':
-                    print("Inscription abandonnée.")
+                id_partie = int(reponse['choix_partie'].split(' ')[0])
+                partie_sel = [partie for partie in parties if partie.id==int(id_partie)][0]
+
+                # choix du personnage
+                persos_ok = ServiceJoueur().persos_niv_sup_a(Session().utilisateur, partie_sel.scenario.niveau_min)
+
+                if persos_ok:
+                    reponse = prompt(
+                        {
+                        'type': 'list',
+                        'name': 'choix_perso',
+                        'message': 'Sélectionner un personnage',
+                        'choices': [str(perso.id)+" : "+perso.nom+", "+str(perso.age)+" ans, "+perso.race+", niveau "+str(perso.niveau)+", "+perso.classe+")" for perso in persos_ok]
+                        }
+                    )
+
+                    q_val = prompt(self.__questions[2])
+                    if q_val['validation']=="Valider l'inscription":
+                        id_perso = int(reponse['choix_perso'].split(' ')[0])
+                        ServiceJoueur().inscription_perso(id_perso, id_partie)
+                    elif q_val['validation']=='Abandonner':
+                        print("Inscription abandonnée.\n")
 
 
-            else:
-                print("Vous n'avez aucun personnage de niveau suffisant.")
-                reponse = prompt(self.__questions[1])
-                if reponse['choix_retour']=='Retourner au menu principal':
-                    from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
-                    return VuePrincipaleJoueur()
+                else:
+                    print("Vous n'avez aucun personnage de niveau suffisant.\n")
+                    reponse = prompt(self.__questions[1])
+                    if reponse['choix_retour']=='Retourner au menu principal':
+                        from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
+                        return VuePrincipaleJoueur()
 
+            else :
+                print("Aucune partie disponible sur ce créneau.\n")
 
-
-            # une fois que l'inscription est bien faite
             reponse = prompt(self.__questions[1])
             if reponse['choix_retour']=='Retourner au menu principal':
                 from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur

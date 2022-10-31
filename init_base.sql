@@ -22,8 +22,8 @@ CREATE SEQUENCE scenario_seq;
 
 CREATE TABLE Creneaux (
     id_creneau INT PRIMARY KEY NOT NULL,
-    Date_debut DATE,
-    Date_fin DATE
+    Date_debut TIMESTAMP,
+    Date_fin TIMESTAMP
 );
 
 CREATE TABLE joueur(
@@ -78,7 +78,7 @@ CREATE TABLE journal(
     id_message INT PRIMARY KEY
     DEFAULT nextval ('journal_seq'),
     pseudo VARCHAR(25),
-    date DATE,
+    date TIMESTAMP,
     msg TEXT
 );
 

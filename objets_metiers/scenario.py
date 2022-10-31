@@ -11,7 +11,7 @@ class Scenario():
         Parameters
         ----------
         id : str
-            Id du maitre de jeu
+            Id du scénario
         nom : str
             Nom (description courte) du scénario
         description : str

@@ -11,7 +11,7 @@ class Joueur(AbstractJoueur):
             L'âge du joueur
         personnages : liste
             Liste de personnages que possède le joueur, il peut en avoir maximum 3, au départ elle est vide
-        
+
         Examples
         ----------
         Exemple d'utilisation
@@ -53,8 +53,17 @@ class Joueur(AbstractJoueur):
         bool
             True si le personnage a bien été ajouté, False sinon
         """
+        from dao.dao import DAO
         if len(self.__personnages)<3:
-            self.__personnages.append(Personnage(id, nom, age, race, niveau, classe))
+            perso = Personnage(nom=nom,
+                               age=age,
+                               race=race,
+                               niveau=niveau,
+                               classe=classe)
+            id = DAO().creer_perso(perso,
+                                   self.__pseudo)
+            perso.id = id
+            self.__personnages.append(perso)
             status = True
         else:
             status = False

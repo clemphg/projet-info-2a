@@ -1,26 +1,21 @@
-import imp
-from pkgutil import ImpImporter
 from pprint import pprint
 import regex
 
 from PyInquirer import Separator, prompt
 from prompt_toolkit.validation import ValidationError, Validator
-from utils.singleton import Singleton
 
+# importation des vues
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
-from objets_metiers.personnage import Personnage
-
-from dao.dao import DAO
-
-from appel_api import AppelAPI
+# importation des services
+from service.service_appel_api import ServiceAppelAPI
 
 class ValidationInput(Validator):
 
     def validate(self, document):
-
-        ''' Permet de vérifier que le texte rentré ici défini comme document ait bien un nombre de caractères compris entre 5 et 25 avec une majuscule uniquement pour la première lettre, et affiche un message d'erreur si ce n'est pas le cas  '''
+        ''' Permet de vérifier que le texte rentré ici défini comme document ait bien un nombre de caractères compris entre
+        5 et 25 avec une majuscule uniquement pour la première lettre, et affiche un message d'erreur si ce n'est pas le cas  '''
 
         ok = regex.match("^[A-Z]{0,1}[a-z]{5,25}$", document.text)
         if not ok:
@@ -32,7 +27,6 @@ class ValidationInput(Validator):
 class ValidationEntier(Validator):
 
     def validate(self, document):
-
         ''' Permet de vérifier que le nombre rentré ici défini comme document soit bien un entier, et affiche un message d'erreur si ce n'est pas le cas  '''
 
         ok = regex.match("^\d{1,}$", document.text)
@@ -46,10 +40,11 @@ class ValidationEntier(Validator):
 
 class VueCreationPersonnageJoueur(AbstractVue):
     def __init__(self) -> None:
-    
-    ''' Création de la vue avec la définition d'une variable questions qui va stocker les intéractions du joueur, qui consitent à pouvoir choisir le nom de son personnage, son âge, son niveau et sa classe s'il sélectionne 'Créer le personnage'. Il pourra également abandonner la création de son personnage en sélectionnant 'Abandonner' et/ou retourner sur le menu principal en sélectionnant 'Retourner au menu principal' '''
-
-
+        ''' Création de la vue avec la définition d'une variable questions qui va stocker les intéractions du joueur,
+        qui consitent à pouvoir choisir le nom de son personnage, son âge, son niveau et sa classe s'il sélectionne
+        'Créer le personnage'. Il pourra également abandonner la création de son personnage en sélectionnant 'Abandonner'
+        et/ou retourner sur le menu principal en sélectionnant 'Retourner au menu principal'
+        '''
         self.__questions = [
             {
                 'type': 'input',
@@ -67,7 +62,7 @@ class VueCreationPersonnageJoueur(AbstractVue):
                 'type': 'list',
                 'name': 'choix_race',
                 'message': 'Race',
-                'choices': AppelAPI().races_possibles()
+                'choices': ServiceAppelAPI().races_possibles()
             },
             {
                 'type': 'input',
@@ -79,7 +74,7 @@ class VueCreationPersonnageJoueur(AbstractVue):
                 'type': 'list',
                 'name': 'choix_classe',
                 'message': 'Classe',
-                'choices': AppelAPI().classes_possibles()
+                'choices': ServiceAppelAPI().classes_possibles()
             },
             {
                 'type': 'list',
@@ -105,31 +100,29 @@ class VueCreationPersonnageJoueur(AbstractVue):
         print("Création d'un personnage")
 
     def make_choice(self):
+        ''' Permet d'afficher le menu à partir de la variable question. Ce qui s'affichera dépendra du choix sélectionné par le joueur.
+        Si le joueur décide de sélectionner 'Créer le personnage' sur le menu, il pourra créer le personnage de son choix à condition que
+        le nombre de personnages qu'il possède déjà ne dépasse pas 3, ainsi un message s'affichera comme quoi le création a bien eu lieu.
+        De plus, le personnage nouvellement créé sera stocké dans la base de données. Dans le cas contraire, un message d'erreur s'affichera.
+        Le joueur pourra ensuite choisir de retourner au menu principal. Si c'est le cas, la vue principale du joueur sera retournée  '''
 
-        ''' Permet d'afficher le menu à partir de la variable question. Ce qui s'affichera dépendra du choix sélectionné par le joueur. Si le joueur décide de sélectionner 'Créer le personnage' sur le menu, il pourra créer le personnage de son choix à condition que le nombre de personnages qu'il possède déjà ne dépasse pas 3, ainsi un message s'affichera comme quoi le création a bien eu lieu. De plus, le personnage nouvellement créé sera stocké dans la base de données. Dans le cas contraire, un message d'erreur s'affichera. Le joueur pourra ensuite choisir de retourner au menu principal. Si c'est le cas, la vue principale du joueur sera retournée  '''
-
+        # si le joueur peut encore créer un personnage
         if len(Session().utilisateur.personnages)<3:
             reponses = prompt(self.__questions[0:6])
 
             if reponses['validation'] == 'Créer le personnage':
-                perso = Personnage(nom=reponses['choix_nom'],
-                                age=reponses['choix_age'],
-                                race=reponses['choix_race'],
-                                niveau=reponses['choix_niveau'],
-                                classe=reponses['choix_classe'])
-                id = DAO().creer_perso(perso,
-                                    Session().utilisateur.pseudo)
-                Session().utilisateur.creer_personnage(id=id,
-                                                    nom=reponses['choix_nom'],
-                                                    age=reponses['choix_age'],
-                                                    race=reponses['choix_race'],
-                                                    niveau=reponses['choix_niveau'],
-                                                    classe=reponses['choix_classe'])
+                Session().utilisateur.creer_personnage(
+                    nom=reponses['choix_nom'],
+                    age=reponses['choix_age'],
+                    race=reponses['choix_race'],
+                    niveau=reponses['choix_niveau'],
+                    classe=reponses['choix_classe'])
                 print('Le personnage a bien été créé !')
         else:
             print("Vous avez déjà trois personnages, vous ne pouvez pas en créer plus.\n"
                   "Vous pouvez modifier la classe de vos personnages dans le menus 'Mes personnages'.\n")
 
+        # retour au menu principal
         suivant = prompt(self.__questions[6])
         if suivant['menu_suivant'] == 'Retourner au menu principal':
             from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur

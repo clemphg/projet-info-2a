@@ -4,7 +4,7 @@ import requests
 
 from utils.singleton import Singleton
 
-class AppelAPI(metaclass=Singleton):
+class ServiceAppelAPI(metaclass=Singleton):
     def __init__(self):
         dotenv.load_dotenv(override=True)
         self.__urlapi = os.environ["HOST_WEBSERVICE"]

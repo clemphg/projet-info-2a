@@ -4,22 +4,25 @@ from objets_metiers.scenario import Scenario
 
 class Partie():
     ''' Une partie est jouée par 4 personnages et met en scène un des scénarios des maîtres du jeu, elle est donc créee par le maître du jeu
-       id : int
-           Id de la partie
-       creneau : int
-           Le créneau durant lequel se déroulera la partie
-       scenario : Scenario
-           Le scénario utilisé pour la partie 
+
+        Attributes
+        ----------
+        id : int
+            Id de la partie
+        creneau : int
+            Le créneau durant lequel se déroulera la partie
+        scenario : Scenario
+            Le scénario utilisé pour la partie
         liste_persos: list[Personnage]
-           La liste des personnages qui participent à la partie 
-      
+            La liste des personnages qui participent à la partie
+
        Examples
        ----------
        Exemple d'utilisation
        >>> c = Partie()
        >>> c.ajouter_perso()
        >>> c.supprimer_perso
-'''
+    '''
 
 
     def __init__(self, id:int=None, creneau:int=None, scenario:Scenario=None, liste_persos:list[Personnage]=None):

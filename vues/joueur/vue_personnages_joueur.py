@@ -10,7 +10,7 @@ from vues.session import Session
 
 from dao.dao import DAO
 
-from appel_api import AppelAPI
+from service.service_appel_api import ServiceAppelAPI
 
 
 class VuePersonnagesJoueur(AbstractVue):
@@ -30,7 +30,7 @@ class VuePersonnagesJoueur(AbstractVue):
                 'name': 'choix_nvlle_classe',
                 'message': 'Sélectionner une nouvelle classe',
                 'choices':
-                    AppelAPI().classes_possibles()
+                    ServiceAppelAPI().classes_possibles()
             },
             {
                 'type': 'list',

@@ -2,10 +2,11 @@
 
 class Personnage():
     ''' Un personnage est créé par un joueur et est choisi par ce même joueur lorsqu'il participe à une partie de jeu de rôle, il en a au maximum 3
+    
         Attributes
         ----------
         id: int
-           Id du personnage 
+           Id du personnage
         nom : str
             Nom du personnage
         age : int
@@ -27,7 +28,7 @@ class Personnage():
 
     def __init__(self, id=None, nom=None, age=None, race=None, niveau=None, classe=None) -> None:
         ''' Constructeur'''
-       
+
         self.__id = id
         self.__nom = nom
         self.__age = age

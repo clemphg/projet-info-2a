@@ -296,13 +296,13 @@ class DAO(metaclass=Singleton):
             return None
 
 
-    def inscription_personnage(self, perso, id_partie):
+    def inscription_personnage(self, id_perso, id_partie):
         """Inscrire un personnage à une partie
 
         Parameters
         ----------
-        perso : Personnage
-            Personnage à inscrire
+        id_perso : int
+            ID du Personnage à inscrire
         id_partie : int
             id de la partie à laquelle inscrire le personnage
         """
@@ -310,7 +310,7 @@ class DAO(metaclass=Singleton):
             cursor.execute("INSERT INTO inscription_perso (id_perso,id_partie)"
             "VALUES (%(id_perso)s, %(id_partie)s);"
             ,{
-                "id_perso" : perso.id,
+                "id_perso" : id_perso,
                 "id_partie" : id_partie,
                  })
 
@@ -871,10 +871,10 @@ class DAO(metaclass=Singleton):
     def chercher_persos_par_partie(self, id_partie):
         with self.__connection.cursor() as cursor:
             cursor.execute(
-                "SELECT id_perso, nom, age, race, niveau, classe"
+                "SELECT personnage.id_perso, nom, age, race, niveau, classe"
                 " FROM inscription_perso"
                 " JOIN personnage ON inscription_perso.id_perso=personnage.id_perso"
-                "WHERE id_partie=%(id_partie)s;",
+                " WHERE id_partie=%(id_partie)s;",
                 {
                     "id_partie": id_partie
                 }
@@ -885,10 +885,22 @@ class DAO(metaclass=Singleton):
                 while res is not None:
                     l_persos.append(Personnage(res['id_perso'], res['nom'],res['age'],res['race'],res['niveau'],res['classe']))
                     res = cursor.fetchone()
-            return res
+            return l_persos
 
 
     def chercher_parties_par_creneau(self, id_creneau):
+        """Chercher les parties se déroulant sur un créneau donné
+
+        Parameters
+        ----------
+        id_creneau : int
+            ID du créneau
+
+        Returns
+        -------
+        list
+            liste des parties
+        """
         with self.__connection.cursor() as cursor:
             cursor.execute(
                 "SELECT partie.id_partie, scenario.id_scenario, nom, descrip, niveau"
@@ -900,18 +912,20 @@ class DAO(metaclass=Singleton):
                 }
             )
             res = cursor.fetchone()
+            parties = []
             if res:
-                l_persos = self.chercher_persos_par_partie(res['id_partie'])
-                partie = Partie(id=res['id_partie'],
-                                creneau=id_creneau,
-                                scenario = Scenario(id=res['id_scenario'],
-                                                    nom=res['nom'],
-                                                    description=res['descrip'],
-                                                    niveau_min=res['niveau']),
-                                liste_persos=l_persos)
-                return partie
-            else:
-                return None
+                while res is not None:
+                    l_persos = self.chercher_persos_par_partie(res['id_partie'])
+                    partie = Partie(id=res['id_partie'],
+                                    creneau=id_creneau,
+                                    scenario = Scenario(id=res['id_scenario'],
+                                                        nom=res['nom'],
+                                                        description=res['descrip'],
+                                                        niveau_min=res['niveau']),
+                                    liste_persos=l_persos)
+                    parties.append(partie)
+                    res = cursor.fetchone()
+            return parties
 
 
 

@@ -25,7 +25,7 @@ class Partie():
     '''
 
 
-    def __init__(self, id:int=None, creneau:int=None, scenario:Scenario=None, liste_persos:list[Personnage]=None):
+    def __init__(self, id:int=None, creneau:int=None, scenario:Scenario=None, liste_persos:list[Personnage]=[]):
         ''' Constructeur'''
         self.__id = id
         self.__creneau = creneau

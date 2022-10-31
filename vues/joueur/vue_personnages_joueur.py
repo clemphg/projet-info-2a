@@ -45,7 +45,7 @@ class VuePersonnagesJoueur(AbstractVue):
             for perso in Session().utilisateur.personnages:
                 print("ID : ",perso.id,"\nNom :",perso.nom,"\nAge :",perso.age,"\nNiveau :",perso.niveau,"\nRace :",perso.race,"\nClasse :",perso.classe,"\n")
         else:
-            print("Vous n'avez pas encore créé de personnage.")
+            print("Vous n'avez pas encore créé de personnage.\n")
 
     def make_choice(self):
 

@@ -21,8 +21,8 @@ class ServiceJoueur(metaclass=Singleton):
         res = DAO().desinscription_joueur(joueur,id_partie)
         return res
 
-    def liste_creneaux_dispos_joueur(self, joueur):
-        creneaux_dispos = DAO().liste_creneaux_dispos_joueur(self, joueur)
+    def liste_creneaux_dispos(self, joueur):
+        creneaux_dispos = DAO().liste_creneaux_dispos_joueur(joueur)
         return creneaux_dispos
 
     def parties_dispos_creneau(self, id_creneau):
@@ -33,11 +33,14 @@ class ServiceJoueur(metaclass=Singleton):
 
     def persos_niv_sup_a(self, joueur, niveau):
         l_res = []
-        for perso in joueur.liste_persos:
+        for perso in joueur.personnages:
             if perso.niveau>=niveau:
                 l_res.append(perso)
         if len(l_res)>0:
             return l_res
         else:
             return None
+
+    def inscription_perso(self, id_perso, id_partie):
+        DAO().inscription_personnage(id_perso, id_partie)
 

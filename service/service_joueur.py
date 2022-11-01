@@ -14,8 +14,8 @@ class ServiceJoueur(metaclass=Singleton):
     def details_partie(self, id_partie):
         return DAO().chercher_partie_par_id(id_partie)
 
-    def liste_parties(self, joueur):
-        return DAO().liste_inscriptions_joueur(joueur)
+    def liste_parties(self, pseudo_joueur):
+        return DAO().liste_inscriptions_joueur(pseudo_joueur)
 
     def desinscription_joueur(self, joueur, id_partie):
         res = DAO().desinscription_joueur(joueur,id_partie)

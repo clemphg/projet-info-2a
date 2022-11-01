@@ -2,11 +2,12 @@ from pprint import pprint
 
 from PyInquirer import Separator, prompt
 
-
+# import vues
 from vues.abstract_vue import AbstractVue
-
-from dao.dao import DAO
 from vues.session import Session
+
+# import service
+from service.service_maitre_de_jeu import ServiceMaitreDeJeu
 
 class VuePartiesMJ(AbstractVue):
     def __init__(self) -> None:
@@ -33,7 +34,7 @@ class VuePartiesMJ(AbstractVue):
     def display_info(self):
         print("--- Liste de mes parties ---\n")
         # à remplacer par un appel à un service
-        inscriptions = DAO().liste_inscriptions_mj(Session().utilisateur.pseudo)
+        inscriptions = ServiceMaitreDeJeu().liste_parties(Session().utilisateur.pseudo)
 
         if inscriptions :
             for ins in inscriptions:
@@ -49,7 +50,7 @@ class VuePartiesMJ(AbstractVue):
                 "Vous pouvez en créer une via l'onglet 'Créer une partie' du menu principal.\n")
 
     def make_choice(self):
-        inscriptions = DAO().liste_inscriptions_mj(Session().utilisateur.pseudo)
+        inscriptions = ServiceMaitreDeJeu().liste_parties(Session().utilisateur.pseudo)
         if inscriptions:
             reponse = prompt(self.__questions[0])
             if reponse['choix']=='Voir une partie en détail':

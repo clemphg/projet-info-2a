@@ -8,10 +8,6 @@ from prompt_toolkit.validation import ValidationError, Validator
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
-from objets_metiers.scenario import Scenario
-
-from dao.dao import DAO
-
 
 class ValidationNom(Validator):
     def validate(self, document):
@@ -24,7 +20,7 @@ class ValidationNom(Validator):
 
 class ValidationDescription(Validator):
     def validate(self, document):
-        ok = regex.match("^[A-Za-z.,;!?' éèàù]{0,200}$", document.text)
+        ok = regex.match("^[A-Za-z.,;!?' êîûéèàù]{0,200}$", document.text)
         if not ok:
             raise ValidationError(
                 message="Les caractères spéciaux autorisés sont : ,.;!?'",
@@ -88,16 +84,9 @@ class VueCreationScenarioMJ(AbstractVue):
             reponses = prompt(self.__questions[0:4])
 
             if reponses['validation'] == 'Créer le scénario':
-                scenar = Scenario(nom=reponses['choix_nom'],
-                                description=reponses['choix_description'],
-                                niveau_min=reponses['choix_niveau_min'])
-                id = DAO().creer_scenario(scenar,
-                                        Session().utilisateur.pseudo)
-                scenar.id = id
-                Session().utilisateur.creer_scenario(id = id,
-                                                   nom=reponses['choix_nom'],
-                                                   description=reponses['choix_description'],
-                                                   niveau_min=reponses['choix_niveau_min'])
+                Session().utilisateur.creer_scenario(nom=reponses['choix_nom'],
+                                                     description=reponses['choix_description'],
+                                                     niveau_min=reponses['choix_niveau_min'])
                 print('Le scénario a bien été créé !')
         else:
             print("Vous avez déjà deux scénarios, vous ne pouvez pas en créer plus.\n")

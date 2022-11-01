@@ -11,7 +11,7 @@ class MaitreDeJeu(AbstractJoueur):
             L'âge du maître de jeu
         scénarios : liste
             Liste de scénarios que crée le maître de jeu, il peut en avoir maximum 2, au départ elle est vide
-        
+
         Examples
         ----------
         Exemple d'utilisation
@@ -29,7 +29,7 @@ class MaitreDeJeu(AbstractJoueur):
     def scenarios(self):
         return self.__scenarios
 
-    def creer_scenario(self, id, nom, description, niveau_min):
+    def creer_scenario(self, nom, description, niveau_min):
         """Création d'un scénario.
 
         Un maitre de jeu possède des scénarios. Ils lui servent pour créer une partie sur une table vide.
@@ -37,8 +37,6 @@ class MaitreDeJeu(AbstractJoueur):
 
         Parameters
         ----------
-        id : int
-            Id du scénario
         nom : str
             Nom du scénario.
         description : str
@@ -51,7 +49,13 @@ class MaitreDeJeu(AbstractJoueur):
         bool
             True si le scénario a bien été ajouté, False sinon.
         """
+        from dao.dao import DAO
         if len(self.__scenarios)<2:
+            scenar = Scenario(nom=nom,
+                              description=description,
+                              niveau_min=niveau_min)
+            id = DAO().creer_scenario(scenar,
+                                      self.pseudo)
             self.__scenarios.append(Scenario(id, nom, description, niveau_min))
             status = True
         else:

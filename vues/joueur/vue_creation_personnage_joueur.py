@@ -9,8 +9,7 @@ from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
 # importation des services
-from service.service_appel_api import ServiceAppelAPI
-
+from client.client_personnage import ClientPersonnage
 class ValidationInput(Validator):
 
     def validate(self, document):
@@ -62,7 +61,7 @@ class VueCreationPersonnageJoueur(AbstractVue):
                 'type': 'list',
                 'name': 'choix_race',
                 'message': 'Race',
-                'choices': ServiceAppelAPI().races_possibles()
+                'choices': ClientPersonnage().races_possibles()
             },
             {
                 'type': 'input',
@@ -74,7 +73,7 @@ class VueCreationPersonnageJoueur(AbstractVue):
                 'type': 'list',
                 'name': 'choix_classe',
                 'message': 'Classe',
-                'choices': ServiceAppelAPI().classes_possibles()
+                'choices': ClientPersonnage().classes_possibles()
             },
             {
                 'type': 'list',

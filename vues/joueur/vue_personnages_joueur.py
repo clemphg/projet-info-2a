@@ -8,8 +8,7 @@ from utils.singleton import Singleton
 from vues.abstract_vue import AbstractVue
 from vues.session import Session
 
-from service.service_appel_api import ServiceAppelAPI
-
+from client.client_personnage import ClientPersonnage
 
 class VuePersonnagesJoueur(AbstractVue):
     def __init__(self) -> None:
@@ -28,7 +27,7 @@ class VuePersonnagesJoueur(AbstractVue):
                 'name': 'choix_nvlle_classe',
                 'message': 'Sélectionner une nouvelle classe',
                 'choices':
-                    ServiceAppelAPI().classes_possibles()
+                    ClientPersonnage().classes_possibles()
             },
             {
                 'type': 'list',

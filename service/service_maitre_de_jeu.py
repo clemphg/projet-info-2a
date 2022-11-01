@@ -1,3 +1,4 @@
+from pickle import TRUE
 from utils.singleton import Singleton
 
 from vues.session import Session
@@ -20,6 +21,16 @@ class ServiceMaitreDeJeu(metaclass=Singleton):
     def liste_parties(self, pseudo_mj):
         return DAO().liste_inscriptions_mj(pseudo_mj)
 
+    def liste_creneaux_dispos(self, mj):
+        creneaux_dispos = DAO().liste_creneaux_dispos_mj(mj)
+        return creneaux_dispos
+
     def verifier_nvlle_partie_possible(self, creneau):
-        pass
+        parties = DAO().chercher_parties_par_creneau(creneau)
+        if len(parties)<nb_parties_par_creneau:
+            return True
+        else:
+            return False
+
+
 

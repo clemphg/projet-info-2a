@@ -1,5 +1,6 @@
 from objets_metiers.abstract_joueur import AbstractJoueur
 from objets_metiers.scenario import Scenario
+from objets_metiers.partie import Partie
 
 class MaitreDeJeu(AbstractJoueur):
     ''' Un maître de jeu est un abstract joueur défini par son pseudo, son âge et la liste de scénario(s) qu'il crée
@@ -63,5 +64,9 @@ class MaitreDeJeu(AbstractJoueur):
         return status
 
 
-    def creer_partie():
-        pass
+    def creer_partie(self, creneau, scenario):
+        from dao.dao import DAO
+        partie = Partie(creneau=creneau,
+                        scenario=scenario)
+        id = DAO().creer_partie(partie)
+

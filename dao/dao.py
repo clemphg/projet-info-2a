@@ -938,4 +938,34 @@ class DAO(metaclass=Singleton):
 
 
 
+    def liste_creneaux_dispos_mj(self, mj):
+        """Liste des creneaux
+
+        Returns
+        -------
+        List[int]
+            Liste des créneaux
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id_creneau"
+                " FROM creneaux"
+                " EXCEPT"
+                " SELECT creneaux.id_creneau"
+                " FROM creneaux"
+                " JOIN partie ON partie.id_creneau=creneaux.id_creneau"
+                " JOIN scenario ON scenario.id_scenario=partie.id_scenario"
+                " WHERE pseudo_mj=%(pseudo)s"
+                " ORDER BY id_creneau ASC;",
+                {
+                    "pseudo": mj.pseudo
+                }
+            )
+            l_creneaux = []
+            res = cursor.fetchone()
+            if res:
+                while res is not None:
+                    l_creneaux.append(res['id_creneau'])
+                    res = cursor.fetchone()
+        return l_creneaux
 

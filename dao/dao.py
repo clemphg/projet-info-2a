@@ -639,11 +639,24 @@ class DAO(metaclass=Singleton):
             True si la partie à bien été supprimée
         """
         with self.__connection.cursor() as cursor:
-            cursor.execute("DELETE FROM partie"
-            "WHERE id=%(id)s RETURNING TRUE"
+
+            # suppression des inscriptions à la partie
+            cursor.execute(
+                "DELETE FROM inscription_perso"
+                " WHERE id_partie=%(id)s"
+                " RETURNING TRUE AS status;"
+            , {"id": partie.id})
+            sup_inscription=cursor.fetchone()
+
+            # suppression de la partie dans la table des parties
+            cursor.execute(
+                "DELETE FROM partie"
+                " WHERE id_partie=%(id)s"
+                " RETURNING TRUE AS status;"
             , {"id": partie.id})
             sup_partie=cursor.fetchone()
-        return sup_partie
+
+        return sup_partie and sup_inscription
 
     def supprimer_scenario(self,scenario:Scenario):
         """Suprimer un scenario de la table de donnée
@@ -775,34 +788,25 @@ class DAO(metaclass=Singleton):
         with self.__connection.cursor() as cursor:
             cursor.execute(
                 "SELECT partie.id_partie, partie.id_creneau, scenario.id_scenario, scenario.pseudo_mj, scenario.nom AS nom_scenario,"
-                " scenario.descrip AS des_scenario, scenario.niveau AS niv_min_scenario, id_perso"
+                " scenario.descrip AS des_scenario, scenario.niveau AS niv_min_scenario"
                 " FROM partie"
                 " JOIN scenario ON partie.id_scenario = scenario.id_scenario"
-                " JOIN inscription_perso ON partie.id_partie = inscription_perso.id_partie"
                 " WHERE partie.id_partie = %(id_partie)s;"
             ,{
                 "id_partie" : id_partie
                 })
             row=cursor.fetchone()
+            partie = None
             if row:
                 id=row['id_partie']
                 creneau=row['id_creneau']
                 scenario=Scenario(id=row['id_scenario'], nom=row['nom_scenario'], description=row['des_scenario'])
-                id_persos = []
-                while row is not None:
-                    id_persos.append(row['id_perso'])
-                    row = cursor.fetchone()
-
-                persos = [self.chercher_par_id_perso(id) for id in id_persos]
+                persos = self.chercher_persos_par_partie(id)
                 partie = Partie(id=id,
                                 creneau=creneau,
                                 scenario=scenario,
                                 liste_persos=persos)
-
-        if partie:
-            return partie
-        else:
-            return None
+        return partie
 
     def desinscription_joueur(self, joueur:Joueur, id_partie):
         with self.__connection.cursor() as cursor:

@@ -32,5 +32,9 @@ class ServiceMaitreDeJeu(metaclass=Singleton):
         else:
             return False
 
+    def supprimer_partie(self, partie):
+        res = DAO().supprimer_partie(partie)
+        return res
+
 
 

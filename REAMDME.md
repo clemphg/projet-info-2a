@@ -22,6 +22,6 @@ Cette application a vocation à servir lors d'une conférence de jeux de rôles 
 
 ### Maitre de jeu
 
-#### LEs scénarios
+#### Les scénarios
 
 ### Organisateur

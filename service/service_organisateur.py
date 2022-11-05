@@ -40,15 +40,49 @@ class ServiceOrganisateur(metaclass=Singleton):
         res = DAO().supprimer_personnage(perso)
         return res and status
 
+    def liste_mjs(self):
+        return DAO().liste_mjs()
 
     def bannir_mj(self, mj):
-        pass
+        status = True
+        # supprimer les inscriptions du mj (donc les parties)
+        inscriptions = DAO().liste_inscriptions_mj(mj.pseudo)
+        if inscriptions:
+            for id_partie in [ins['id_partie'] for ins in inscriptions]:
+                res = DAO().supprimer_partie(id_partie)
+                status = status and res
+        # supprimer ses scenarios
+        if len(mj.scenarios)>0:
+            for scenario in mj.scenarios:
+                res = DAO().supprimer_scenario(scenario)
+                status = status and res
+        # le supprimer
+        res = DAO().bannir_mj(mj.pseudo)
+        return status and res
+
+
+    def supprimer_scenario(self, scenario, mj):
+        status = True
+        # supprimer les parties dans lesquelles le scénario est utilisé
+        inscriptions = DAO().liste_inscriptions_mj(mj.pseudo)
+        if inscriptions:
+            for id_partie in [ins['id_scenario'] for ins in inscriptions]:
+                res = DAO().supprimer_partie(id_partie)
+                status = status and res
+        # supprimer le scénario
+        res = DAO().supprimer_scenario(scenario)
+        return status and res
+
+    def liste_parties(self):
+        creneaux = DAO().liste_creneaux()
+        parties = []
+        for c in creneaux:
+            parties = parties + DAO().chercher_parties_par_creneau(c)
+        return parties
 
     def supprimer_partie(self, partie):
-        pass
-
-    def supprimer_scenario(self, scenario):
-        pass
+        res = DAO().supprimer_partie(partie)
+        return res
 
     def desinscrire_personnage(self, perso, partie):
         pass

@@ -311,87 +311,6 @@ class DAO(metaclass=Singleton):
                 "id_partie" : id_partie,
                  })
 
-    def chercher_parties_creneaux(self,creneau):
-        """Chercher les parties se déroulant sur un creneau donné
-
-        Parameters
-        ----------
-        creneau : int
-            id du créneau
-
-        Returns
-        -------
-        List[Partie]
-            Liste de parties ou None si aucune partie
-        """
-        with self.__connection.cursor() as cursor:
-
-            # liste des scénarios
-            cursor.execute("SELECT id_scenario, nom, descrip, niveau"
-            "FROM scenario JOIN scenario.id_scenario ON partie.id_scenario"
-            "WHERE partie.id_creneau=%(creneau)s"
-            , {"creneau": creneau})
-            row=cursor.fetchone()
-            l=[]
-            while row is not None:
-                l.append([row['id_scenario'],Scenario(row['nom'],row['descrip'],row['niveau'])])
-                row=cursor.fetchone()
-
-        d=[]
-        with self.__connection.cursor() as cursor2:
-            cursor2.execute("SELECT id_partie"
-            "FROM partie "
-            "WHERE id_creneau=%(creneau)s"
-            , {"creneau": creneau})
-            res=cursor2.fetchone()
-            while res is not None:
-                with self.__connection.cursor() as cursor3:
-                    cursor3.execute("SELECT id_personnage"
-                    "FROM inscription perso "
-                    "WHERE id_partie=%(id_partie)s"
-                    , {"id_partie": res['id_partie']})
-                    idperso=cursor3.fetchone()
-                    while idperso is not None:
-                        with self.__connection.cursor() as cursor4:
-                            cursor4.execute("SELECT id,nom, age ,niveau, race, classe"
-                            "FROM inscription perso "
-                            "WHERE id_perso=%(id_perso)s"
-                            , {"id_perso": idperso['id_personnage']})
-                            perso=cursor4.fetchone()
-                            d.apppend([res['id_partie'],Personnage(perso['id'],perso['nom'],perso['niveau'],perso['age'],perso['race'],perso["classe"])])
-                        idperso=cursor3.fetchone()
-                res=cursor2.fetchone()
-        p=[] #on intialise la liste qui va contenir des couples (id_partie,listes des perso de la partie)
-        t=[]
-        for i in range(len(d)):
-            if d[i][0] not in s: #on parcours la liste composé de (id_partie,personnage)
-                p_i=[d[i][0]]
-                t.append(d[i][0]) #on intialise une liste contenant l'id de la partie
-                for l in d:
-                    p_l=[]#on initialise la liste qui va contenir tous les personnages inscrit à la partie id correspondant à [d[i][0]]
-                    if l[0]==d[i][0]:
-                        p_l.append(l[1]) #ajoute tous les personnages inscrits à d[i][0]
-                p_i.append(p_l)
-                p.append(p_i)
-        s=[]
-        with self.__connection.cursor() as cursor2:
-            cursor2.execute("SELECT id_partie,id_scenario"
-            "FROM partie "
-            "WHERE id_creneau=%(creneau)s"
-            , {"creneau": creneau})
-            res=cursor2.fetchone()
-            while res is not None:
-                s.append([res['id_partie',res['id_scenari']]])
-                res=cursor2.fetchone()
-        p_c=[]
-        for i in l:
-            partie=Partie(creneau,i[1])
-            for j in p:
-                if i[0]==j[0]:
-                    partie.liste_perso=j[1]
-            p_c.append(partie)
-
-
 
     def liste_joueurs(self):
         """Liste des joueurs
@@ -454,11 +373,11 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM Maitre_de_jeu"
-            " WHERE pseudo_mj=%(pseudo)s RETURNING TRUE"
+            " WHERE pseudo_mj=%(pseudo)s RETURNING TRUE;"
             , {"pseudo": pseudo})
             sup_mj=cursor.fetchone()
             cursor.execute("DELETE FROM mdp"
-            " WHERE pseudo=%(pseudo)s RETURNING TRUE"
+            " WHERE pseudo=%(pseudo)s RETURNING TRUE:"
             , {"pseudo": pseudo})
             sup_mdp=cursor.fetchone()
         return sup_mj and sup_mdp
@@ -472,8 +391,8 @@ class DAO(metaclass=Singleton):
             Liste des maitres de jeu
         """
         with self.__connection.cursor() as cursor :
-            cursor.execute("SELECT pseudo_mj "
-            "FROM Maitre_de_jeu"
+            cursor.execute("SELECT pseudo_mj"
+            " FROM Maitre_de_jeu:"
             )
             row=cursor.fetchone()
             l=[]
@@ -494,8 +413,8 @@ class DAO(metaclass=Singleton):
             Liste des personnages
         """
         with self.__connection.cursor() as cursor :
-            cursor.execute("SELECT id_perso "
-            "FROM personnage"
+            cursor.execute("SELECT id_perso"
+            " FROM personnage;"
             )
             row=cursor.fetchone()
             l=[]
@@ -518,7 +437,7 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("UPDATE personnage SET classe=%(nvlle_classe)s"
-            "WHERE id_perso=%(id)s"
+            " WHERE id_perso=%(id)s;"
             ,{
                 "nvlle_classe" : nvlle_classe,
                 "id" : personnage.id
@@ -730,12 +649,12 @@ class DAO(metaclass=Singleton):
         Returns
         -------
         List[Dict]
-            Chaque élément de la liste est un dictionnaire décrivant l'inscription (id_creneau, id_partie, nom_scenario, niv_min_scenario, pseudo_mj, id_perso, nom_perso, niv_perso).
+            Chaque élément de la liste est un dictionnaire décrivant l'inscription (id_creneau, id_partie, id_scenario, nom_scenario, niv_min_scenario, pseudo_mj, id_perso, nom_perso, niv_perso).
             Retourne None si pas d'inscriptions.
         """
         with self.__connection.cursor() as cursor:
             cursor.execute(
-                "SELECT id_creneau, inscription_perso.id_partie, scenario.nom AS nom_scenario, scenario.niveau AS niv_min_scenario,"
+                "SELECT id_creneau, inscription_perso.id_partie, scenario.id_scenario, scenario.nom AS nom_scenario, scenario.niveau AS niv_min_scenario,"
                 " maitre_de_jeu.pseudo_mj, personnage.id_perso, personnage.nom AS nom_perso, personnage.niveau AS niv_perso"
                 " FROM personnage"
                 " JOIN inscription_perso ON personnage.id_perso=inscription_perso.id_perso"
@@ -753,6 +672,7 @@ class DAO(metaclass=Singleton):
                 inscriptions.append({
                     "id_creneau": row['id_creneau'],
                     "id_partie": row['id_partie'],
+                    "id_scenario": row['id_scenario'],
                     "pseudo_mj": row['pseudo_mj'],
                     "nom_scenario": row['nom_scenario'],
                     "niv_min_scenario": row['niv_min_scenario'],
@@ -857,6 +777,22 @@ class DAO(metaclass=Singleton):
             return status
         else:
             return False
+
+    def liste_creneaux(self):
+        """Liste des creneaux
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id_creneau"
+                " FROM creneaux;"
+            )
+            l_creneaux = []
+            res = cursor.fetchone()
+            if res:
+                while res is not None:
+                    l_creneaux.append(res['id_creneau'])
+                    res = cursor.fetchone()
+        return l_creneaux
 
     def liste_creneaux_dispos_joueur(self, joueur):
         """Liste des creneaux

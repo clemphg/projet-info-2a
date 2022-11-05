@@ -6,5 +6,7 @@ class Session(metaclass=Singleton):
         """
         Variables que l'on stocke en session.
 
+        utilisateur : utilisateur de la session (Joueur, MaitreDeJeu ou Organisateur)
+
         """
         self.utilisateur = None

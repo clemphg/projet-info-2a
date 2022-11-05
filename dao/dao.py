@@ -403,7 +403,7 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor :
             cursor.execute("SELECT pseudo_j "
-            "FROM joueur"
+            "FROM joueur;"
             )
             row=cursor.fetchone()
             l=[]
@@ -430,11 +430,11 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM joueur"
-            "WHERE pseudo_j=%(pseudo)s RETURNING TRUE"
+            " WHERE pseudo_j=%(pseudo)s RETURNING TRUE;"
             , {"pseudo": pseudo})
             sup_joueur=cursor.fetchone()
             cursor.execute("DELETE FROM mdp"
-            "WHERE pseudo=%(pseudo)s RETURNING TRUE"
+            " WHERE pseudo=%(pseudo)s RETURNING TRUE;"
             , {"pseudo": pseudo})
             sup_mdp=cursor.fetchone()
         return sup_joueur and sup_mdp
@@ -454,11 +454,11 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM Maitre_de_jeu"
-            "WHERE pseudo_mj=%(pseudo)s RETURNING TRUE"
+            " WHERE pseudo_mj=%(pseudo)s RETURNING TRUE"
             , {"pseudo": pseudo})
             sup_mj=cursor.fetchone()
             cursor.execute("DELETE FROM mdp"
-            "WHERE pseudo=%(pseudo)s RETURNING TRUE"
+            " WHERE pseudo=%(pseudo)s RETURNING TRUE"
             , {"pseudo": pseudo})
             sup_mdp=cursor.fetchone()
         return sup_mj and sup_mdp
@@ -672,8 +672,28 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("DELETE FROM scenario"
-            "WHERE id=%(id)s RETURNING TRUE"
+            " WHERE id_scenario=%(id)s RETURNING TRUE"
             , {"id": scenario.id})
+            sup_scenario=cursor.fetchone()
+        return sup_scenario
+
+    def supprimer_personnage(self,perso:Personnage):
+        """Suprimer un personnage de la table de données
+
+        Parameters
+        ------------
+        perso: Personnage
+            Le personnage à supprimer
+
+        Returns
+        -----------
+        booléen
+            True si le personnage à bien été supprimé
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute("DELETE FROM personnage"
+            " WHERE id_perso=%(id)s RETURNING TRUE"
+            , {"id": perso.id})
             sup_scenario=cursor.fetchone()
         return sup_scenario
 
@@ -710,13 +730,13 @@ class DAO(metaclass=Singleton):
         Returns
         -------
         List[Dict]
-            Chaque élément de la liste est un dictionnaire décrivant l'inscription (id_creneau, id_partie, nom_scenario, niv_min_scenario, pseudo_mj, nom_perso, niv_perso).
+            Chaque élément de la liste est un dictionnaire décrivant l'inscription (id_creneau, id_partie, nom_scenario, niv_min_scenario, pseudo_mj, id_perso, nom_perso, niv_perso).
             Retourne None si pas d'inscriptions.
         """
         with self.__connection.cursor() as cursor:
             cursor.execute(
                 "SELECT id_creneau, inscription_perso.id_partie, scenario.nom AS nom_scenario, scenario.niveau AS niv_min_scenario,"
-                " maitre_de_jeu.pseudo_mj, personnage.nom AS nom_perso, personnage.niveau AS niv_perso"
+                " maitre_de_jeu.pseudo_mj, personnage.id_perso, personnage.nom AS nom_perso, personnage.niveau AS niv_perso"
                 " FROM personnage"
                 " JOIN inscription_perso ON personnage.id_perso=inscription_perso.id_perso"
                 " JOIN partie ON partie.id_partie=inscription_perso.id_partie"
@@ -736,6 +756,7 @@ class DAO(metaclass=Singleton):
                     "pseudo_mj": row['pseudo_mj'],
                     "nom_scenario": row['nom_scenario'],
                     "niv_min_scenario": row['niv_min_scenario'],
+                    "id_perso": row["id_perso"],
                     "nom_perso": row['nom_perso'],
                     "niv_perso": row['niv_perso']
                 })

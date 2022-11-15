@@ -15,8 +15,30 @@ class VueDetailsPartieOrganisateur(AbstractVue):
             {
                 'type': 'list',
                 'name': 'choix',
-                'message': 'Sélectionner un choix',
+                'message': 'Sélectionner une action',
                 'choices': [
+                    'Inscrire un personnage à cette partie',
+                    'Désinscrire un personnage de cette partie',
+                    'Retourner à la liste des parties',
+                    'Retourner au menu principal'
+                ]
+            },
+            {
+                'type': 'list',
+                'name': 'choix',
+                'message': 'Sélectionner une action',
+                'choices': [
+                    'Inscrire un personnage à cette partie',
+                    'Retourner à la liste des parties',
+                    'Retourner au menu principal'
+                ]
+            },
+            {
+                'type': 'list',
+                'name': 'choix',
+                'message': 'Sélectionner une action',
+                'choices': [
+                    'Désinscrire un personnage de cette partie',
                     'Retourner à la liste des parties',
                     'Retourner au menu principal'
                 ]
@@ -39,8 +61,36 @@ class VueDetailsPartieOrganisateur(AbstractVue):
 
     def make_choice(self):
 
-        reponse = prompt(self.__questions)
-        if reponse['choix']=='Retourner à la liste des parties':
+        nb_persos = len(self.__partie.liste_persos)
+
+        if nb_persos == 0:
+            reponse = prompt(self.__questions[1])
+        elif 0 < nb_persos < 4:
+            reponse = prompt(self.__questions[0])
+        elif nb_persos == 4:
+            reponse = prompt(self.__questions[2])
+
+        if reponse['choix'] == 'Inscrire un personnage à cette partie':
+            choix_perso = prompt(
+                {
+                    'type': 'list',
+                    'name': 'choix',
+                    'message': 'Sélectionner un personnage selon son nom',
+                    'choices':
+                        [str(p.id) for p in self.__partie.liste_persos]
+                }
+            )
+        elif reponse['choix'] == 'Désinscrire un personnage de cette partie':
+            choix_perso = prompt(
+                {
+                    'type': 'list',
+                    'name': 'choix',
+                    'message': 'Sélectionner un personnage selon son nom',
+                    'choices':
+                        [str(p.id) for p in self.__partie.liste_persos]
+                }
+            )
+        elif reponse['choix']=='Retourner à la liste des parties':
             from vues.organisateur.vue_parties_organisateur import VuePartiesOrganisateur
             return VuePartiesOrganisateur()
         elif reponse['choix']=='Retourner au menu principal':

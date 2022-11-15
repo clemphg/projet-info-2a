@@ -46,8 +46,8 @@ class VueDetailsMJOrganisateur(AbstractVue):
         print("-- Détails sur un joueur --\n")
 
         print(
-            "   Pseudo      :",self.__joueur.pseudo,"\n",
-            "   Âge         :",self.__joueur.age,"\n",
+            "   Pseudo      :",self.__mj.pseudo,"\n",
+            "   Âge         :",self.__mj.age,"\n",
             "   Scenarios   :\n"
         )
         for scenario in self.__mj.scenarios:
@@ -79,7 +79,7 @@ class VueDetailsMJOrganisateur(AbstractVue):
             else:
                 reponse = prompt(self.__questions[2])
                 id_s = reponse['choix_scenario']
-                scenario = [s for s in self.__mj.scenarios if scenario.id==int(id_s)][0]
+                scenario = [s for s in self.__mj.scenarios if s.id==int(id_s)][0]
                 res = ServiceOrganisateur().supprimer_scenario(scenario, self.__mj)
                 if res:
                     print("Le scénario a bien été supprimé.")

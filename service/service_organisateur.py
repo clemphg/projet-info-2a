@@ -49,7 +49,8 @@ class ServiceOrganisateur(metaclass=Singleton):
         inscriptions = DAO().liste_inscriptions_mj(mj.pseudo)
         if inscriptions:
             for id_partie in [ins['id_partie'] for ins in inscriptions]:
-                res = DAO().supprimer_partie(id_partie)
+                partie = DAO().chercher_partie_par_id(id_partie)
+                res = DAO().supprimer_partie(partie)
                 status = status and res
         # supprimer ses scenarios
         if len(mj.scenarios)>0:
@@ -66,8 +67,9 @@ class ServiceOrganisateur(metaclass=Singleton):
         # supprimer les parties dans lesquelles le scénario est utilisé
         inscriptions = DAO().liste_inscriptions_mj(mj.pseudo)
         if inscriptions:
-            for id_partie in [ins['id_scenario'] for ins in inscriptions]:
-                res = DAO().supprimer_partie(id_partie)
+            for id_partie in list(set([ins['id_partie'] for ins in inscriptions if ins['id_scenario']==scenario.id])):
+                partie = DAO().chercher_partie_par_id(id_partie)
+                res = DAO().supprimer_partie(partie)
                 status = status and res
         # supprimer le scénario
         res = DAO().supprimer_scenario(scenario)

@@ -377,7 +377,7 @@ class DAO(metaclass=Singleton):
             , {"pseudo": pseudo})
             sup_mj=cursor.fetchone()
             cursor.execute("DELETE FROM mdp"
-            " WHERE pseudo=%(pseudo)s RETURNING TRUE:"
+            " WHERE pseudo=%(pseudo)s RETURNING TRUE;"
             , {"pseudo": pseudo})
             sup_mdp=cursor.fetchone()
         return sup_mj and sup_mdp
@@ -392,7 +392,7 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor :
             cursor.execute("SELECT pseudo_mj"
-            " FROM Maitre_de_jeu:"
+            " FROM Maitre_de_jeu;"
             )
             row=cursor.fetchone()
             l=[]
@@ -702,7 +702,7 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute(
-                "SELECT id_creneau, partie.id_partie, scenario.nom AS nom_scenario, scenario.niveau AS niv_min_scenario"
+                "SELECT id_creneau, partie.id_partie, scenario.id_scenario, scenario.nom AS nom_scenario, scenario.niveau AS niv_min_scenario"
                 " FROM scenario"
                 " JOIN partie ON partie.id_scenario=scenario.id_scenario"
                 " WHERE pseudo_mj=%(pseudo)s"
@@ -716,6 +716,7 @@ class DAO(metaclass=Singleton):
                 inscriptions.append({
                     "id_creneau": row['id_creneau'],
                     "id_partie": row['id_partie'],
+                    "id_scenario": row['id_scenario'],
                     "nom_scenario": row['nom_scenario'],
                     "niv_min_scenario": row['niv_min_scenario']
                 })

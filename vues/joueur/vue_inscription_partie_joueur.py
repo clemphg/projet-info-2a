@@ -2,12 +2,19 @@ from pprint import pprint
 
 from PyInquirer import Separator, prompt
 
+#importation des vues
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
+#importation des services 
 from service.service_joueur import ServiceJoueur
 class VueInscriptionPartieJoueur(AbstractVue):
     def __init__(self) -> None:
+        '''Création de la vue VueInscriptionPartieJoueur, définition de la variable questions qui va stocker les
+        intéractions du joueur. Il peut séléctionner un créneau en séléctionnant un créneau parmi la liste disponible,
+        ou retourner au menu principal en séléctionnant "retourner au menu principal" ou valider l'inscription en 
+        séléctionnant "valider l'inscription" ou retourner à la vue précédente en séléctionnant "abandonner"
+        ''''
         self.__questions = [
             {
                 'type': 'list',
@@ -36,15 +43,28 @@ class VueInscriptionPartieJoueur(AbstractVue):
         ]
 
     def display_info(self):
+        '''Permet d'afficher sur la console "Inscription à une partie" ainsi que les créneaux qui restent disponibles.
+        S'il ne reste aucun créneau, le message suivant s'affiche : "Vous êtes déjà occupé sur tous les créneaux
+        Veuillez vous désinscrire d'une partie pour vous inscrire à une autre"
+        '''
+
         print("--- Inscription à une partie ---\n")
 
         creneaux_dispo = [str(creneau) for creneau in ServiceJoueur().liste_creneaux_dispos(Session().utilisateur)]
 
         if len(creneaux_dispo)==0:
-            print("Vous êtes déjà occupé sur tous les créneaux. Veillez vous désinscrire d'une partie pour vous inscrire à une autre.\n")
+            print("Vous êtes déjà occupé sur tous les créneaux. Veuillez vous désinscrire d'une partie pour vous inscrire à une autre.\n")
 
 
     def make_choice(self):
+        '''Permet d'afficher le menu à partir de la variable question. Ce qui s'affichera dépendra du choix 
+        du joueur. S'il choisit "séléctionner un créneau", il pourra choisir le créneau d'inscription de la partie.
+        L'écran affiche l’ensemble des parties disponibles à ce créneau, avec une description associée à
+        chacune de ces parties. Lorsque la partie est sélectionnée, le personnage doit être séléctionné, parmi ceux
+        déjà créés. Si aucun personnage de niveau suffisant pour la partie n'a encore été créé, un message d'erreur 
+        s'affiche. Le joueur peut ensuite valider ou annuler l'inscription ou encore retourner au menu principal.
+        '''
+
         creneaux_dispo = [str(creneau) for creneau in ServiceJoueur().liste_creneaux_dispos(Session().utilisateur)]
         if len(creneaux_dispo)>0:
 
@@ -100,6 +120,7 @@ class VueInscriptionPartieJoueur(AbstractVue):
 
 
                 else:
+                    #pas de personnage créé de niveau suffisant
                     print("Vous n'avez aucun personnage de niveau suffisant.\n")
                     reponse = prompt(self.__questions[1])
                     if reponse['choix_retour']=='Retourner au menu principal':
@@ -110,11 +131,13 @@ class VueInscriptionPartieJoueur(AbstractVue):
                 print("Aucune partie disponible sur ce créneau.\n")
 
             reponse = prompt(self.__questions[1])
+            #retour au menu principal
             if reponse['choix_retour']=='Retourner au menu principal':
                 from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
                 return VuePrincipaleJoueur()
         else:
             reponse = prompt(self.__questions[1])
+            #retour au menu principal
             if reponse['choix_retour']=='Retourner au menu principal':
                 from vues.joueur.vue_principale_joueur import VuePrincipaleJoueur
                 return VuePrincipaleJoueur()

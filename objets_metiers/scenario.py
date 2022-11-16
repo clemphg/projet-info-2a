@@ -5,7 +5,7 @@ Un scénario appartient à un maître de jeu. Une fois créé, il ne peut pas ê
 """
 class Scenario():
 
-    def __init__(self, id=None, nom=None, description=None, niveau_min=None):
+    def __init__(self, id=None, nom=None, description=None, niveau_min=None, pseudo_mj=None):
         """Créer un scénario (par un maître de jeu).
 
         Parameters
@@ -18,11 +18,14 @@ class Scenario():
             Description longue du scénario
         niveau_min : int
             Niveau minimal requis pour jouer au scénario
+        pseudo_mj : str
+            Pseudo du maître de jeu possédant le scénario
         """
         self.__id = id
         self.__nom = nom
         self.__description = description
         self.__niveau_min = niveau_min
+        self.__pseudo_mj = pseudo_mj
 
     @property
     def id(self):
@@ -43,3 +46,7 @@ class Scenario():
     @property
     def niveau_min(self):
         return self.__niveau_min
+
+    @property
+    def pseudo_mj(self):
+        return self.__pseudo_mj

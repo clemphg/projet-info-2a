@@ -17,6 +17,8 @@ class Personnage():
             Niveau du personnage
         classe : str
             Classe du personnage
+        pseudo_j : str
+            Pseudo du joueur possédant le personnage
 
         Examples
         ----------
@@ -26,7 +28,7 @@ class Personnage():
 
         '''
 
-    def __init__(self, id=None, nom=None, age=None, race=None, niveau=None, classe=None) -> None:
+    def __init__(self, id=None, nom=None, age=None, race=None, niveau=None, classe=None, pseudo_j=None) -> None:
         ''' Constructeur'''
 
         self.__id = id
@@ -35,6 +37,7 @@ class Personnage():
         self.__race = race
         self.__niveau = niveau
         self.__classe = classe
+        self.__pseudo_j = pseudo_j
 
     @property
     def id(self):
@@ -82,3 +85,8 @@ class Personnage():
         self.__classe = nvlle_classe
         from dao.dao import DAO
         DAO().maj_classe(self, nvlle_classe)
+
+    @property
+    def pseudo_j(self):
+        '''Retourne le pseudo du joueur possédant le personnage'''
+        return self.__pseudo_j

@@ -59,9 +59,9 @@ class Joueur(AbstractJoueur):
                                age=age,
                                race=race,
                                niveau=niveau,
-                               classe=classe)
-            id = DAO().creer_perso(perso,
-                                   self.pseudo)
+                               classe=classe,
+                               pseudo_j=self.__pseudo)
+            id = DAO().creer_perso(perso)
             perso.id = id
             self.__personnages.append(perso)
             status = True

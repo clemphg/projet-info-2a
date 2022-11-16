@@ -71,15 +71,13 @@ class DAO(metaclass=Singleton):
             return False
 
 
-    def creer_perso(self,perso: Personnage, pseudo_j):
+    def creer_perso(self,perso: Personnage):
         """Ajouter un personnage en base de données
 
         Parameters
         ----------
         perso : Personnage
             Personnage à ajouter dans la base
-        pseudo_j : str
-            Pseudo du joueur a qui appartient le personnage
 
         Returns
         -------
@@ -95,7 +93,7 @@ class DAO(metaclass=Singleton):
                 "niveau" : perso.niveau,
                 "race" : perso.race,
                 "classe" : perso.classe,
-                "pseudo_j" : pseudo_j
+                "pseudo_j" : perso.pseudo_j
                 })
             res=cursor.fetchone()['id_perso']
         return res
@@ -147,15 +145,13 @@ class DAO(metaclass=Singleton):
         else:
             return False
 
-    def creer_scenario(self,scenario: Scenario, pseudo_mj):
+    def creer_scenario(self,scenario: Scenario):
         """Ajouter un scenario en base
 
         Parameters
         ----------
         scenario : Scenario
             Scénario à ajouter en base
-        pseudo_mj : str
-            Pseudo du maitre de jeu a qui le scénario appartient
 
         Returns
         -------
@@ -169,7 +165,7 @@ class DAO(metaclass=Singleton):
                 "nom" : scenario.nom,
                 "descrip" : scenario.description,
                 "niveau" : scenario.niveau_min,
-                "pseudo_mj" : pseudo_mj
+                "pseudo_mj" : scenario.pseudo_mj
                 })
             scenario.id = cursor.fetchone()['id_scenario']
         return scenario.id

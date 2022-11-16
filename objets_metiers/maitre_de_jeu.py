@@ -54,10 +54,11 @@ class MaitreDeJeu(AbstractJoueur):
         if len(self.__scenarios)<2:
             scenar = Scenario(nom=nom,
                               description=description,
-                              niveau_min=niveau_min)
-            id = DAO().creer_scenario(scenar,
-                                      self.pseudo)
-            self.__scenarios.append(Scenario(id, nom, description, niveau_min))
+                              niveau_min=niveau_min,
+                              pseudo_mj=self.pseudo)
+            id = DAO().creer_scenario(scenar)
+            scenar.id = id
+            self.__scenarios.append(scenar)
             status = True
         else:
             status = False

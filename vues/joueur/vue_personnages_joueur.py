@@ -42,7 +42,7 @@ class VuePersonnagesJoueur(AbstractVue):
     def display_info(self):
         if Session().utilisateur.personnages:
             for perso in Session().utilisateur.personnages:
-                print("ID : ",perso.id,"\nNom :",perso.nom,"\nAge :",perso.age,"\nNiveau :",perso.niveau,"\nRace :",perso.race,"\nClasse :",perso.classe,"\n")
+                print(perso,"\n")
         else:
             print("Vous n'avez pas encore créé de personnage.\n")
 
@@ -70,7 +70,7 @@ class VuePersonnagesJoueur(AbstractVue):
 
                 # on affiche la nouvelle liste des personnages
                 for perso in Session().utilisateur.personnages:
-                    print("ID : ",perso.id,"\nNom :",perso.nom,"\nAge :",perso.age,"\nNiveau :",perso.niveau,"\nRace :",perso.race,"\nClasse :",perso.classe,"\n")
+                    print(perso,"\n")
 
                 # on repose la question : modifier classe ou retour au menu principal
                 reponse = prompt(self.__questions[0])

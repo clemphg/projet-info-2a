@@ -33,13 +33,12 @@ class Partie():
         self.__liste_persos = liste_persos
 
     def __str__(self):
-        res = """ID       : {id}\n
-                 Creneau  : {cre}\n
-                 Scenario : """.format(id=self.__id, cre=self.__creneau)
-        res.append(self.__scenario.__str__())
-        for perso in self.__liste_persos:
-            res.append("\n")
-            res.append(perso.__str__())
+        res = "ID          : {id}\nCreneau     : {cre}\nScenario    : ".format(id=self.__id, cre=self.__creneau)
+        res=res+"\n"+self.__scenario.__str__()
+        if len(self.__liste_persos)>0:
+            res = res+"Personnages :"
+            for perso in self.__liste_persos:
+                res = res+"\n"+perso.__str__()
         return res
 
     @property

@@ -6,15 +6,15 @@ from PyInquirer import Separator, prompt
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
-#importation des services 
+#importation des services
 from service.service_joueur import ServiceJoueur
 class VueInscriptionPartieJoueur(AbstractVue):
     def __init__(self) -> None:
         '''Création de la vue VueInscriptionPartieJoueur, définition de la variable questions qui va stocker les
         intéractions du joueur. Il peut séléctionner un créneau en séléctionnant un créneau parmi la liste disponible,
-        ou retourner au menu principal en séléctionnant "retourner au menu principal" ou valider l'inscription en 
+        ou retourner au menu principal en séléctionnant "retourner au menu principal" ou valider l'inscription en
         séléctionnant "valider l'inscription" ou retourner à la vue précédente en séléctionnant "abandonner"
-        ''''
+        '''
         self.__questions = [
             {
                 'type': 'list',
@@ -57,11 +57,11 @@ class VueInscriptionPartieJoueur(AbstractVue):
 
 
     def make_choice(self):
-        '''Permet d'afficher le menu à partir de la variable question. Ce qui s'affichera dépendra du choix 
+        '''Permet d'afficher le menu à partir de la variable question. Ce qui s'affichera dépendra du choix
         du joueur. S'il choisit "séléctionner un créneau", il pourra choisir le créneau d'inscription de la partie.
         L'écran affiche l’ensemble des parties disponibles à ce créneau, avec une description associée à
         chacune de ces parties. Lorsque la partie est sélectionnée, le personnage doit être séléctionné, parmi ceux
-        déjà créés. Si aucun personnage de niveau suffisant pour la partie n'a encore été créé, un message d'erreur 
+        déjà créés. Si aucun personnage de niveau suffisant pour la partie n'a encore été créé, un message d'erreur
         s'affiche. Le joueur peut ensuite valider ou annuler l'inscription ou encore retourner au menu principal.
         '''
 

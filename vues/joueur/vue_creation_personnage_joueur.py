@@ -114,7 +114,7 @@ class VueCreationPersonnageJoueur(AbstractVue):
                     nom=reponses['choix_nom'],
                     age=reponses['choix_age'],
                     race=reponses['choix_race'],
-                    niveau=reponses['choix_niveau'],
+                    niveau=int(reponses['choix_niveau']),
                     classe=reponses['choix_classe'])
                 print('Le personnage a bien été créé !')
         else:

@@ -87,15 +87,15 @@ class VueInscriptionPartieJoueur(AbstractVue):
                     {
                     'type': 'list',
                     'name': 'choix_partie',
-                    'message': 'Sélectionner une partie (selon leur ID)',
-                    'choices': [str(partie.id)+" \n   Scénario : "+
+                    'message': 'Sélectionner une partie',
+                    'choices': ["ID : "+str(partie.id)+" \n   Scénario : "+
                                 partie.scenario.nom+"\n   Description : "+
                                 partie.scenario.description+"\n   Niveau minimum : "+
                                 str(partie.scenario.niveau_min) for partie in parties]
                     }
                 )
 
-                id_partie = int(reponse['choix_partie'].split(' ')[0])
+                id_partie = int(reponse['choix_partie'].split(' ')[2])
                 partie_sel = [partie for partie in parties if partie.id==int(id_partie)][0]
 
                 # choix du personnage
@@ -107,13 +107,13 @@ class VueInscriptionPartieJoueur(AbstractVue):
                         'type': 'list',
                         'name': 'choix_perso',
                         'message': 'Sélectionner un personnage',
-                        'choices': [str(perso.id)+" : "+perso.nom+", "+str(perso.age)+" ans, "+perso.race+", niveau "+str(perso.niveau)+", "+perso.classe+")" for perso in persos_ok]
+                        'choices': ["ID : "+str(perso.id)+" : "+perso.nom+", "+str(perso.age)+" ans, "+perso.race+", niveau "+str(perso.niveau)+", "+perso.classe+")" for perso in persos_ok]
                         }
                     )
 
                     q_val = prompt(self.__questions[2])
                     if q_val['validation']=="Valider l'inscription":
-                        id_perso = int(reponse['choix_perso'].split(' ')[0])
+                        id_perso = int(reponse['choix_perso'].split(' ')[2])
                         ServiceJoueur().inscription_perso(id_perso, id_partie)
                     elif q_val['validation']=='Abandonner':
                         print("Inscription abandonnée.\n")

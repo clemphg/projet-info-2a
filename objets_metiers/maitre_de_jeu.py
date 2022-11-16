@@ -26,6 +26,14 @@ class MaitreDeJeu(AbstractJoueur):
         super().__init__(pseudo, age)
         self.__scenarios = scenarios
 
+    def __str__(self):
+        res = """Pseudo : {pseudo}\n
+                 Age    : {age}""".format(pseudo=self.__pseudo, age=self.__age)
+        for scenario in self.__scenarios:
+            res.append("\n")
+            res.append(scenario.__str__())
+        return res
+
     @property
     def scenarios(self):
         return self.__scenarios

@@ -27,6 +27,14 @@ class Joueur(AbstractJoueur):
     def personnages(self):
         return self.__personnages
 
+    def __str__(self):
+        res = """Pseudo : {pseudo}\n
+                 Age    : {age}""".format(pseudo=self.__pseudo, age=self.__age)
+        for perso in self.__personnages:
+            res.append("\n")
+            res.append(perso.__str__())
+        return res
+
     def creer_personnage(self, nom, age, race, niveau, classe):
         """Création d'un personnage.
 

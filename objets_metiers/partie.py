@@ -32,6 +32,16 @@ class Partie():
         self.__scenario = scenario
         self.__liste_persos = liste_persos
 
+    def __str__(self):
+        res = """ID       : {id}\n
+                 Creneau  : {cre}\n
+                 Scenario : """.format(id=self.__id, cre=self.__creneau)
+        res.append(self.__scenario.__str__())
+        for perso in self.__liste_persos:
+            res.append("\n")
+            res.append(perso.__str__())
+        return res
+
     @property
     def id(self):
         ''' Retourne l'id de la partie'''

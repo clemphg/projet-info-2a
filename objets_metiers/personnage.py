@@ -30,7 +30,6 @@ class Personnage():
 
     def __init__(self, id=None, nom=None, age=None, race=None, niveau=None, classe=None, pseudo_j=None) -> None:
         ''' Constructeur'''
-
         self.__id = id
         self.__nom = nom
         self.__age = age
@@ -38,6 +37,23 @@ class Personnage():
         self.__niveau = niveau
         self.__classe = classe
         self.__pseudo_j = pseudo_j
+
+    def __str__(self):
+        '''Chaine de caractères décrivant le personnage'''
+        res = """ID            : {id}\n
+                 Nom           : {nom}\n
+                 Age           : {age}\n
+                 Race          : {race}\n
+                 Niveau        : {niv}\n
+                 Classe        : {classe}\n
+                 Pseudo joueur : {pseudo}""".format(id=self.__id,
+                                                    nom=self.__nom,
+                                                    age=self.__age,
+                                                    race=self.__race,
+                                                    niv=self.__niveau,
+                                                    classe=self.__classe,
+                                                    pseudo=self.__pseudo_j)
+        return res
 
     @property
     def id(self):

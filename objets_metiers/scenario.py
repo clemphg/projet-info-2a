@@ -27,6 +27,19 @@ class Scenario():
         self.__niveau_min = niveau_min
         self.__pseudo_mj = pseudo_mj
 
+    def __str__(self):
+        '''Chaine de caractères décrivant le scénario'''
+        res = """ID                   : {id}\n
+                 Nom                  : {nom}\n
+                 Description          : {des}\n
+                 Niveau minimal       : {niv}\n
+                 Pseudo maitre de jeu : {pseudo}""".format(id=self.__id,
+                                                           nom=self.__nom,
+                                                           des=self.__description,
+                                                           niv=self.__niveau_min,
+                                                           pseudo=self.__pseudo_mj)
+        return res
+
     @property
     def id(self):
         return self.__id

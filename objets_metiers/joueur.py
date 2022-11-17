@@ -1,6 +1,7 @@
 from objets_metiers.abstract_joueur import AbstractJoueur
 from objets_metiers.personnage import Personnage
 
+
 class Joueur(AbstractJoueur):
     ''' Un joueur est un abstract joueur défini par son pseudo, son âge et la liste de personnages qu'il possède
         Attributes
@@ -73,6 +74,8 @@ class Joueur(AbstractJoueur):
             perso.id = id
             self.__personnages.append(perso)
             status = True
+            from service.service_messages import ServiceMessages
+            ServiceMessages().message_creation_personnage(self.pseudo, perso)
         else:
             status = False
         return status

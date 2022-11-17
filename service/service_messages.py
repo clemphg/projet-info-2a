@@ -21,7 +21,8 @@ class ServiceMessages(metaclass=Singleton):
 
     def message_creation_personnage(self, pseudo, perso):
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        msg = "Inscription sur la plateforme"
+        msg = "Création du personnage {id} ({nom}, {age} ans, niveau {niv}, {race}, {classe})".format(id = perso.id, nom = perso.nom, age = perso.age,
+                                                                                                      niv = perso.niveau, race = perso.race, classe = perso.classe)
         status = DAO().ajouter_message(pseudo, date, msg)
         return status
 

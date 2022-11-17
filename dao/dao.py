@@ -538,6 +538,7 @@ class DAO(metaclass=Singleton):
             cursor.execute("SELECT *"
             " FROM journal "
             " WHERE pseudo=%(pseudo)s"
+            " ORDER BY date DESC;"
             , {"pseudo": pseudo})
 
             row=cursor.fetchone()
@@ -897,7 +898,7 @@ class DAO(metaclass=Singleton):
         with self.__connection.cursor() as cursor:
             cursor.execute(
                 "INSERT INTO journal (pseudo , date, msg)"
-                " VALUES (%(pseudo)s, %(date)s,%(msg)s)"
+                " VALUES (%(pseudo)s,%(date)s,%(msg)s)"
                 " RETURNING TRUE AS status;",
                 {
                     "pseudo": pseudo,

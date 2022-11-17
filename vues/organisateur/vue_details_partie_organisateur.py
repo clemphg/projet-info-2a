@@ -19,6 +19,7 @@ class VueDetailsPartieOrganisateur(AbstractVue):
                 'choices': [
                     'Inscrire un personnage à cette partie',
                     'Désinscrire un personnage de cette partie',
+                    'Supprimer la partie',
                     'Retourner à la liste des parties',
                     'Retourner au menu principal'
                 ]
@@ -29,6 +30,7 @@ class VueDetailsPartieOrganisateur(AbstractVue):
                 'message': 'Sélectionner une action',
                 'choices': [
                     'Inscrire un personnage à cette partie',
+                    'Supprimer la partie',
                     'Retourner à la liste des parties',
                     'Retourner au menu principal'
                 ]
@@ -39,6 +41,7 @@ class VueDetailsPartieOrganisateur(AbstractVue):
                 'message': 'Sélectionner une action',
                 'choices': [
                     'Désinscrire un personnage de cette partie',
+                    'Supprimer la partie',
                     'Retourner à la liste des parties',
                     'Retourner au menu principal'
                 ]
@@ -64,7 +67,6 @@ class VueDetailsPartieOrganisateur(AbstractVue):
 
     def display_info(self):
         print(" --- Détails d'une partie --- \n")
-
         print(self.__partie,"\n")
 
     def make_choice(self):
@@ -101,6 +103,14 @@ class VueDetailsPartieOrganisateur(AbstractVue):
                     from vues.organisateur.vue_principale_organisateur import VuePrincipaleOrganisateur
                     return VuePrincipaleOrganisateur()
             elif valid['choix']=="Annuler":
+                from vues.organisateur.vue_principale_organisateur import VuePrincipaleOrganisateur
+                return VuePrincipaleOrganisateur()
+        elif reponse['choix'] == 'Supprimer la partie':
+            res = ServiceOrganisateur().supprimer_partie(self.__partie)
+            if res :
+                print("La partie a bien été supprimée.\n")
+            retour = prompt(self.__questions[3])
+            if retour['choix']=='Retourner au menu principal':
                 from vues.organisateur.vue_principale_organisateur import VuePrincipaleOrganisateur
                 return VuePrincipaleOrganisateur()
         elif reponse['choix']=='Retourner à la liste des parties':

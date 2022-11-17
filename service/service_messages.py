@@ -17,3 +17,4 @@ class ServiceMessages(metaclass=Singleton):
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         msg = "Inscription"
         DAO().ajouter_message(pseudo, date, msg)
+

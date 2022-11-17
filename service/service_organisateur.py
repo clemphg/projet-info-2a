@@ -33,7 +33,7 @@ class ServiceOrganisateur(metaclass=Singleton):
         # supprimer ses inscriptions
         inscriptions = DAO().liste_inscriptions_joueur(joueur.pseudo)
         if len(inscriptions)>0:
-            for id_partie in [ins for ins in inscriptions if ins['id_perso']==perso.id]:
+            for id_partie in [ins['id_partie'] for ins in inscriptions if ins['id_perso']==perso.id]:
                 res = DAO().desinscription_personnage(perso.id, id_partie)
                 status = status and res
         # le supprimer
@@ -86,8 +86,8 @@ class ServiceOrganisateur(metaclass=Singleton):
         res = DAO().supprimer_partie(partie)
         return res
 
-    def desinscrire_personnage(self, perso, partie):
-        res = DAO().desinscription_personnage(perso.id, partie.id)
+    def desinscrire_personnage(self, id_perso, id_partie):
+        res = DAO().desinscription_personnage(id_perso, id_partie)
         return res
 
     def inscrire_personnage(self, perso, partie):

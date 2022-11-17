@@ -42,6 +42,23 @@ class VueDetailsPartieOrganisateur(AbstractVue):
                     'Retourner à la liste des parties',
                     'Retourner au menu principal'
                 ]
+            },
+            {
+                'type': 'list',
+                'name': 'choix',
+                'message': 'Sélectionner une action',
+                'choices': [
+                    'Retourner au menu principal'
+                ]
+            },
+            {
+                'type': 'list',
+                'name': 'choix',
+                'message': 'Sélectionner une action',
+                'choices': [
+                    "Confirmer la désinscription",
+                    "Annuler"
+                ]
             }
         ]
 
@@ -76,11 +93,23 @@ class VueDetailsPartieOrganisateur(AbstractVue):
                 {
                     'type': 'list',
                     'name': 'choix',
-                    'message': 'Sélectionner un personnage selon son nom',
+                    'message': 'Sélectionner un personnage selon son id',
                     'choices':
                         [str(p.id) for p in self.__partie.liste_persos]
                 }
             )
+            valid = prompt(self.__questions[4])
+            if valid['choix']=="Confirmer la désinscription":
+                res = ServiceOrganisateur().desinscrire_personnage(int(choix_perso['choix']), self.__partie.id)
+                if res:
+                    print("Le personnage a bien été désinscrit.\n")
+                retour = prompt(self.__questions[3])
+                if retour['choix']=='Retourner au menu principal':
+                    from vues.organisateur.vue_principale_organisateur import VuePrincipaleOrganisateur
+                    return VuePrincipaleOrganisateur()
+            elif valid['choix']=="Annuler":
+                from vues.organisateur.vue_principale_organisateur import VuePrincipaleOrganisateur
+                return VuePrincipaleOrganisateur()
         elif reponse['choix']=='Retourner à la liste des parties':
             from vues.organisateur.vue_parties_organisateur import VuePartiesOrganisateur
             return VuePartiesOrganisateur()

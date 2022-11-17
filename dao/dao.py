@@ -765,9 +765,9 @@ class DAO(metaclass=Singleton):
     def desinscription_personnage(self, id_perso, id_partie):
         with self.__connection.cursor() as cursor:
             cursor.execute(
-                "DELETE FROM inscription_perso "
-                "WHERE id_perso = %(id_perso)s AND id_partie = %(id_partie)s "
-                "RETURNING TRUE AS status;",
+                "DELETE FROM inscription_perso"
+                " WHERE id_perso = %(id_perso)s AND id_partie = %(id_partie)s"
+                " RETURNING TRUE AS status;",
                 {
                     "id_perso": id_perso,
                     "id_partie": id_partie

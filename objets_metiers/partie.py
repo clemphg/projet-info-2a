@@ -36,9 +36,9 @@ class Partie():
         res = "ID          : {id}\nCreneau     : {cre}\nScenario    : ".format(id=self.__id, cre=self.__creneau)
         res=res+"\n"+self.__scenario.__str__()
         if len(self.__liste_persos)>0:
-            res = res+"Personnages :"
+            res = res+"\nPersonnages :"
             for perso in self.__liste_persos:
-                res = res+"\n"+perso.__str__()
+                res = res+"\n>"+perso.__str__()
         return res
 
     @property

@@ -25,26 +25,7 @@ class VueDetailsPartieMJ(AbstractVue):
     def display_info(self):
         print("--- Vue détaillée d'une partie ---\n")
         partie = ServiceMaitreDeJeu().details_partie(self.__id_partie)
-
-        print(
-            "    ID          :",partie.id,"\n",
-            "   Créneau     :", partie.creneau,"\n",
-            "   Scénario    :\n",
-            "       Nom            :",partie.scenario.nom,"\n",
-            "       Niveau minimum :",partie.scenario.niveau_min,"\n",
-            "       Description    :",partie.scenario.description,"\n",
-            "   Personnages :\n"
-        )
-        for perso in partie.liste_persos:
-            print(
-                "      > ID :",perso.id,"\n",
-                "       Nom :",perso.nom,"\n",
-                "       Age :",perso.age,"\n",
-                "       Niveau :",perso.niveau,"\n",
-                "       Race :",perso.race,"\n",
-                "       Classe :",perso.classe,"\n"
-            )
-
+        print(partie,"\n")
 
     def make_choice(self):
         partie = ServiceMaitreDeJeu().details_partie(self.__id_partie)

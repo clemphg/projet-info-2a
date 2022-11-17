@@ -40,6 +40,7 @@ class VuePersonnagesJoueur(AbstractVue):
         ]
 
     def display_info(self):
+        print("--- Mes personnages ---\n")
         if Session().utilisateur.personnages:
             for perso in Session().utilisateur.personnages:
                 print(perso,"\n")

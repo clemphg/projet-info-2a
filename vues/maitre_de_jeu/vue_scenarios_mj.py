@@ -21,6 +21,7 @@ class VueScenariosMJ(AbstractVue):
         ]
 
     def display_info(self):
+        print("--- Mes scénarios ---\n")
         if Session().utilisateur.scenarios:
             for scenar in Session().utilisateur.scenarios:
                 print(scenar,"\n")

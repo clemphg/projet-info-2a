@@ -1,10 +1,10 @@
 from utils.singleton import Singleton
 
-from vues.session import Session
-
 from dao.dao import DAO
 
-from objets_metiers.joueur import Joueur
+from vues.session import Session
+
+from service.service_messages import ServiceMessages
 
 class ServiceJoueur(metaclass=Singleton):
 
@@ -19,6 +19,7 @@ class ServiceJoueur(metaclass=Singleton):
 
     def desinscription_personnage(self, id_perso, id_partie):
         res = DAO().desinscription_personnage(id_perso,id_partie)
+        ServiceMessages().message_desinscription_partie(Session().utilisateur.pseudo, id_partie, id_perso)
         return res
 
     def liste_creneaux_dispos(self, joueur):
@@ -43,5 +44,6 @@ class ServiceJoueur(metaclass=Singleton):
 
     def inscription_perso(self, id_perso, id_partie):
         res = DAO().inscription_personnage(id_perso, id_partie)
+        ServiceMessages().message_inscription_partie(Session().utilisateur.pseudo, id_partie, id_perso)
         return res
 

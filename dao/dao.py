@@ -897,13 +897,19 @@ class DAO(metaclass=Singleton):
         with self.__connection.cursor() as cursor:
             cursor.execute(
                 "INSERT INTO journal (pseudo , date, msg)"
-                " VALUES (%(pseudo)s, %(date)s,%(msg)s);",
+                " VALUES (%(pseudo)s, %(date)s,%(msg)s)"
+                " RETURNING TRUE AS status;",
                 {
                     "pseudo": pseudo,
                     "date": date,
                     "msg": msg
                 }
             )
+            status = cursor.fetchone()['status']
+        if status:
+            return status
+        else:
+            return False
 
 
 

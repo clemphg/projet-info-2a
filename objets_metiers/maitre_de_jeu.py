@@ -68,6 +68,8 @@ class MaitreDeJeu(AbstractJoueur):
             scenar.id = id
             self.__scenarios.append(scenar)
             status = True
+            from service.service_messages import ServiceMessages
+            ServiceMessages().message_creation_scenario(self.pseudo, scenar)
         else:
             status = False
         return status

@@ -26,6 +26,12 @@ class ServiceMessages(metaclass=Singleton):
         status = DAO().ajouter_message(pseudo, date, msg)
         return status
 
+    def message_creation_scenario(self, pseudo, scenario):
+        date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        msg = "Création du scénario {id} ({nom}, niveau minimum : {niv_min})".format(id = scenario.id, nom = scenario.nom, niv_min = scenario.niveau_min)
+        status = DAO().ajouter_message(pseudo, date, msg)
+        return status
+
     def message_inscription_partie(self, pseudo, id_partie, id_perso):
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         msg = "Inscription à la partie {id_partie} avec le personnage {id_perso}.".format(id_partie=id_partie, id_perso=id_perso)

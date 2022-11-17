@@ -298,14 +298,25 @@ class DAO(metaclass=Singleton):
             ID du Personnage à inscrire
         id_partie : int
             id de la partie à laquelle inscrire le personnage
+
+        Returns
+        -------
+        boolean
+            True si l'opération a bien été réalisée
         """
         with self.__connection.cursor() as cursor :
             cursor.execute("INSERT INTO inscription_perso (id_perso,id_partie)"
-            " VALUES (%(id_perso)s, %(id_partie)s);"
+            " VALUES (%(id_perso)s, %(id_partie)s)"
+            " RETURNING TRUE AS status;"
             ,{
                 "id_perso" : id_perso,
                 "id_partie" : id_partie,
                  })
+            status = cursor.fetchone()['status']
+        if status:
+            return status
+        else:
+            return False
 
 
     def liste_joueurs(self):
@@ -751,24 +762,12 @@ class DAO(metaclass=Singleton):
                                 liste_persos=persos)
         return partie
 
-    def desinscription_joueur(self, joueur:Joueur, id_partie):
+    def desinscription_personnage(self, id_perso, id_partie):
         with self.__connection.cursor() as cursor:
-            cursor.execute(
-                "SELECT personnage.id_perso AS id"
-                " FROM inscription_perso"
-                " JOIN personnage ON inscription_perso.id_perso=personnage.id_perso"
-                " WHERE id_partie=%(id_partie)s AND personnage.pseudo_j=%(pseudo)s;",
-                {
-                    "id_partie": id_partie,
-                    "pseudo": joueur.pseudo
-
-                }
-            )
-            id_perso = cursor.fetchone()['id']
             cursor.execute(
                 "DELETE FROM inscription_perso "
                 "WHERE id_perso = %(id_perso)s AND id_partie = %(id_partie)s "
-                "RETURNING TRUE AS status",
+                "RETURNING TRUE AS status;",
                 {
                     "id_perso": id_perso,
                     "id_partie": id_partie

@@ -17,8 +17,8 @@ class ServiceJoueur(metaclass=Singleton):
     def liste_parties(self, pseudo_joueur):
         return DAO().liste_inscriptions_joueur(pseudo_joueur)
 
-    def desinscription_joueur(self, joueur, id_partie):
-        res = DAO().desinscription_joueur(joueur,id_partie)
+    def desinscription_personnage(self, id_perso, id_partie):
+        res = DAO().desinscription_personnage(id_perso,id_partie)
         return res
 
     def liste_creneaux_dispos(self, joueur):
@@ -42,5 +42,6 @@ class ServiceJoueur(metaclass=Singleton):
             return None
 
     def inscription_perso(self, id_perso, id_partie):
-        DAO().inscription_personnage(id_perso, id_partie)
+        res = DAO().inscription_personnage(id_perso, id_partie)
+        return res
 

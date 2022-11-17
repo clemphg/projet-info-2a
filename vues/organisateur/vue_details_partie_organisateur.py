@@ -48,16 +48,7 @@ class VueDetailsPartieOrganisateur(AbstractVue):
     def display_info(self):
         print(" --- Détails d'une partie --- \n")
 
-        print("> Partie ", self.__partie.id,
-              "\n  Nom du scénario : ", self.__partie.scenario.nom,
-              "\n  Description de la partie : ", self.__partie.scenario.description,
-              "\n  Personnages : ")
-
-        for perso in self.__partie.liste_persos:
-            print("\n     Nom ", perso.nom,
-                  "\n     Age : ", perso.id,
-                  "\n     Rage : ", perso.race,
-                  "\n     Niveau : ", perso.niveau,"\n")
+        print(self.__partie,"\n")
 
     def make_choice(self):
 

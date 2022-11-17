@@ -43,20 +43,9 @@ class VueDetailsMJOrganisateur(AbstractVue):
         ]
 
     def display_info(self):
-        print("-- Détails sur un joueur --\n")
+        print("-- Détails sur un maître de jeu --\n")
 
-        print(
-            "   Pseudo      :",self.__mj.pseudo,"\n",
-            "   Âge         :",self.__mj.age,"\n",
-            "   Scenarios   :\n"
-        )
-        for scenario in self.__mj.scenarios:
-            print(
-                "      > ID :",scenario.id,"\n",
-                "       Nom :",scenario.nom,"\n",
-                "       Description :",scenario.description,"\n",
-                "       Niveau minimum :",scenario.niveau_min,"\n"
-            )
+        print(self.__mj,"\n")
 
     def make_choice(self):
         reponse = prompt(self.__questions[0])

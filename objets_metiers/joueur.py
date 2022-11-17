@@ -28,9 +28,9 @@ class Joueur(AbstractJoueur):
         return self.__personnages
 
     def __str__(self):
-        res = "Pseudo     : {pseudo}\nAge        : {age}".format(pseudo=self.__pseudo, age=self.__age)
+        res = "Pseudo     : {pseudo}\nAge        : {age}".format(pseudo=self.pseudo, age=self.age)
         if len(self.__personnages)>0:
-            res = res+"Personnage :"
+            res = res+"\nPersonnage :"
             for perso in self.__personnages:
                 res = res+"\n"+perso.__str__()
         return res

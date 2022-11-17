@@ -38,7 +38,7 @@ class Partie():
         if len(self.__liste_persos)>0:
             res = res+"\nPersonnages :"
             for perso in self.__liste_persos:
-                res = res+"\n>"+perso.__str__()
+                res = res+"\n"+perso.__str__()
         return res
 
     @property

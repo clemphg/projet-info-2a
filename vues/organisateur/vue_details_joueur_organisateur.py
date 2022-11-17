@@ -45,20 +45,7 @@ class VueDetailsJoueurOrganisateur(AbstractVue):
     def display_info(self):
         print("-- Détails sur un joueur --\n")
 
-        print(
-            "   Pseudo      :",self.__joueur.pseudo,"\n",
-            "   Âge         :",self.__joueur.age,"\n",
-            "   Personnages :\n"
-        )
-        for perso in self.__joueur.personnages:
-            print(
-                "      > ID :",perso.id,"\n",
-                "       Nom :",perso.nom,"\n",
-                "       Age :",perso.age,"\n",
-                "       Niveau :",perso.niveau,"\n",
-                "       Race :",perso.race,"\n",
-                "       Classe :",perso.classe,"\n"
-            )
+        print(self.__joueur,"\n")
 
     def make_choice(self):
         reponse = prompt(self.__questions[0])

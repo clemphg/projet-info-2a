@@ -37,7 +37,7 @@ class VuePartiesOrganisateur(AbstractVue):
             print("> Partie ", partie.id,
                   "\n  Nom du scénario : ", partie.scenario.nom,
                   "\n  Description de la partie : ", partie.scenario.description,
-                  "\n  Nombre de joueurs inscrits : ", len(partie.liste_persos))
+                  "\n  Nombre de joueurs inscrits : ", len(partie.liste_persos),"\n")
 
     def make_choice(self):
 

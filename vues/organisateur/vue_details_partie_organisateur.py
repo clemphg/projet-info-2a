@@ -54,7 +54,7 @@ class VueDetailsPartieOrganisateur(AbstractVue):
             {
                 'type': 'list',
                 'name': 'choix',
-                'message': 'Sélectionner une action',
+                'message': 'Validation',
                 'choices': [
                     "Confirmer la désinscription",
                     "Annuler"
@@ -79,15 +79,8 @@ class VueDetailsPartieOrganisateur(AbstractVue):
             reponse = prompt(self.__questions[2])
 
         if reponse['choix'] == 'Inscrire un personnage à cette partie':
-            choix_perso = prompt(
-                {
-                    'type': 'list',
-                    'name': 'choix',
-                    'message': 'Sélectionner un personnage selon son nom',
-                    'choices':
-                        [str(p.id) for p in self.__partie.liste_persos]
-                }
-            )
+            from vues.organisateur.vue_inscription_partie_organisateur import VueInscriptionPartieOrganisateur
+            return VueInscriptionPartieOrganisateur(self.__partie)
         elif reponse['choix'] == 'Désinscrire un personnage de cette partie':
             choix_perso = prompt(
                 {

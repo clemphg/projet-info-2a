@@ -738,7 +738,7 @@ class DAO(metaclass=Singleton):
         with self.__connection.cursor() as cursor:
             cursor.execute(
                 "SELECT partie.id_partie, partie.id_creneau, scenario.id_scenario, scenario.pseudo_mj, scenario.nom AS nom_scenario,"
-                " scenario.descrip AS des_scenario, scenario.niveau AS niv_min_scenario, scenario.pseudo_mj AS pseudo_mj"
+                " scenario.descrip AS des_scenario, scenario.niveau AS niv_min_scenario"
                 " FROM partie"
                 " JOIN scenario ON partie.id_scenario = scenario.id_scenario"
                 " WHERE partie.id_partie = %(id_partie)s;"
@@ -868,7 +868,7 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute(
-                "SELECT partie.id_partie, scenario.id_scenario, nom, descrip, niveau"
+                "SELECT partie.id_partie, scenario.id_scenario, nom, descrip, niveau, pseudo_mj"
                 " FROM partie"
                 " JOIN scenario ON partie.id_scenario=scenario.id_scenario"
                 " WHERE id_creneau=%(creneau)s;",
@@ -886,7 +886,8 @@ class DAO(metaclass=Singleton):
                                     scenario = Scenario(id=res['id_scenario'],
                                                         nom=res['nom'],
                                                         description=res['descrip'],
-                                                        niveau_min=res['niveau']),
+                                                        niveau_min=res['niveau'],
+                                                        pseudo_mj=res['pseudo_mj']),
                                     liste_persos=l_persos)
                     parties.append(partie)
                     res = cursor.fetchone()
@@ -936,4 +937,41 @@ class DAO(metaclass=Singleton):
                     l_creneaux.append(res['id_creneau'])
                     res = cursor.fetchone()
         return l_creneaux
+
+    def liste_perso_possibles(self, partie:Partie):
+        """Liste des personnages possibles
+
+        Liste des personnages pouvant être inscrits à une partie.
+        Cherche les personnages des joueurs disponibles sur le créneau et garde ceux de niveau suffisant.
+
+        Returns
+        -------
+        List[int]
+            Liste des personnages
+        """
+        with self.__connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT id_perso"
+                " FROM personnage"
+                " WHERE pseudo_j IN"
+                " (SELECT DISTINCT pseudo_j"
+                " FROM personnage"
+                " EXCEPT"
+                " SELECT pseudo_j"
+                " FROM inscription_perso"
+                " JOIN personnage ON personnage.id_perso=inscription_perso.id_perso"
+                " WHERE id_partie=%(id_partie)s) AND niveau>=%(niv_min)s;",
+                {
+                    "id_partie": partie.id,
+                    "niv_min": partie.scenario.niveau_min
+                }
+            )
+            persos = []
+            res = cursor.fetchone()
+            if res:
+                while res is not None:
+                    perso = self.chercher_par_id_perso(res['id_perso'])
+                    persos.append(perso)
+                    res = cursor.fetchone()
+        return persos
 

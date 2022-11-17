@@ -91,5 +91,9 @@ class ServiceOrganisateur(metaclass=Singleton):
         return res
 
     def inscrire_personnage(self, perso, partie):
-        res = DAO().inscription_personnage(self, perso.id, partie.id)
+        res = DAO().inscription_personnage(perso.id, partie.id)
+        return res
+
+    def personnages_possibles(self, partie):
+        res = DAO().liste_perso_possibles(partie)
         return res

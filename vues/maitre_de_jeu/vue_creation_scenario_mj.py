@@ -86,7 +86,7 @@ class VueCreationScenarioMJ(AbstractVue):
             if reponses['validation'] == 'Créer le scénario':
                 Session().utilisateur.creer_scenario(nom=reponses['choix_nom'],
                                                      description=reponses['choix_description'],
-                                                     niveau_min=reponses['choix_niveau_min'])
+                                                     niveau_min=int(reponses['choix_niveau_min']))
                 print('Le scénario a bien été créé !')
         else:
             print("Vous avez déjà deux scénarios, vous ne pouvez pas en créer plus.\n")

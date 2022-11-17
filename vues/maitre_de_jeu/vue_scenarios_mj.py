@@ -23,9 +23,9 @@ class VueScenariosMJ(AbstractVue):
     def display_info(self):
         if Session().utilisateur.scenarios:
             for scenar in Session().utilisateur.scenarios:
-                print("Nom :",scenar.nom,"\nNiveau minimum :",scenar.niveau_min,"\nDescription :",scenar.description,"\n")
+                print(scenar,"\n")
         else:
-            print("Vous n'avez pas encore créé de scénario.")
+            print("Vous n'avez pas encore créé de scénario.\n")
 
     def make_choice(self):
         reponse = prompt(self.__questions)

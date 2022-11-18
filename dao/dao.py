@@ -953,7 +953,7 @@ class DAO(metaclass=Singleton):
 
         Returns
         -------
-        List[int]
+        List[Personnage]
             Liste des personnages
         """
         with self.__connection.cursor() as cursor:

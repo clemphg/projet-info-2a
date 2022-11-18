@@ -14,20 +14,29 @@ class ServiceMessages(metaclass=Singleton):
 
     def message_inscription(self, pseudo):
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        msg = "Inscription sur la plateforme"
+        msg = "Inscription sur la plateforme."
         status = DAO().ajouter_message(pseudo, date, msg)
         return status
 
     def message_creation_personnage(self, pseudo, perso):
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        msg = "Création du personnage {id} ({nom}, {age} ans, niveau {niv}, {race}, {classe})".format(id = perso.id, nom = perso.nom, age = perso.age,
+        msg = "Création du personnage {id} ({nom}, {age} ans, niveau {niv}, {race}, {classe}).".format(id = perso.id, nom = perso.nom, age = perso.age,
                                                                                                       niv = perso.niveau, race = perso.race, classe = perso.classe)
+        status = DAO().ajouter_message(pseudo, date, msg)
+        return status
+
+    def message_maj_classe(self, pseudo, perso, nvlle_classe):
+        date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        msg = "Le personnage {id} ({nom}, {age} ans, niveau {niv}, {race}) passe de {classe} à {nv_classe}.".format(id = perso.id, nom = perso.nom,
+                                                                                                                    age = perso.age, niv = perso.niveau,
+                                                                                                                    race = perso.race, classe = perso.classe,
+                                                                                                                    nv_classe = nvlle_classe)
         status = DAO().ajouter_message(pseudo, date, msg)
         return status
 
     def message_creation_scenario(self, pseudo, scenario):
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        msg = "Création du scénario {id} ({nom}, niveau minimum : {niv_min})".format(id = scenario.id, nom = scenario.nom, niv_min = scenario.niveau_min)
+        msg = "Création du scénario {id} ({nom}, niveau minimum : {niv_min}).".format(id = scenario.id, nom = scenario.nom, niv_min = scenario.niveau_min)
         status = DAO().ajouter_message(pseudo, date, msg)
         return status
 

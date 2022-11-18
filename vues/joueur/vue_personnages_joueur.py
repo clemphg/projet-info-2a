@@ -69,7 +69,6 @@ class VuePersonnagesJoueur(AbstractVue):
                 id = rep_perso['choix_perso'].split(' ')[2]
                 for perso in Session().utilisateur.personnages:
                     if perso.id == int(id):
-                        perso.classe = rep_classe['choix_nvlle_classe']
                         ServiceJoueur().changer_classe_perso(perso, rep_classe['choix_nvlle_classe'])
 
                 # on affiche la nouvelle liste des personnages

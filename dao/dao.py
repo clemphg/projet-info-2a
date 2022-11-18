@@ -538,7 +538,7 @@ class DAO(metaclass=Singleton):
             cursor.execute("SELECT *"
             " FROM journal "
             " WHERE pseudo=%(pseudo)s"
-            " ORDER BY date DESC;"
+            " ORDER BY date ASC;"
             , {"pseudo": pseudo})
 
             row=cursor.fetchone()

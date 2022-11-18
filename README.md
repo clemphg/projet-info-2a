@@ -9,11 +9,23 @@ En amont de la tenue d'une convention de jeux de rôle, il faut organiser les pa
 
 ## Fonctionnement général
 
-technologies utilisées
+
+### Technologies utilisées
+
+Cette application est codée en Python.
+
+architecture générale
+technologies utilisées (bdd, python, ...)
+
+#### Base de données
+
+Les données des utilisateurs sont persistées via une base de données relationnelle.
+
+#### API
+
+Cette application utilise l'API Donjons&Dragons5. Lors de la création d'un personnage, le joueur doit choisir la classe et la race du personnage dans des listes obtenues via l'API
 
 ## Mise en place de l'application
-
-
 
 
 ### Téléchargement de l'application
@@ -21,16 +33,25 @@ technologies utilisées
 Cette application s'installe en local via ce dossier
 
 ### Initialisation de la base de données
-Vous devez disposer d'un accès à une base de données SQL
 
-changer le .env pour qu'il corresponde aux caractéristiques de votre base et pour pouvoir s'y connecter
+Vous devez disposer d'un accès à une base de données SQL.
+
+Mettre à jour dans le fichier .env :
+
+- HOST : l'host de la database
+- DATABASE : le nom de la base de données
+- USER : le nom d'utilisateur
+- PASSWORD : le mot de passe
+
+Ces informations permettront d'établir la connexion à votre base de données.
+
+
 
 éventuellement ajouter fichier config json pour les variables globales
 
 ## Instructions d'utilisation
 
-lancer le main.py
-menu s'affiche dans le terminal
+Afin de lancer l'application, il faut executer le main.py. Le menu d'accueil de l'application s'affiche.
 
 Toute la navigation dans l'application s'effectue via le clavier
 
@@ -40,12 +61,3 @@ pour sélectionner une option, se positionner dessus et touche entrer
 certains champs requièrent une entrée dactylographiée : taper votre réponse au clavier. Si le texte rentré n'est pas conforme,
 vous serez contraint de retaper une autre réponse jusqu'à ce que vous entriez un text correct (par exemple pour le mot de passe qui doit vérifier certaines caractéristiques)
 
-
-
-
-
-architecture générale
-technologies utilisées (bdd, python, ...)
-parler de tout ce qu'on utiliser (API D and D)
-
-comment mettre en place l'appli

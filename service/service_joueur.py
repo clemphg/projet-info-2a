@@ -30,7 +30,7 @@ class ServiceJoueur(metaclass=Singleton):
         return DAO().chercher_partie_par_id(id_partie)
 
     def liste_parties(self, pseudo_joueur):
-        "Retourne une liste de dictionnaire décrivant l'inscription"
+        "Retourne une liste de dictionnaire décrivant l'inscription aux différentes parties"
         return DAO().liste_inscriptions_joueur(pseudo_joueur)
 
     def desinscription_personnage(self, id_perso, id_partie):

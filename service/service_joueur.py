@@ -34,7 +34,7 @@ class ServiceJoueur(metaclass=Singleton):
         return DAO().liste_inscriptions_joueur(pseudo_joueur)
 
     def desinscription_personnage(self, id_perso, id_partie):
-        "Retourne un True si la désinscription a bien été réalisée, sinon False. Notifie les changements dans la base de données"
+        "Retourne un True si la désinscription a bien été réalisée, sinon False. Notifie les changements à la base de données"
         res = DAO().desinscription_personnage(id_perso,id_partie)
         ServiceMessages().message_desinscription_partie(Session().utilisateur.pseudo, id_partie, id_perso)
         return res

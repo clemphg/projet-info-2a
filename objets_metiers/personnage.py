@@ -89,8 +89,6 @@ class Personnage():
             Nouvelle classe à donner au personnage
         """
         self.__classe = nvlle_classe
-        from dao.dao import DAO
-        DAO().maj_classe(self, nvlle_classe)
 
     @property
     def pseudo_j(self):

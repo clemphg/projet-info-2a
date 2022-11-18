@@ -1,4 +1,3 @@
-from email import message
 from utils.singleton import Singleton
 
 from datetime import datetime

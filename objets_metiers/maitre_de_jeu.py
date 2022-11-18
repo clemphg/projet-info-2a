@@ -38,7 +38,7 @@ class MaitreDeJeu(AbstractJoueur):
     def scenarios(self):
         return self.__scenarios
 
-    def creer_scenario(self, nom, description, niveau_min):
+    def creer_scenario(self, id, nom, description, niveau_min):
         """Création d'un scénario.
 
         Un maitre de jeu possède des scénarios. Ils lui servent pour créer une partie sur une table vide.
@@ -46,6 +46,8 @@ class MaitreDeJeu(AbstractJoueur):
 
         Parameters
         ----------
+        id : id
+            Id du scénario
         nom : str
             Nom du scénario.
         description : str
@@ -58,18 +60,14 @@ class MaitreDeJeu(AbstractJoueur):
         bool
             True si le scénario a bien été ajouté, False sinon.
         """
-        from dao.dao import DAO
         if len(self.__scenarios)<2:
-            scenar = Scenario(nom=nom,
+            scenar = Scenario(id = id,
+                              nom=nom,
                               description=description,
                               niveau_min=niveau_min,
                               pseudo_mj=self.pseudo)
-            id = DAO().creer_scenario(scenar)
-            scenar.id = id
             self.__scenarios.append(scenar)
             status = True
-            from service.service_messages import ServiceMessages
-            ServiceMessages().message_creation_scenario(self.pseudo, scenar)
         else:
             status = False
         return status

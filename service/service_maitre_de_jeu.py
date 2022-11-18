@@ -7,6 +7,7 @@ from dao.dao import DAO
 
 from objets_metiers.maitre_de_jeu import MaitreDeJeu
 
+from service.service_messages import ServiceMessages
 
 nb_parties_par_creneau = 10
 
@@ -14,6 +15,12 @@ class ServiceMaitreDeJeu(metaclass=Singleton):
 
     def messages(self, pseudo):
         return DAO().chercher_messages_par_pseudo(pseudo)
+
+    def creer_scenario(self, scenario):
+        id = DAO().creer_scenario(scenario)
+        scenario.id = id
+        ServiceMessages().message_creation_scenario(scenario.pseudo_mj, scenario)
+        return id
 
     def details_partie(self, id_partie):
         return DAO().chercher_partie_par_id(id_partie)

@@ -8,6 +8,9 @@ from prompt_toolkit.validation import ValidationError, Validator
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
+from service.service_maitre_de_jeu import ServiceMaitreDeJeu
+from objets_metiers.scenario import Scenario
+
 
 class ValidationNom(Validator):
     def validate(self, document):
@@ -84,7 +87,13 @@ class VueCreationScenarioMJ(AbstractVue):
             reponses = prompt(self.__questions[0:4])
 
             if reponses['validation'] == 'Créer le scénario':
-                Session().utilisateur.creer_scenario(nom=reponses['choix_nom'],
+                scenario = Scenario(nom=reponses['choix_nom'],
+                                    description=reponses['choix_description'],
+                                    niveau_min=int(reponses['choix_niveau_min']),
+                                    pseudo_mj=Session().utilisateur.pseudo)
+                id = ServiceMaitreDeJeu().creer_scenario(scenario)
+                Session().utilisateur.creer_scenario(id=id,
+                                                     nom=reponses['choix_nom'],
                                                      description=reponses['choix_description'],
                                                      niveau_min=int(reponses['choix_niveau_min']))
                 print('Le scénario a bien été créé !')

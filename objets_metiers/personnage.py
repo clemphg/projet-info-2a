@@ -1,5 +1,4 @@
 
-
 class Personnage():
     ''' Un personnage est créé par un joueur et est choisi par ce même joueur lorsqu'il participe à une partie de jeu de rôle, il en a au maximum 3
 
@@ -13,7 +12,7 @@ class Personnage():
             Age du personnage
         race : str
             Race du personnage
-        niveau : str
+        niveau : int
             Niveau du personnage
         classe : str
             Classe du personnage

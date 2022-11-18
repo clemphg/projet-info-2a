@@ -73,9 +73,3 @@ class MaitreDeJeu(AbstractJoueur):
         return status
 
 
-    def creer_partie(self, creneau, scenario):
-        from dao.dao import DAO
-        partie = Partie(creneau=creneau,
-                        scenario=scenario)
-        id = DAO().creer_partie(partie)
-

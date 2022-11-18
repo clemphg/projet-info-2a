@@ -9,6 +9,8 @@ from vues.session import Session
 
 from service.service_maitre_de_jeu import ServiceMaitreDeJeu
 
+from objets_metiers.partie import Partie
+
 class VueCreationPartieMJ(AbstractVue):
     def __init__(self) -> None:
         self.__questions = [
@@ -63,7 +65,8 @@ class VueCreationPartieMJ(AbstractVue):
                 scenario = [scenario for scenario in Session().utilisateur.scenarios if scenario.id==id_scenario][0]
                 reponse = prompt(self.__questions[2])
                 if reponse['validation']=="Valider et créer la partie":
-                    Session().utilisateur.creer_partie(creneau, scenario)
+                    partie = Partie(creneau = creneau, scenario=scenario)
+                    ServiceMaitreDeJeu().creer_partie(partie)
                     print('Partie créée !\n')
                 elif reponse['validation']=="Abandonner":
                     print("Abandon.\n")

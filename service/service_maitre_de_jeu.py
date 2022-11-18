@@ -22,6 +22,10 @@ class ServiceMaitreDeJeu(metaclass=Singleton):
         ServiceMessages().message_creation_scenario(scenario.pseudo_mj, scenario)
         return id
 
+    def creer_partie(self, partie):
+        id = DAO().creer_partie(partie)
+        return id
+
     def details_partie(self, id_partie):
         return DAO().chercher_partie_par_id(id_partie)
 

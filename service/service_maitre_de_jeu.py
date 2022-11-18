@@ -1,11 +1,6 @@
-from pickle import TRUE
 from utils.singleton import Singleton
 
-from vues.session import Session
-
 from dao.dao import DAO
-
-from objets_metiers.maitre_de_jeu import MaitreDeJeu
 
 from service.service_messages import ServiceMessages
 
@@ -24,6 +19,7 @@ class ServiceMaitreDeJeu(metaclass=Singleton):
 
     def creer_partie(self, partie):
         id = DAO().creer_partie(partie)
+        ServiceMessages().message_creation_partie(partie.scenario.pseudo_mj, partie)
         return id
 
     def details_partie(self, id_partie):
@@ -45,6 +41,7 @@ class ServiceMaitreDeJeu(metaclass=Singleton):
 
     def supprimer_partie(self, partie):
         res = DAO().supprimer_partie(partie)
+        ServiceMessages().message_suppression_partie(partie.scenario.pseudo_mj, partie)
         return res
 
 

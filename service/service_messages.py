@@ -40,6 +40,22 @@ class ServiceMessages(metaclass=Singleton):
         status = DAO().ajouter_message(pseudo, date, msg)
         return status
 
+    def message_creation_partie(self, pseudo, partie):
+        date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        msg = "Création de la partie {id} (scénario : {nom}, niveau minimum : {niv_min}, creneau {cr}).".format(id = partie.id, nom = partie.scenario.nom,
+                                                                                                                niv_min = partie.scenario.niveau_min,
+                                                                                                                cr = partie.creneau)
+        status = DAO().ajouter_message(pseudo, date, msg)
+        return status
+
+    def message_suppression_partie(self, pseudo, partie):
+        date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        msg = "Suppression de la partie {id} (scénario : {nom}, niveau minimum : {niv_min}, creneau {cr}).".format(id = partie.id, nom = partie.scenario.nom,
+                                                                                                                   niv_min = partie.scenario.niveau_min,
+                                                                                                                   cr = partie.creneau)
+        status = DAO().ajouter_message(pseudo, date, msg)
+        return status
+
     def message_inscription_partie(self, pseudo, id_partie, id_perso):
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         msg = "Inscription à la partie {id_partie} avec le personnage {id_perso}.".format(id_partie=id_partie, id_perso=id_perso)

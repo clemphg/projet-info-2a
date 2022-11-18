@@ -43,7 +43,7 @@ class TestServicePersonnage():
         # THEN 
         self.assertTrue(test)
 
-    def test_desinscription_personnage(self):
+    def test_desinscription_personnage_true(self):
         #On donne un id_perso et un id_partie valide
         id_perso=1
         id_partie=1
@@ -52,7 +52,7 @@ class TestServicePersonnage():
         # THEN
         self.assertTrue(test)
     
-    def test_desinscription_personnage(self):
+    def test_desinscription_personnage_false(self):
         #On donne un id_perso et un id_partie qui ne correspondent pas un couple de inscription partie existant
         id_perso=1
         id_partie=3
@@ -60,5 +60,14 @@ class TestServicePersonnage():
         test=ServiceJoueur().desinscription_personnage(id_perso, id_partie)
         # THEN
         self.assertTrue(test,"le personnage n'est pas inscrit à la partie")
+    
+    def test_liste_creneaux_dispos(self):
+        #On donne un joueur valide
+        joueur=Joueur('Hilaire100', 58)
+        # WHEN
+        test=ServiceJoueur().liste_creneaux_dispos(joueur)
+        # THEN
+        self.assertTrue(test)
+
 
 

@@ -36,7 +36,7 @@ class Joueur(AbstractJoueur):
                 res = res+"\n"+perso.__str__()
         return res
 
-    def creer_personnage(self, nom, age, race, niveau, classe):
+    def creer_personnage(self, id, nom, age, race, niveau, classe):
         """Création d'un personnage.
 
         Un joueur possède des personnages. Il peut en créer jusqu'à trois. Il s'inscrit sur
@@ -44,8 +44,6 @@ class Joueur(AbstractJoueur):
 
         Parameters
         ----------
-        id : int
-            Id du personnage
         nom : str
             Nom du personnage.
         age : int
@@ -62,20 +60,16 @@ class Joueur(AbstractJoueur):
         bool
             True si le personnage a bien été ajouté, False sinon
         """
-        from dao.dao import DAO
         if len(self.__personnages)<3:
-            perso = Personnage(nom=nom,
+            perso = Personnage(id=id,
+                               nom=nom,
                                age=age,
                                race=race,
                                niveau=niveau,
                                classe=classe,
                                pseudo_j=self.pseudo)
-            id = DAO().creer_perso(perso)
-            perso.id = id
             self.__personnages.append(perso)
             status = True
-            from service.service_messages import ServiceMessages
-            ServiceMessages().message_creation_personnage(self.pseudo, perso)
         else:
             status = False
         return status

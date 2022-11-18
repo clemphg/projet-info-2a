@@ -11,6 +11,15 @@ class ServiceJoueur(metaclass=Singleton):
     def messages(self, pseudo):
         return DAO().chercher_messages_par_pseudo(pseudo)
 
+    def creation_personnage(self, perso):
+        id = DAO().creer_perso(perso)
+        perso.id = id
+        ServiceMessages().message_creation_personnage(perso.pseudo_j, perso)
+        return id
+
+    def changer_classe_perso(self, perso, nvlle_classe):
+        DAO().maj_classe(perso, nvlle_classe)
+
     def details_partie(self, id_partie):
         return DAO().chercher_partie_par_id(id_partie)
 

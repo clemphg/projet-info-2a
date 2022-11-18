@@ -2,13 +2,18 @@
 
 ## Contexte
 
-Cette application a vocation à servir lors d'une conférence de jeux de rôles organisée lors d'un weekend à Rennes.
+Cette application à été réalisée en 2022 dans le cadre du projet d'informatique de deuxième année de l'ENSAI.
+
+En amont de la tenue d'une convention de jeux de rôle, il faut organiser les parties qui s'y tiendront. Via cette application, des joueurs et des maîtres de jeu peuvent créer personnages et scénarios. Après qu'une partie ait été créée par un maître de jeu, les joueurs peuvent s'y inscrire avec un personnage si celui-ci est compatible.  Des organisateurs ont également accès à l'application et peuvent gérer joueurs, maîtres de jeu, personnages, scénarios et parties.
 
 
 ## Fonctionnement général
 
+technologies utilisées
 
 ## Mise en place de l'application
+
+
 
 
 ### Téléchargement de l'application

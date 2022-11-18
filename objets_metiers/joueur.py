@@ -44,8 +44,6 @@ class Joueur(AbstractJoueur):
 
         Parameters
         ----------
-        id : int
-            Id du personnage
         nom : str
             Nom du personnage.
         age : int

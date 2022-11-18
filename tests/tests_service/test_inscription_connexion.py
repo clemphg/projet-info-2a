@@ -1,5 +1,5 @@
 from unittest import TestCase
-from service import service_inscription_connexion
+from service.service_inscription_connexion import *
 from objets_metiers.joueur import Joueur
 import hashlib
 

@@ -24,7 +24,7 @@ class TestDaoJoueur(TestCase):
         result[2].sort(key=lambda result[2]:result[2].id_perso)
         test[2].sort(key=lambda test[2]:test[2].id_perso)
         #THEN 
-        self.assertEqual(result,test))
+        self.assertEqual(result,test)
         pass
 
 

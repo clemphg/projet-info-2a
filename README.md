@@ -1,5 +1,12 @@
 # Conférence de jeu de rôle
 
+## Sommaire
+
+1. [Contexte](#contexte)
+2. [Fonctionnement général](#fonctionnement-general)
+3. [Mise en place de l'application](#mep-application)
+4. [Instructions d'utilisation](#instruction-utilisation)
+
 ## Contexte
 
 Cette application à été réalisée en 2022 dans le cadre du projet d'informatique de deuxième année de l'ENSAI.

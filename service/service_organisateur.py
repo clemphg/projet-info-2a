@@ -6,6 +6,8 @@ from dao.dao import DAO
 
 from objets_metiers.organisateur import Organisateur
 
+from service.service_messages import ServiceMessages
+
 class ServiceOrganisateur(metaclass=Singleton):
 
     def liste_joueurs(self):
@@ -38,6 +40,7 @@ class ServiceOrganisateur(metaclass=Singleton):
                 status = status and res
         # le supprimer
         res = DAO().supprimer_personnage(perso)
+        ServiceMessages().message_suppression_perso_org(joueur.pseudo, Session().utilisateur.pseudo, perso)
         return res and status
 
     def liste_mjs(self):
@@ -73,6 +76,7 @@ class ServiceOrganisateur(metaclass=Singleton):
                 status = status and res
         # supprimer le scénario
         res = DAO().supprimer_scenario(scenario)
+        ServiceMessages().message_suppression_scenario_org(mj.pseudo, Session().utilisateur.pseudo, scenario)
         return status and res
 
     def liste_parties(self):

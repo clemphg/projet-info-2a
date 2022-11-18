@@ -67,3 +67,28 @@ class ServiceMessages(metaclass=Singleton):
         msg = "Désinscription du personnage {id_perso} de la partie {id_partie}.".format(id_perso=id_perso, id_partie=id_partie)
         status = DAO().ajouter_message(pseudo, date, msg)
         return status
+
+    def message_suppression_perso_org(self, pseudo_j, pseudo_o, perso):
+        date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        msg = "Votre personnage {id_perso} ({nom}, {age} ans, niveau {niv}, {race}, {classe}) a été supprimé par {pseudo_o}.".format(id_perso=perso.id,
+                                                                                                                                     nom = perso.nom,
+                                                                                                                                     age = perso.age,
+                                                                                                                                     niv = perso.niveau,
+                                                                                                                                     race = perso.race,
+                                                                                                                                     classe = perso.classe,
+                                                                                                                                     pseudo_o=pseudo_o)
+        status = DAO().ajouter_message(pseudo_j, date, msg)
+        return status
+
+    def message_suppression_scenario_org(self, pseudo_mj, pseudo_o, scenario):
+        date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        msg = "Suppression du scénario {id} ({nom}, niveau minimum : {niv_min}) par {pseudo_o}.".format(id = scenario.id, nom = scenario.nom,
+                                                                                                        niv_min = scenario.niveau_min, pseudo_o=pseudo_o)
+        status = DAO().ajouter_message(pseudo_mj, date, msg)
+        return status
+
+    def message_desinscription_partie_org(self, pseudo_j, pseudo_o, id_partie, id_perso):
+        date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        msg = "Vous avez été désinscrit de la partie {id_partie} (personnage {id_perso} par {pseudo_o}.".format(id_partie=id_partie, id_perso=id_perso, pseudo_o=pseudo_o)
+        status = DAO().ajouter_message(pseudo_j, date, msg)
+        return status

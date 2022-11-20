@@ -3,9 +3,9 @@ class Organisateur():
     Attributes
        ----------
        pseudo : str
-           Pseudo de l'organisateur, sert d'identifiant de connexion 
+           Pseudo de l'organisateur, sert d'identifiant de connexion
            '''
-   
+
     def __init__(self, pseudo):
         ''' Constructeur'''
         self.__pseudo = pseudo

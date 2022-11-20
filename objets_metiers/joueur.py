@@ -19,7 +19,8 @@ class Joueur(AbstractJoueur):
         >>> c = Joueur()
         >>> c.creer_personnage()
         '''
-    def __init__(self, pseudo, age, personnages = []):
+
+    def __init__(self, pseudo, age, personnages=[]):
         ''' Constructeur'''
         super().__init__(pseudo, age)
         self.__personnages = personnages
@@ -29,8 +30,9 @@ class Joueur(AbstractJoueur):
         return self.__personnages
 
     def __str__(self):
-        res = "Pseudo     : {pseudo}\nAge        : {age}".format(pseudo=self.pseudo, age=self.age)
-        if len(self.__personnages)>0:
+        res = "Pseudo     : {pseudo}\nAge        : {age}".format(
+            pseudo=self.pseudo, age=self.age)
+        if len(self.__personnages) > 0:
             res = res+"\nPersonnage :"
             for perso in self.__personnages:
                 res = res+"\n"+perso.__str__()
@@ -60,7 +62,7 @@ class Joueur(AbstractJoueur):
         bool
             True si le personnage a bien été ajouté, False sinon
         """
-        if len(self.__personnages)<3:
+        if len(self.__personnages) < 3:
             perso = Personnage(id=id,
                                nom=nom,
                                age=age,

@@ -1,3 +1,8 @@
+"""Main
+
+Point d'entrée de l'application. Fichier à executer pour accéder à l'app.
+"""
+
 from vues.vue_accueil import VueAccueil
 
 # Point d'entrée de l'application
@@ -20,5 +25,3 @@ if __name__ == '__main__':
     # s affiche lorsqu'on quitte l'application
     with open('graphiques/a_bientot.txt', 'r', encoding="utf-8") as asset:
         print(asset.read())
-
-

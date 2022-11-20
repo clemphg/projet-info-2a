@@ -29,7 +29,7 @@ class ServiceMessages(metaclass=Singleton):
         return status
 
     def message_maj_classe(self, pseudo, perso, nvlle_classe):
-    "Vérifie si on a bien envoyé le message de changement de classe du personnage voulu, daté à l'utilisateur. Si c'est le cas, la méthode retourne True sinon False"
+        "Vérifie si on a bien envoyé le message de changement de classe du personnage voulu, daté à l'utilisateur. Si c'est le cas, la méthode retourne True sinon False"
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         msg = "Le personnage {id} ({nom}, {age} ans, niveau {niv}, {race}) passe de {classe} à {nv_classe}.".format(id = perso.id, nom = perso.nom,
                                                                                                                     age = perso.age, niv = perso.niveau,
@@ -46,7 +46,7 @@ class ServiceMessages(metaclass=Singleton):
         return status
 
     def message_creation_partie(self, pseudo, partie):
-       "Vérifie si on a bien envoyé le message de création d'une partie, daté à l'utilisateur. Si c'est le cas, la méthode retourne True sinon False"
+        "Vérifie si on a bien envoyé le message de création d'une partie, daté à l'utilisateur. Si c'est le cas, la méthode retourne True sinon False"
         date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         msg = "Création de la partie {id} (scénario : {nom}, niveau minimum : {niv_min}, creneau {cr}).".format(id = partie.id, nom = partie.scenario.nom,
                                                                                                                 niv_min = partie.scenario.niveau_min,

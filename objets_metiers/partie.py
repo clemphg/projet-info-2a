@@ -2,6 +2,7 @@
 from objets_metiers.personnage import Personnage
 from objets_metiers.scenario import Scenario
 
+
 class Partie():
     ''' Une partie est jouée par 4 personnages et met en scène un des scénarios des maîtres du jeu, elle est donc créee par le maître du jeu
 
@@ -24,8 +25,7 @@ class Partie():
        >>> c.supprimer_perso
     '''
 
-
-    def __init__(self, id:int=None, creneau:int=None, scenario:Scenario=None, liste_persos:list[Personnage]=[]):
+    def __init__(self, id: int = None, creneau: int = None, scenario: Scenario = None, liste_persos: list[Personnage] = []):
         ''' Constructeur'''
         self.__id = id
         self.__creneau = creneau
@@ -33,9 +33,10 @@ class Partie():
         self.__liste_persos = liste_persos
 
     def __str__(self):
-        res = "ID          : {id}\nCreneau     : {cre}\nScenario    : ".format(id=self.__id, cre=self.__creneau)
-        res=res+"\n"+self.__scenario.__str__()
-        if len(self.__liste_persos)>0:
+        res = "ID          : {id}\nCreneau     : {cre}\nScenario    : ".format(
+            id=self.__id, cre=self.__creneau)
+        res = res+"\n"+self.__scenario.__str__()
+        if len(self.__liste_persos) > 0:
             res = res+"\nPersonnages :"
             for perso in self.__liste_persos:
                 res = res+"\n"+perso.__str__()
@@ -64,5 +65,3 @@ class Partie():
     def liste_persos(self):
         ''' Retourne la liste des personnages participant à la partie'''
         return self.__liste_persos
-
-    

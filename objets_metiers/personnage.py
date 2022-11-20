@@ -39,9 +39,10 @@ class Personnage():
 
     def __str__(self):
         '''Chaine de caractères décrivant le personnage'''
-        res = "  > ID            : {id}\n    Nom           : {nom}\n    Age           : {age}\n".format(id=self.__id,nom=self.__nom,age=self.__age)
-        res = res+"    Race          : {race}\n    Niveau        : {niv}\n    Classe        : {classe}\n".format(race=self.__race,niv=self.__niveau,classe=self.__classe)
-        res = res+"    Pseudo joueur : {pseudo}".format(pseudo=self.__pseudo_j)
+        res = f"  > ID            : {self.__id}\n    Nom           : {self.__nom}\n    Age           : {self.__age}\n"
+        res = res + \
+            f"    Race          : {self.__race}\n    Niveau        : {self.__niveau}\n    Classe        : {self.__classe}\n"
+        res = res+f"    Pseudo joueur : {self.__pseudo_j}"
         return res
 
     @property

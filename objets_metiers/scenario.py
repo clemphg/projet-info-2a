@@ -3,6 +3,8 @@
 Un scénario appartient à un maître de jeu. Une fois créé, il ne peut pas être modifié.
 
 """
+
+
 class Scenario():
 
     def __init__(self, id=None, nom=None, description=None, niveau_min=None, pseudo_mj=None):
@@ -29,8 +31,10 @@ class Scenario():
 
     def __str__(self):
         '''Chaine de caractères décrivant le scénario'''
-        res = "  > ID                   : {id}\n    Nom                  : {nom}\n    Description          : {des}\n".format(id=self.__id,nom=self.__nom,des=self.__description)
-        res = res+"    Niveau minimal       : {niv}\n    Pseudo maitre de jeu : {pseudo}".format(niv=self.__niveau_min,pseudo=self.pseudo_mj)
+        res = "  > ID                   : {id}\n    Nom                  : {nom}\n    Description          : {des}\n".format(
+            id=self.__id, nom=self.__nom, des=self.__description)
+        res = res+"    Niveau minimal       : {niv}\n    Pseudo maitre de jeu : {pseudo}".format(
+            niv=self.__niveau_min, pseudo=self.pseudo_mj)
         return res
 
     @property
@@ -38,7 +42,7 @@ class Scenario():
         return self.__id
 
     @id.setter
-    def id(self,value):
+    def id(self, value):
         self.__id = value
 
     @property

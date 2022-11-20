@@ -17,23 +17,23 @@ En amont de la tenue d'une convention de jeux de rôle, il faut organiser les pa
 ## Fonctionnement général
 
 
+
 ### Technologies utilisées
 
-Cette application est codée en Python.
+Cette application est codée en Python .
 
 architecture générale
 technologies utilisées (bdd, python, ...)
 
 #### Base de données
 
-Les données des utilisateurs sont persistées via une base de données relationnelle.
+Les données des utilisateurs sont gardées en mémoire grace à une base de données relationnelle.
 
 #### API
 
-Cette application utilise l'API Donjons&Dragons5. Lors de la création d'un personnage, le joueur doit choisir la classe et la race du personnage dans des listes obtenues via l'API
+Cette application utilise l'[API Dungeons and Dragons (5th edition)](https://www.dnd5eapi.co/). Lors de la création d'un personnage, le joueur doit choisir la classe et la race du personnage dans des listes obtenues via l'API.
 
 ## Mise en place de l'application
-
 
 ### Téléchargement de l'application
 
@@ -41,9 +41,9 @@ Cette application s'installe en local via ce dossier
 
 ### Initialisation de la base de données
 
-Vous devez disposer d'un accès à une base de données SQL.
+Vous devez disposer d'un accès à une base de données SQL. Vous pouvez par exemple installer une base [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) en local.
 
-Mettre à jour dans le fichier .env :
+Une fois que vous disposez d'une base, vous devrez mettre à jour dans le fichier .env :
 
 - HOST : l'host de la database
 - DATABASE : le nom de la base de données

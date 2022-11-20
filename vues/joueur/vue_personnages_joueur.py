@@ -14,7 +14,9 @@ from service.service_joueur import ServiceJoueur
 
 class VuePersonnagesJoueur(AbstractVue):
     def __init__(self) -> None:
-         "Création de la vue avec la définition d'une variable questions qui va stocker les intéractions du joueur. Ici, le     joueur va pouvoir modifier les classes de son personnage en sélectionnant 'Modifier la classe de l'un de mes personnages' et retourner au menu principal"
+        """Création de la vue avec la définition d'une variable questions qui va stocker les intéractions du joueur.
+        Ici, le joueur va pouvoir modifier les classes de son personnage en sélectionnant 'Modifier la classe de l'un
+        de mes personnages' et retourner au menu principal"""
 
         self.__questions = [
             {

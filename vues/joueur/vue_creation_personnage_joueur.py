@@ -43,7 +43,7 @@ class ValidationEntier(Validator):
 class VueCreationPersonnageJoueur(AbstractVue):
     def __init__(self) -> None:
         ''' Création de la vue avec la définition d'une variable questions qui va stocker les intéractions du joueur,
-        qui consitent à pouvoir choisir le nom de son personnage, son âge, son niveau et sa classe s'il sélectionne
+        qui consitent à pouvoir choisir le nom de son personnage, son âge, son niveau, sa race et sa classe s'il sélectionne
         'Créer le personnage'. Il pourra également abandonner la création de son personnage en sélectionnant 'Abandonner'
         et/ou retourner sur le menu principal en sélectionnant 'Retourner au menu principal'
         '''

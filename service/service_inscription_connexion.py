@@ -60,19 +60,25 @@ class ServiceInscriptionConnexion(metaclass=Singleton):
             Mot de passe du nouvel utilisateur
         type_de_profil : str
             Type du nouvel utilisateur ('Joueur' ou 'Maître de jeu')
+
+        Returns
+        -------
+        bool
+            True si le pseudo de l'utilisateur créé est bien retrouvé, False sinon
         """
         mdp_hache = hashlib.sha256(pseudo.encode() + mdp.encode()).hexdigest()
         if type_de_profil=='Joueur':
-            DAO().creer_joueur(Joueur(pseudo=pseudo,
+            res = DAO().creer_joueur(Joueur(pseudo=pseudo,
                                       age=age),
                                mot_de_passe=mdp_hache)
         elif type_de_profil=='Maître de jeu':
-            DAO().creer_mj(MaitreDeJeu(pseudo=pseudo,
+            res = DAO().creer_mj(MaitreDeJeu(pseudo=pseudo,
                                        age=age),
                            mot_de_passe=mdp_hache)
 
         from service.service_messages import ServiceMessages
         ServiceMessages().message_inscription(pseudo)
+        return res
 
 
     def instancier_utilisateur(self, pseudo, type_de_profil):

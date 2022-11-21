@@ -38,6 +38,17 @@ class TestServiceInscriptionConnexion(TestCase):
         #THEN
         self.assertFalse(test)
 
+    def test_creer_utilisateur(self):
+        # GIVEN
+        pseudo = "NewGameMaster"
+        age = 54
+        mdp = "MotDePasse234:)"
+        type_de_profil = "Maître de jeu"
+        # WHEN
+        res = ServiceInscriptionConnexion().creer_utilisateur(pseudo, age, mdp, type_de_profil)
+        # THEN
+        self.assertTrue(res)
+
     def test_instancier_utilisateur_ok(self):
         # GIVEN
         pseudo = "Hilaire100"

@@ -30,7 +30,7 @@ L'utilisateur va interagir avec les vues, qui font appel aux services. Ces derni
 
 ### Technologies utilisées
 
-Cette application est codée en Python 3.9. Elle s'appuie sur une base de données relationnelle pour le stockage des données.
+Cette application est codée en **Python 3.9**. Elle s'appuie sur une base de données relationnelle pour le stockage des données.
 
 #### Base de données
 

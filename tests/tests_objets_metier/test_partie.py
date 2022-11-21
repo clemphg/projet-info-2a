@@ -41,47 +41,10 @@ class TestPartie(TestCase):
         # THEN
         self.assertEqual(scenar,partie.scenario)
 
-    def test_ajouter_perso_possible(self):
+    def test_str(self):
         # GIVEN
-        perso = Personnage(nom="fifi")
-        partie = Partie(liste_persos=[Personnage(nom="riri")])
+        scenar = Scenario(nom="A l'aventure")
         # WHEN
-        status = partie.ajouter_perso(perso)
+        res = scenar.__str__()
         # THEN
-        self.assertTrue(status)
-
-    def test_ajouter_perso_impossible(self):
-        # GIVEN
-        perso = Personnage(nom="fifi")
-        partie = Partie(liste_persos=[Personnage(nom="riri"),
-                                      Personnage(nom="loulou"),
-                                      Personnage(nom="sisi"),
-                                      Personnage(nom="nonnon"),
-                                      Personnage(nom="coucou")])
-        # WHEN
-        status = partie.ajouter_perso(perso)
-        # THEN
-        self.assertFalse(status)
-
-    def test_supprimer_perso_possible(self):
-        # GIVEN
-        perso = Personnage(id=2)
-        partie = Partie(liste_persos=[Personnage(id=54),
-                                      Personnage(id=4),
-                                      perso])
-        # WHEN
-        status = partie.supprimer_perso(perso)
-        # THEN
-        self.assertTrue(status)
-
-    def test_supprimer_perso_impossible(self):
-        # GIVEN
-        perso = Personnage(id=3)
-        partie = Partie(liste_persos=[Personnage(id=1),
-                                      Personnage(id=2),
-                                      Personnage(id=35),
-                                      Personnage(id=32)])
-        # WHEN
-        status = partie.supprimer_perso(perso)
-        # THEN
-        self.assertFalse(status)
+        self.assertIsInstance(res,str)

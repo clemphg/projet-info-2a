@@ -5,7 +5,7 @@ from dao.dao import DAO
 from objets_metiers.joueur import Joueur
 
 class TestDaoJoueur(TestCase):
-
+    """
     def test_creer_joueur(self):
         # GIVEN
         # On donne un couple Joueur, mdp valide
@@ -15,6 +15,7 @@ class TestDaoJoueur(TestCase):
         test=DAO().creer_joueur(j,mdp)
         #THEN
         self.assertTrue(test)
+    """
 
     def test_chercher_par_pseudo_j(self):
         # GIVEN

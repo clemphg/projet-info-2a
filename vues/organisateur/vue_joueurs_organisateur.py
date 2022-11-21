@@ -12,6 +12,7 @@ from service.service_organisateur import ServiceOrganisateur
 
 class VueJoueursOrganisateur(AbstractVue):
     def __init__(self) -> None:
+        "Création JoueursOrganisateur avec la définiton d'une variable questions qui va stocker toutes les intéractions de l'organisateur. Il va pouvoir consulter sélectionner un joueur, consulter son profil de façon détaillé et/ou retourner au menu principal."
         self.__questions = [
             {
                 'type': 'list',
@@ -31,6 +32,7 @@ class VueJoueursOrganisateur(AbstractVue):
         ]
 
     def display_info(self):
+        "S'affiche la liste des joueurs avec leur pseudo, leur âge et leur nombre de personnages. "
         print("-- Liste des joueurs --\n")
         joueurs = ServiceOrganisateur().liste_joueurs()
         for joueur in joueurs:
@@ -39,6 +41,7 @@ class VueJoueursOrganisateur(AbstractVue):
                   "\n  Nb de personnages :",len(joueur.personnages),"\n")
 
     def make_choice(self):
+        "Si l'organisateur fait le choix de voir un joueur en détail, il lui sera proposé de selectionner un joueur parmi la liste à disposition. Après avoir terminé la selection, il lui sera retourné une nouvelle vue VueDetailsJoueurOrganisateurs. Dans le cas contraire, il fait le choix de retourner à son menu principal: il lui sera retourné la vue VuePrincipalOrganisateur."
         reponse = prompt(self.__questions[0])
         if reponse['choix'] == 'Voir un joueur en détails':
             choix_j = prompt(self.__questions[1])

@@ -4,8 +4,6 @@ from vues.session import Session
 
 from dao.dao import DAO
 
-from objets_metiers.organisateur import Organisateur
-
 from service.service_messages import ServiceMessages
 
 class ServiceOrganisateur(metaclass=Singleton):
@@ -33,7 +31,7 @@ class ServiceOrganisateur(metaclass=Singleton):
         return status and res
 
     def supprimer_personnage(self, perso, joueur):
-        "Retourne True si le personnage a été supprimé et désinscrit, et notifie à la base de données les informations du personnage supprimé"  
+        "Retourne True si le personnage a été supprimé et désinscrit, et notifie à la base de données les informations du personnage supprimé"
         status = True
         # supprimer ses inscriptions
         inscriptions = DAO().liste_inscriptions_joueur(joueur.pseudo)

@@ -2,8 +2,6 @@ from utils.singleton import Singleton
 
 from datetime import datetime
 
-from vues.session import Session
-
 from dao.dao import DAO
 
 

@@ -1,15 +1,11 @@
 from utils.singleton import Singleton
 
-from vues.session import Session
-
 from dao.dao import DAO
 
 import hashlib
 
 from objets_metiers.joueur import Joueur
 from objets_metiers.maitre_de_jeu import MaitreDeJeu
-from objets_metiers.organisateur import Organisateur
-
 class ServiceInscriptionConnexion(metaclass=Singleton):
 
     def verifier_pseudo_libre(self, pseudo_a_tester):

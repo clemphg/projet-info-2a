@@ -114,7 +114,7 @@ class VueInscriptionPartieJoueur(AbstractVue):
                     q_val = prompt(self.__questions[2])
                     if q_val['validation']=="Valider l'inscription":
                         id_perso = int(reponse['choix_perso'].split(' ')[2])
-                        ServiceJoueur().inscription_perso(id_perso, id_partie)
+                        ServiceJoueur().inscription_perso(id_perso, id_partie, Session().utilisateur.pseudo)
                     elif q_val['validation']=='Abandonner':
                         print("Inscription abandonnée.\n")
 

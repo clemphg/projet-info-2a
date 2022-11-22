@@ -21,9 +21,10 @@ class ServiceJoueur(metaclass=Singleton):
 
     def changer_classe_perso(self, perso, nvlle_classe):
         "Change la classe du personnage et notifie le changement à la base de données"
-        DAO().maj_classe(perso, nvlle_classe)
+        res = DAO().maj_classe(perso, nvlle_classe)
         ServiceMessages().message_maj_classe(perso.pseudo_j, perso, nvlle_classe)
         perso.classe = nvlle_classe
+        return res
 
     def details_partie(self, id_partie):
         "Retourne les détails d'une partie"
@@ -33,10 +34,10 @@ class ServiceJoueur(metaclass=Singleton):
         "Retourne une liste de dictionnaire décrivant l'inscription aux différentes parties"
         return DAO().liste_inscriptions_joueur(pseudo_joueur)
 
-    def desinscription_personnage(self, id_perso, id_partie):
+    def desinscription_personnage(self, id_perso, id_partie, pseudo_j):
         "Retourne un True si la désinscription a bien été réalisée, sinon False. Notifie les changements à la base de données"
         res = DAO().desinscription_personnage(id_perso,id_partie)
-        ServiceMessages().message_desinscription_partie(Session().utilisateur.pseudo, id_partie, id_perso)
+        ServiceMessages().message_desinscription_partie(pseudo_j, id_partie, id_perso)
         return res
 
     def liste_creneaux_dispos(self, joueur):
@@ -62,9 +63,9 @@ class ServiceJoueur(metaclass=Singleton):
         else:
             return None
 
-    def inscription_perso(self, id_perso, id_partie):
+    def inscription_perso(self, id_perso, id_partie, pseudo_j):
         "Retourne True si le personnage a bien été créé, false sinon. Notifie à la base de données, le changement réalisé"
         res = DAO().inscription_personnage(id_perso, id_partie)
-        ServiceMessages().message_inscription_partie(Session().utilisateur.pseudo, id_partie, id_perso)
+        ServiceMessages().message_inscription_partie(pseudo_j, id_partie, id_perso)
         return res
 

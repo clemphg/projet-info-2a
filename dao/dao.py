@@ -444,11 +444,14 @@ class DAO(metaclass=Singleton):
         """
         with self.__connection.cursor() as cursor:
             cursor.execute("UPDATE personnage SET classe=%(nvlle_classe)s"
-            " WHERE id_perso=%(id)s;"
+            " WHERE id_perso=%(id)s"
+            " RETURNING TRUE as status;"
             ,{
                 "nvlle_classe" : nvlle_classe,
                 "id" : personnage.id
                 })
+            res=cursor.fetchone()
+        return res
 
     def verifier_pseudo_libre(self, pseudo):
         """Teste si un pseudo est déjà utilisé ou non
@@ -774,7 +777,7 @@ class DAO(metaclass=Singleton):
                     "id_partie": id_partie
                 }
             )
-            status = cursor.fetchone()['status']
+            status = cursor.fetchone()
         if status:
             return status
         else:

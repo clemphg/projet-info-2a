@@ -66,7 +66,7 @@ class VueDetailsPartieJoueur(AbstractVue):
 
         reponse = prompt(self.__questions)
         if reponse['choix']=="Se désinscrire de la partie":
-            res = ServiceJoueur().desinscription_personnage(perso.id, self.__id_partie)
+            res = ServiceJoueur().desinscription_personnage(perso.id, self.__id_partie, Session().utilisateur.pseudo)
             from vues.joueur.vue_parties_joueur import VuePartiesJoueur
             return VuePartiesJoueur()
         elif reponse['choix']=='Retour à la liste des inscriptions':

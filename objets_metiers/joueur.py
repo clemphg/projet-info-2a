@@ -30,8 +30,7 @@ class Joueur(AbstractJoueur):
         return self.__personnages
 
     def __str__(self):
-        res = "Pseudo     : {pseudo}\nAge        : {age}".format(
-            pseudo=self.pseudo, age=self.age)
+        res = f"Pseudo     : {self.pseudo}\nAge        : {self.age}"
         if len(self.__personnages) > 0:
             res = res+"\nPersonnage :"
             for perso in self.__personnages:

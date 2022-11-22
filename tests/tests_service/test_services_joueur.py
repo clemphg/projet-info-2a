@@ -1,4 +1,3 @@
-import unittest
 from unittest import TestCase
 
 from service.service_joueur import ServiceJoueur
@@ -7,7 +6,6 @@ from objets_metiers.joueur import Joueur
 
 from objets_metiers.personnage import Personnage
 
-import hashlib
 
 class TestServiceJoueur(TestCase):
 

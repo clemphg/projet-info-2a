@@ -312,7 +312,7 @@ class DAO(metaclass=Singleton):
                 "id_perso" : id_perso,
                 "id_partie" : id_partie,
                  })
-            status = cursor.fetchone()['status']
+            status = cursor.fetchone()
         if status:
             return status
         else:

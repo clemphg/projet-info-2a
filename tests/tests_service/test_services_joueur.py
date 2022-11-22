@@ -1,10 +1,11 @@
+import unittest
 from unittest import TestCase
 
-from service.service_joueur import *
+from service.service_joueur import ServiceJoueur
 
 from objets_metiers.joueur import Joueur
 
-from objets_metiers.personnage import *
+from objets_metiers.personnage import Personnage
 
 import hashlib
 
@@ -26,7 +27,7 @@ class TestServicePersonnage():
         test=ServiceJoueur().changer_classe_perso(perso, classe_a_tester)
         #THEN
         self.assertTrue(test)
-    
+
     def test_details_partie(self):
         # On donne un id partie valide
         id_patie=1
@@ -34,13 +35,13 @@ class TestServicePersonnage():
         test=ServiceJoueur().details_partie(id_partie)
         #THEN
         self.assertTrue(test)
-    
+
     def test_liste_parties(self):
         #On donne un pseudo joueur valide
         pseudo="Marielle90"
         # WHEN
         test=ServiceJoueur().liste_parties(pseudo)
-        # THEN 
+        # THEN
         self.assertTrue(test)
 
     def test_desinscription_personnage_true(self):
@@ -51,7 +52,7 @@ class TestServicePersonnage():
         test=ServiceJoueur().desinscription_personnage(id_perso, id_partie)
         # THEN
         self.assertTrue(test)
-    
+
     def test_desinscription_personnage_false(self):
         #On donne un id_perso et un id_partie qui ne correspondent pas un couple de inscription partie existant
         id_perso=1
@@ -60,7 +61,7 @@ class TestServicePersonnage():
         test=ServiceJoueur().desinscription_personnage(id_perso, id_partie)
         # THEN
         self.assertTrue(test,"le personnage n'est pas inscrit à la partie")
-    
+
     def test_liste_creneaux_dispos(self):
         #On donne un joueur valide
         joueur=Joueur('Hilaire100', 58)

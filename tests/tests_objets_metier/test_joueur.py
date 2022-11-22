@@ -1,5 +1,4 @@
 from unittest import TestCase
-import unittest
 
 from objets_metiers.joueur import Joueur
 from objets_metiers.personnage import Personnage

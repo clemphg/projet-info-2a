@@ -18,7 +18,6 @@ class TestDaoJoueur(TestCase):
 
     def test_creer_perso(self):
         # GIVEN
-        # On donne un couple Joueur, mdp valide
         perso = Personnage(id=None, nom="Fafnir", age=135, race="Dwarf", niveau=50, classe="Ranger", pseudo_j="Westbric00")
         # WHEN
         res=DAO().creer_perso(perso)
@@ -35,6 +34,21 @@ class TestDaoJoueur(TestCase):
         testage = (j.age == result.age)
         self.assertTrue(testpseudo and testage)
 
+    def test_chercher_par_id_perso(self):
+        # GIVEN
+        id_perso=1
+        # WHEN
+        res=DAO().chercher_par_id_perso(id_perso)
+        #THEN
+        self.assertIsInstance(res, Personnage)
 
+    def test_inscription_personnage(self):
+        # GIVEN
+        id_perso = 1
+        id_partie = 2
+        # WHEN
+        res=DAO().inscription_personnage(id_perso, id_partie)
+        # THEN
+        self.assertTrue(res)
 
 

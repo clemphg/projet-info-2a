@@ -20,10 +20,3 @@ class TestServiceOrganisateur(TestCase):
         res=ServiceOrganisateur().liste_mjs()
         #THEN
         self.assertIsInstance(res,list)
-
-    def test_supprimer_personnage(self):
-        # GIVEN
-
-        # WHEN
-
-        # THEN

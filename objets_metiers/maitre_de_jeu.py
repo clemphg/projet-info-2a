@@ -2,6 +2,7 @@ from objets_metiers.abstract_joueur import AbstractJoueur
 from objets_metiers.scenario import Scenario
 from objets_metiers.partie import Partie
 
+
 class MaitreDeJeu(AbstractJoueur):
     ''' Un maître de jeu est un abstract joueur défini par son pseudo, son âge et la liste de scénario(s) qu'il crée
         Attributes
@@ -21,14 +22,15 @@ class MaitreDeJeu(AbstractJoueur):
         >>> c.creer_scenario()
         '''
 
-    def __init__(self, pseudo, age, scenarios = []):
+    def __init__(self, pseudo, age, scenarios=[]):
         ''' Constructeur'''
         super().__init__(pseudo, age)
         self.__scenarios = scenarios
 
     def __str__(self):
-        res = "Pseudo   : {pseudo}\nAge      : {age}".format(pseudo=self.pseudo, age=self.age)
-        if len(self.__scenarios)>0:
+        res = "Pseudo   : {pseudo}\nAge      : {age}".format(
+            pseudo=self.pseudo, age=self.age)
+        if len(self.__scenarios) > 0:
             res = res+"\nScenario :"
             for scenario in self.__scenarios:
                 res = res+"\n"+scenario.__str__()
@@ -38,7 +40,7 @@ class MaitreDeJeu(AbstractJoueur):
     def scenarios(self):
         return self.__scenarios
 
-    def creer_scenario(self, nom, description, niveau_min):
+    def creer_scenario(self, id, nom, description, niveau_min):
         """Création d'un scénario.
 
         Un maitre de jeu possède des scénarios. Ils lui servent pour créer une partie sur une table vide.
@@ -46,6 +48,8 @@ class MaitreDeJeu(AbstractJoueur):
 
         Parameters
         ----------
+        id : id
+            Id du scénario
         nom : str
             Nom du scénario.
         description : str
@@ -58,26 +62,14 @@ class MaitreDeJeu(AbstractJoueur):
         bool
             True si le scénario a bien été ajouté, False sinon.
         """
-        from dao.dao import DAO
-        if len(self.__scenarios)<2:
-            scenar = Scenario(nom=nom,
+        if len(self.__scenarios) < 2:
+            scenar = Scenario(id=id,
+                              nom=nom,
                               description=description,
                               niveau_min=niveau_min,
                               pseudo_mj=self.pseudo)
-            id = DAO().creer_scenario(scenar)
-            scenar.id = id
             self.__scenarios.append(scenar)
             status = True
-            from service.service_messages import ServiceMessages
-            ServiceMessages().message_creation_scenario(self.pseudo, scenar)
         else:
             status = False
         return status
-
-
-    def creer_partie(self, creneau, scenario):
-        from dao.dao import DAO
-        partie = Partie(creneau=creneau,
-                        scenario=scenario)
-        id = DAO().creer_partie(partie)
-

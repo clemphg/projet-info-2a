@@ -4,6 +4,7 @@ from dao.dao import DAO
 
 from objets_metiers.maitre_de_jeu import MaitreDeJeu
 from objets_metiers.scenario import Scenario
+<<<<<<< HEAD
 
 class TestDaoMaitredejeu(TestCase):
 
@@ -57,5 +58,4 @@ class TestDaoMaitredejeu(TestCase):
         pass
 
 
-    
 

@@ -4,10 +4,13 @@ import regex
 from PyInquirer import Separator, prompt
 from prompt_toolkit.validation import ValidationError, Validator
 
+from objets_metiers.personnage import Personnage
+
 # importation des vues
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
+from service.service_joueur import ServiceJoueur
 # importation des services
 from client.client_personnage import ClientPersonnage
 class ValidationInput(Validator):
@@ -40,7 +43,7 @@ class ValidationEntier(Validator):
 class VueCreationPersonnageJoueur(AbstractVue):
     def __init__(self) -> None:
         ''' Création de la vue avec la définition d'une variable questions qui va stocker les intéractions du joueur,
-        qui consitent à pouvoir choisir le nom de son personnage, son âge, son niveau et sa classe s'il sélectionne
+        qui consitent à pouvoir choisir le nom de son personnage, son âge, son niveau, sa race et sa classe s'il sélectionne
         'Créer le personnage'. Il pourra également abandonner la création de son personnage en sélectionnant 'Abandonner'
         et/ou retourner sur le menu principal en sélectionnant 'Retourner au menu principal'
         '''
@@ -110,12 +113,19 @@ class VueCreationPersonnageJoueur(AbstractVue):
             reponses = prompt(self.__questions[0:6])
 
             if reponses['validation'] == 'Créer le personnage':
-                Session().utilisateur.creer_personnage(
-                    nom=reponses['choix_nom'],
-                    age=reponses['choix_age'],
-                    race=reponses['choix_race'],
-                    niveau=int(reponses['choix_niveau']),
-                    classe=reponses['choix_classe'])
+                perso = Personnage(nom=reponses['choix_nom'],
+                                   age=reponses['choix_age'],
+                                   race=reponses['choix_race'],
+                                   niveau=int(reponses['choix_niveau']),
+                                   classe=reponses['choix_classe'],
+                                   pseudo_j=Session().utilisateur.pseudo)
+                id = ServiceJoueur().creation_personnage(perso)
+                Session().utilisateur.creer_personnage(id=id,
+                                                       nom=reponses['choix_nom'],
+                                                       age=reponses['choix_age'],
+                                                       race=reponses['choix_race'],
+                                                       niveau=int(reponses['choix_niveau']),
+                                                       classe=reponses['choix_classe'])
                 print('Le personnage a bien été créé !')
         else:
             print("Vous avez déjà trois personnages, vous ne pouvez pas en créer plus.\n"

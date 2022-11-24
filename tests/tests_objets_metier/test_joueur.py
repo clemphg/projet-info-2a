@@ -1,5 +1,4 @@
 from unittest import TestCase
-import unittest
 
 from objets_metiers.joueur import Joueur
 from objets_metiers.personnage import Personnage
@@ -11,7 +10,7 @@ class TestJoueur(TestCase):
         # GIVEN
         joueur = Joueur("riri",20)
         # WHEN
-        status = joueur.creer_personnage("fifi", 234, "Elf", 3, "Warrior")
+        status = joueur.creer_personnage(1, "fifi", 234, "Elf", 3, "Warrior")
         # THEN
         self.assertTrue(status)
 
@@ -21,7 +20,7 @@ class TestJoueur(TestCase):
                                    Personnage("B"),
                                    Personnage("C")])
         # WHEN
-        status = joueur.creer_personnage("fifi", 234, "Elf", 3, "Warrior")
+        status = joueur.creer_personnage(4, "fifi", 234, "Elf", 3, "Warrior")
         # THEN
         self.assertFalse(status)
 

@@ -12,6 +12,7 @@ from vues.joueur.vue_notifications_joueur import VueNotificationsJoueur
 from vues.session import Session
 
 class VuePrincipaleJoueur(AbstractVue):
+    "Création d'une vue avec la défintion d'une variable questions qui va stocker les intéractions du joueur. Ici, le joueur pourra créer un personnage, s'inscrire à une partie, consulter ses parties, ses personnages ainsi que ses notifications et enfin se déconnecter, s'il sélectionne le sous-menu correspondant. "
     def __init__(self) -> None:
         self.__questions = [
             {
@@ -30,9 +31,11 @@ class VuePrincipaleJoueur(AbstractVue):
         ]
 
     def display_info(self):
+        "Affiche Bienvenue ainsi que le pseudo de l'utilisateur"
         print("Bienvenue",Session().utilisateur.pseudo,"!\n")
 
     def make_choice(self):
+        "Retourne la vue du joueur correspondant à ce qu'il aura choisi de sélectionner comme sous-menu "
         reponse = prompt(self.__questions)
         if reponse['choix'] == 'Créer un personnage' :
             return VueCreationPersonnageJoueur()

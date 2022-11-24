@@ -25,16 +25,25 @@ class TestDaoJoueur(TestCase):
         
 
     def test_creer_joueur(self):
+        # GIVEN
         # On donne un couple Joueur, mdp valide
-        perso=[Joueur("Westbric00",34),Peutofeu8**]
+        j=Joueur("Westbric00",34)
+        mdp="Peutofeu8**"
         # WHEN
-        tets=DAO().creer_joueur(perso[0],perso[1])
+        test=DAO().creer_joueur(j,mdp)
         #THEN
         self.assertTrue(test)
-        pass
+
+    def test_creer_perso(self):
+        # GIVEN
+        perso = Personnage(id=None, nom="Fafnir", age=135, race="Dwarf", niveau=50, classe="Ranger", pseudo_j="Westbric00")
+        # WHEN
+        res=DAO().creer_perso(perso)
+        #THEN
+        self.assertIsInstance(res, int)
 
     def test_chercher_par_pseudo_j(self):
-         # On donne un psuedo valide
+        # On donne un psuedo valide
         pseudo_val="Rebecca70"
         # WHEN
         test=DAO().chercher_par_pseudo_j(pseudo_val)
@@ -56,9 +65,6 @@ class TestDaoJoueur(TestCase):
         pass
 
 
-    
 
 
 
-
-    

@@ -10,8 +10,14 @@ from vues.session import Session
 
 from client.client_personnage import ClientPersonnage
 
+from service.service_joueur import ServiceJoueur
+
 class VuePersonnagesJoueur(AbstractVue):
     def __init__(self) -> None:
+        """Création de la vue avec la définition d'une variable questions qui va stocker les intéractions du joueur.
+        Ici, le joueur va pouvoir modifier les classes de son personnage en sélectionnant 'Modifier la classe de l'un
+        de mes personnages' et retourner au menu principal"""
+
         self.__questions = [
             {
                 'type': 'list',
@@ -40,6 +46,7 @@ class VuePersonnagesJoueur(AbstractVue):
         ]
 
     def display_info(self):
+        "Affiche l'ensemble des personnages du joueur ou affiche 'Vous n'avez pas encore crée de personnage' si l'utilisateur n'en a pas"
         print("--- Mes personnages ---\n")
         if Session().utilisateur.personnages:
             for perso in Session().utilisateur.personnages:
@@ -48,11 +55,11 @@ class VuePersonnagesJoueur(AbstractVue):
             print("Vous n'avez pas encore créé de personnage.\n")
 
     def make_choice(self):
+        "Permet de changer la classe d'un ou plusieurs personnage(s) si le joueur le désire ou retourner au menu principal si ce n'est pas le cas. Il sera donc affiché la nouvelle liste de personnages du joueur. S'il n'en a aucun, il est proposé au joueur de retourner au menu principal."
 
         # si le joueur a des personnages il peut modifier leur classe
         if Session().utilisateur.personnages:
             reponse = prompt(self.__questions[0])
-
             while reponse['choix_menu'] == "Modifier la classe de l'un de mes personnages":
                 # question choix perso définie ici pour que les caractéristiques soient à jour ds les questions si jamais on change plusieurs classes
                 rep_perso = prompt(
@@ -67,7 +74,7 @@ class VuePersonnagesJoueur(AbstractVue):
                 id = rep_perso['choix_perso'].split(' ')[2]
                 for perso in Session().utilisateur.personnages:
                     if perso.id == int(id):
-                        perso.classe = rep_classe['choix_nvlle_classe']
+                        ServiceJoueur().changer_classe_perso(perso, rep_classe['choix_nvlle_classe'])
 
                 # on affiche la nouvelle liste des personnages
                 for perso in Session().utilisateur.personnages:

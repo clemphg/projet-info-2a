@@ -1,5 +1,4 @@
 
-
 class Personnage():
     ''' Un personnage est créé par un joueur et est choisi par ce même joueur lorsqu'il participe à une partie de jeu de rôle, il en a au maximum 3
 
@@ -13,7 +12,7 @@ class Personnage():
             Age du personnage
         race : str
             Race du personnage
-        niveau : str
+        niveau : int
             Niveau du personnage
         classe : str
             Classe du personnage
@@ -40,9 +39,10 @@ class Personnage():
 
     def __str__(self):
         '''Chaine de caractères décrivant le personnage'''
-        res = "  > ID            : {id}\n    Nom           : {nom}\n    Age           : {age}\n".format(id=self.__id,nom=self.__nom,age=self.__age)
-        res = res+"    Race          : {race}\n    Niveau        : {niv}\n    Classe        : {classe}\n".format(race=self.__race,niv=self.__niveau,classe=self.__classe)
-        res = res+"    Pseudo joueur : {pseudo}".format(pseudo=self.__pseudo_j)
+        res = f"  > ID            : {self.__id}\n    Nom           : {self.__nom}\n    Age           : {self.__age}\n"
+        res = res + \
+            f"    Race          : {self.__race}\n    Niveau        : {self.__niveau}\n    Classe        : {self.__classe}\n"
+        res = res+f"    Pseudo joueur : {self.__pseudo_j}"
         return res
 
     @property
@@ -89,8 +89,6 @@ class Personnage():
             Nouvelle classe à donner au personnage
         """
         self.__classe = nvlle_classe
-        from dao.dao import DAO
-        DAO().maj_classe(self, nvlle_classe)
 
     @property
     def pseudo_j(self):

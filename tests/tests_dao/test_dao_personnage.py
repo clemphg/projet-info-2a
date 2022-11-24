@@ -59,7 +59,27 @@ class TestDaoPersonnage(TestCase):
         self.assertTrue(test)
         pass
     
-    
+
+    def test_verifier_pseudo_libre_true(self):
+        #On donne un pseudo non existant
+        pseu="Boris"
+        #WHEN
+        test=DAO().verifier_pseudo_libre(pseu)
+        #THEN 
+        self.assertTrue(test)
+        pass
+
+    def test_verifier_pseudo_libre_false(self):
+        #On donne un pseudo  existant
+        pseu="Emir"
+        #WHEN
+        test=DAO().verifier_pseudo_libre(pseu)
+        #THEN 
+        self.assertFalse(test)
+        pass
+
+
+    g
 
         
         

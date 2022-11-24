@@ -64,6 +64,34 @@ class TestDaoJoueur(TestCase):
         self.assertEqual(result,test)
         pass
 
+    
+    def test_verifier_mdp_true(self):
+        #on donne le mot de passe a tester qui est correct pour un pseudo
+        pseu=Armandblabla34!
+        mdp=Rebecca70 
+        #WHEN 
+        test=DAO().verifier_mdp(pseu,mdp)
+        #THEN
+        self.assertTrue(test)
+        pass
+
+    def test_verifier_mdp_false(self):
+        #on donne le mot de passe a tester qui n'est pas correct pour un pseudo
+        mdp=Armandblabla34g!
+        pseu=Rebecca70 
+        #WHEN 
+        test=DAO().verifier_mdp(pseu,mdp)
+        #THEN
+        self.assertFalse(test)
+        pass
+
+    def test_chercher_msg_par_pseudo(self):
+        #on donne un pseudo 
+        pseu=Rebecca70 
+        
+
+
+
 
 
 

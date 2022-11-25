@@ -1,4 +1,4 @@
-# Roleplay management app
+# Roleplay convention management app
 
 ## Table of contents
 
@@ -11,7 +11,7 @@
 
 This app was made in 2022 as as a part of ENSAI's second year computer science project.
 
-Prior a roleplay convention, the games that will be held there have to be planned. Gamemasters and players need to have a way to enroll and create games with scripts and characters.
+Prior to a roleplay convention, the games that will be held there have to be planned. Gamemasters and players need to have a way to enroll and create games with scripts and characters.
 This app aims to provide such a tool to roleplay amateurs.
 
 Three types of users can have an accoutn on the app : players, gamemasters and organisers. The first two have to register and create an account before accessing the app.
@@ -43,7 +43,7 @@ This app uses the [API Dungeons and Dragons (5th edition)](https://www.dnd5eapi.
 ## Installation<a name="installation" />
 ### Downloading the app
 
-This app can be installed locally. You can fork this project and then clone it in your choosen directory. You can also simply download it. 
+This app can be installed locally. You can fork this project and then clone it in your choosen directory. You can also simply download it.
 
 An installation of [Python](https://www.python.org/downloads/) is needed. You can also download an IDE such as [Visual Studio Code](https://code.visualstudio.com/) in order to set up and launch the app more easily.
 

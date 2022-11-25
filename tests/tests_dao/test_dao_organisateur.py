@@ -13,6 +13,6 @@ class TestDaoOrganisateur(TestCase):
         pseudo_val='Amima20'
         # WHEN
         test=DAO().chercher_par_pseudo_org(pseudo_val)
-        result=Organisateur('Amima20')
+        result=Organisateur(pseudo_val)
         #THEN 
-        self.assertEqual(result,test)
+        self.assertEqual(result.pseudo,test.pseudo)

@@ -26,7 +26,7 @@ INSERT INTO personnage (nom, age, niveau, race, classe, pseudo_j)
  ( 'Emir', 18, 200, 'humain','épéiste','Rebecca70'),
  ( 'Elliot', 500, 200, 'démon','épéiste','Rebecca70'),
  ('Blondinet', 200, 50, 'nain', 'enchanteur','Aimee20'),
- ('Erys', 30, 100, 'humain','roi','Aimee20'),
+ ('Elyanna', 200, 200,'elf', 'enchantresse','Rebecca70')
  ( 'Lucifer', 800, 300, 'démon','enchanteur','Aimee20'),
  ('Elodie', 200, 20,'elf', 'enchantresse','Marielle90'),
  ( 'Aymen', 180, 200, 'dragon','combattant','Marielle90'),

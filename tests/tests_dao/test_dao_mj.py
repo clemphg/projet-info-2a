@@ -9,20 +9,12 @@ from objets_metiers.scenario import Scenario
 class TestDaoMaitredejeu(TestCase):
 
     
-    def test_liste_mjs(self):
-        #liste des mjs pre renseignés
-        result=[MaitreDeJeu('GiGigigi', 25,[Scenario(1,'Désert de cadavres','Le jeu se déroulera dans un désert infesté de scorpions mortels', 200,'GiGigigi'),Scenario(2,'Volcan enflammé',' Le jeu se déroulera dans un volcan en éruption', 200,'GiGigigi')],
-        MaitreDeJeu('Amy10', 22,[Scenario(3,'Mer enchantée','Le jeu se déroulera dans une mer infestée de sirènes croqueuses d hommes', 200,'Amy10'), Scenario(4,'Montagne à dents de scie', 'Le jeu se déroulera dans une montagne infestée d ours mutants', 50,'Amy10')]),
-        MaitreDeJeu('Marie18', 28,[Scenario(5,'Bataille navale', 'Le jeu se déroulera sous l eau',100,'Marie18'),Scenario(6,'Bataille dans le ciel', 'Le jeu se déroulera dans le ciel mais attention aux licornes armées',50,'Marie18')])
-        MaitreDeJeu ('Hil100', 60, [Scenario(7,'Sable bouillant', 'Le but est de traverser le désert mais le sable est bouillant', 20, 'Hil100'),Scenario(8,'Sauver la princesse', 'Le but est de sauver la princesse Emily mais attention aux ogres', 80,'Hil100')])]
+    def test_liste_mjs(self):  
         # WHEN
         test=DAO().liste_mjs()
-        result[].sort(key=lambda result[]:result[].age)
-        test[].sort(key=lambda test[]:test[].age)
-        result[][2].sort(key=lambda result[][2]:result[][2].id_scenario)
-        test[][2].sort(key=lambda test[][2]:test[][2].id_scenario)
         #THEN
-        self.assertEqual(result,test)
+        self.assertEqual(len(test),4)
+        self.assertIsInstance(test[1],MaitreDeJeu)
         pass
     
     
@@ -40,22 +32,23 @@ class TestDaoMaitredejeu(TestCase):
         pseudo_val="GiGigigi"
         # WHEN
         test=DAO().chercher_par_pseudo_mj(pseudo_val)
-        result=("GiGigigi",25,[Scenario(1,'Désert de cadavres','Le jeu se déroulera dans un désert infesté de scorpions mortels', 200,'GiGigigi'),Scenario(2,'Volcan enflammé',' Le jeu se déroulera dans un volcan en éruption', 200,'GiGigigi')])
-        result[2].sort(key=lambda result[2]:result[2].id_scenario)
-        test[2].sort(key=lambda test[2]:test[2].id_scenario)
+        result=MaitreDeJeu("GiGigigi",25,[Scenario(1,'Désert de cadavres','Le jeu se déroulera dans un désert infesté de scorpions mortels', 200,'GiGigigi'),Scenario(2,'Volcan enflammé',' Le jeu se déroulera dans un volcan en éruption', 200,'GiGigigi')])
         #THEN 
         self.assertEqual(result,test))
-        pass
+        self.assertEqual(result.pseudo,test.pseudo)
+        self.assertEqual(result.age,test.age)
+        self.assertEqual(len(result[2]),len(test[2]))
 
     def test_bannir_joueur(self):
         #on donne un pseudo valide
         pse= 'Hihi100'
         #WHEN 
         test=DAO().bannir_mj(pse)
-        result='Hihi100','f45ee875ec85143d36410b2bae622e6bbcef9e344e7528d219cb112a0116cc63'
+        result=['Hihi100','f45ee875ec85143d36410b2bae622e6bbcef9e344e7528d219cb112a0116cc63']
         #THEN 
-        self.assertEqual(result,test)
-        pass
+        self.assertEqual(result[1],test[1])
+        self.assertEqual(result[2],test[2])
+        
 
 
 

@@ -6,6 +6,8 @@ from vues.session import Session
 
 from service.service_messages import ServiceMessages
 
+from client.client_personnage import ClientPersonnage
+
 class ServiceJoueur(metaclass=Singleton):
 
     def messages(self, pseudo):
@@ -64,8 +66,31 @@ class ServiceJoueur(metaclass=Singleton):
             return None
 
     def inscription_perso(self, id_perso, id_partie, pseudo_j):
-        "Retourne True si le personnage a bien été créé, false sinon. Notifie à la base de données, le changement réalisé"
+        """Retourne True si le personnage a bien été créé, false sinon. Notifie à la base de données, le changement réalisé"""
         res = DAO().inscription_personnage(id_perso, id_partie)
         ServiceMessages().message_inscription_partie(pseudo_j, id_partie, id_perso)
         return res
 
+    def races_possibles(self):
+        """ Liste des races possibles
+
+        Appelle l'API via un client pour déterminer la liste des races ossibles d'un personnage.
+
+        Returns
+        -------
+        list
+            La liste des races possibles (liste de chaines de caractères)
+        """
+        return ClientPersonnage().races_possibles()
+
+    def classes_possibles(self):
+        """ Liste des classes possibles
+
+        Appelle l'API via un client pour déterminer la liste des classes possibles d'un personnage.
+
+        Returns
+        -------
+        list
+            La liste des classes possibles (liste de chaines de caractères)
+        """
+        return ClientPersonnage().classes_possibles()

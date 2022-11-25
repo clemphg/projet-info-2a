@@ -10,9 +10,10 @@ from objets_metiers.personnage import Personnage
 from vues.session import Session
 from vues.abstract_vue import AbstractVue
 
+# importation du service
 from service.service_joueur import ServiceJoueur
-# importation des services
-from client.client_personnage import ClientPersonnage
+
+
 class ValidationInput(Validator):
 
     def validate(self, document):
@@ -64,7 +65,7 @@ class VueCreationPersonnageJoueur(AbstractVue):
                 'type': 'list',
                 'name': 'choix_race',
                 'message': 'Race',
-                'choices': ClientPersonnage().races_possibles()
+                'choices': ServiceJoueur().races_possibles()
             },
             {
                 'type': 'input',
@@ -76,7 +77,7 @@ class VueCreationPersonnageJoueur(AbstractVue):
                 'type': 'list',
                 'name': 'choix_classe',
                 'message': 'Classe',
-                'choices': ClientPersonnage().classes_possibles()
+                'choices': ServiceJoueur().classes_possibles()
             },
             {
                 'type': 'list',

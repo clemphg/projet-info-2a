@@ -1,11 +1,11 @@
-# Application de gestion de conférence de jeu de rôle
+# Roleplay management app
 
-## Sommaire
+## Table of contents
 
-1. [Contexte](#contexte)
-2. [Fonctionnement général](#fonctionnement-general)
-3. [Mise en place de l'application](#mep-application)
-4. [Instructions d'utilisation](#instructions-utilisation)
+1. [Context](#context)
+2. [](#fonctionnement-general)
+3. [Installation](#installation)
+4. [Use](#use)
 
 ## Contexte
 

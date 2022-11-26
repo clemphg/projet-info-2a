@@ -22,8 +22,8 @@ CREATE SEQUENCE scenario_seq;
 
 CREATE TABLE Creneaux (
     id_creneau INT PRIMARY KEY NOT NULL,
-    Date_debut TIMESTAMP,
-    Date_fin TIMESTAMP
+    date_debut TIMESTAMP,
+    date_fin TIMESTAMP
 );
 
 CREATE TABLE joueur(
@@ -62,7 +62,6 @@ CREATE TABLE personnage(
     classe VARCHAR(15),
     pseudo_j VARCHAR(25) REFERENCES joueur(pseudo_j)
 );
-
 
 CREATE TABLE inscription_perso(
     id_partie INT REFERENCES partie(id_partie) ,

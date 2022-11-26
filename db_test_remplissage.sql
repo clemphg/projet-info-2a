@@ -22,18 +22,18 @@ INSERT INTO organisateur (pseudo_organisateur)
 
 INSERT INTO personnage (nom, age, niveau, race, classe, pseudo_j)
  VALUES
- ('Elyanna', 200, 200,'elf', 'enchantresse','Rebecca70'),
- ( 'Emir', 18, 200, 'humain','épéiste','Rebecca70'),
- ( 'Elliot', 500, 200, 'démon','épéiste','Rebecca70'),
- ('Blondinet', 200, 50, 'nain', 'enchanteur','Aimee20'),
- ('Erys', 30, 100, 'humain','roi','Aimee20'),
- ( 'Lucifer', 800, 300, 'démon','enchanteur','Aimee20'),
- ('Elodie', 200, 20,'elf', 'enchantresse','Marielle90'),
- ( 'Aymen', 180, 200, 'dragon','combattant','Marielle90'),
- ( 'Amor', 20, 200, 'humain','enchantresse','Marielle90'),
- ('Isabella', 200, 20,'elf','enchantresse','Hilaire100'),
- ( 'Arthur', 18, 200, 'humain','prince','Hilaire100'),
- ( 'Orifice', 500, 200, 'démon', 'forgeron', 'Hilaire100');
+ ('Elyanna', 200, 200,'Elf', 'Wizard','Rebecca70'),
+ ( 'Emir', 18, 200, 'Human','Rogue','Rebecca70'),
+ ( 'Elliot', 500, 200, 'Tiefling','Bard','Rebecca70'),
+ ('Blondinet', 200, 50, 'Dwarf', 'Fighter','Aimee20'),
+ ('Erys', 30, 100, 'Human','Paladin','Aimee20'),
+ ( 'Lucifer', 800, 300, 'Tiefling','Barbarian','Aimee20'),
+ ('Elodie', 200, 20,'Half-Elf', 'Paladin','Marielle90'),
+ ( 'Aymen', 180, 200, 'Dragonborn','Fighter','Marielle90'),
+ ( 'Amor', 20, 200, 'Human','Rogue','Marielle90'),
+ ('Isabella', 200, 20,'Elf','Sorcerer','Hilaire100'),
+ ( 'Arthur', 18, 200, 'Human','Druid','Hilaire100'),
+ ( 'Orfevre', 500, 200, 'Tiefling', 'Monk', 'Hilaire100');
 
 INSERT INTO scenario (nom, descrip, niveau, pseudo_mj)
  VALUES
@@ -94,3 +94,15 @@ VALUES
 ('Maria180', 'ecd61231077f53d46f51ae6826a6c595f0d10591458d3883531c26a4f3c88a53'),
 ('Hihi100', 'f45ee875ec85143d36410b2bae622e6bbcef9e344e7528d219cb112a0116cc63');
 
+INSERT INTO journal (pseudo,date,msg)
+VALUES
+('Rebecca70', '21/11/2022 08:00', 'Inscription sur la plateforme.'),
+('Rebecca70', '21/11/2022 08:30', 'Création du personnage 1 (Elyanna, 200 ans, niveau 200, Elf, Wizard).'),
+('Rebecca70', '21/11/2022 08:35', 'Création du personnage 2 (Emir, 18 ans, niveau 200, Human, Rogue).'),
+('Rebecca70', '21/11/2022 09:00', 'Création du personnage 3 (Elliot, 500 ans, niveau 200, Tiefling, Bard).'),
+('Rebecca70', '21/11/2022 09:05', 'Inscription à la partie 4 avec le personnage 1.'),
+('Rebecca70', '21/11/2022 09:07', 'Inscription à la partie 2 avec le personnage 3.'),
+('Rebecca70', '21/11/2022 09:10', 'Inscription à la partie 3 avec le personnage 2.'),
+('Aimee20', '22/11/2022 08:00', 'Inscription sur la plateforme.'),
+('Marielle90', '23/11/2022 08:00', 'Inscription sur la plateforme.'),
+('Hilaire100', '24/11/2022 08:00', 'Inscription sur la plateforme.');

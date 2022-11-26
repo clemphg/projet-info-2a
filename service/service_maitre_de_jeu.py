@@ -1,10 +1,12 @@
-from utils.singleton import Singleton
 
+import dotenv
+import os
+
+from utils.singleton import Singleton
 from dao.dao import DAO
 
 from service.service_messages import ServiceMessages
 
-nb_parties_par_creneau = 10
 
 class ServiceMaitreDeJeu(metaclass=Singleton):
 
@@ -41,8 +43,10 @@ class ServiceMaitreDeJeu(metaclass=Singleton):
     def verifier_nvlle_partie_possible(self, creneau):
         """Vérifie s'il est possible de créer une nouvelle partie pour le créneau voulu.
         Si c'est le cas, True sera retournée sinon False"""
+        dotenv.load_dotenv(override=True)
+        nb_parties_par_creneau = int(os.environ["NB_PARTIES_MAX_PAR_CRENEAU"])
         parties = DAO().chercher_parties_par_creneau(creneau)
-        if len(parties)<nb_parties_par_creneau:
+        if len(parties) < nb_parties_par_creneau:
             return True
         else:
             return False
@@ -53,6 +57,3 @@ class ServiceMaitreDeJeu(metaclass=Singleton):
         res = DAO().supprimer_partie(partie)
         ServiceMessages().message_suppression_partie(partie.scenario.pseudo_mj, partie)
         return res
-
-
-

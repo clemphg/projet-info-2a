@@ -2,30 +2,23 @@
 class Personnage():
     ''' Un personnage est créé par un joueur et est choisi par ce même joueur lorsqu'il participe à une partie de jeu de rôle, il en a au maximum 3
 
-        Attributes
-        ----------
-        id: int
-           Id du personnage
-        nom : str
-            Nom du personnage
-        age : int
-            Age du personnage
-        race : str
-            Race du personnage
-        niveau : int
-            Niveau du personnage
-        classe : str
-            Classe du personnage
-        pseudo_j : str
-            Pseudo du joueur possédant le personnage
-
-        Examples
-        ----------
-        Exemple d'utilisation
-        >>> c = Personnage()
-        >>> c.id.classe()
-
-        '''
+    Attributes
+    ----------
+    id: int
+        Id du personnage
+    nom : str
+        Nom du personnage
+    age : int
+        Age du personnage
+    race : str
+        Race du personnage
+    niveau : int
+        Niveau du personnage
+    classe : str
+        Classe du personnage
+    pseudo_j : str
+        Pseudo du joueur possédant le personnage
+    '''
 
     def __init__(self, id=None, nom=None, age=None, race=None, niveau=None, classe=None, pseudo_j=None) -> None:
         ''' Constructeur'''

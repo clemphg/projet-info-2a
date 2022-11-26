@@ -3,25 +3,19 @@ from objets_metiers.personnage import Personnage
 
 
 class Joueur(AbstractJoueur):
-    ''' Un joueur est un abstract joueur défini par son pseudo, son âge et la liste de personnages qu'il possède
-        Attributes
-        ----------
-        pseudo : str
-            Le pseudo du joueur
-        age : int
-            L'âge du joueur
-        personnages : liste
-            Liste de personnages que possède le joueur, il peut en avoir maximum 3, au départ elle est vide
-
-        Examples
-        ----------
-        Exemple d'utilisation
-        >>> c = Joueur()
-        >>> c.creer_personnage()
-        '''
+    """ Un joueur est un abstract joueur défini par son pseudo, son âge et la liste de personnages qu'il possède
+    Attributes
+    ----------
+    pseudo : str
+        Le pseudo du joueur
+    age : int
+        L'âge du joueur
+    personnages : liste
+        Liste de personnages que possède le joueur, il peut en avoir maximum 3, au départ elle est vide
+    """
 
     def __init__(self, pseudo, age, personnages=[]):
-        ''' Constructeur'''
+        '''Constructeur'''
         super().__init__(pseudo, age)
         self.__personnages = personnages
 
@@ -50,11 +44,11 @@ class Joueur(AbstractJoueur):
         age : int
             Age du personnage.
         race : str
-            Race du personnage (la liste des races possibles est déterminée à partir de https://www.dnd5eapi.co/ )
+            Race du personnage (la liste des races possibles déterminée à partir de https://www.dnd5eapi.co/ )
         niveau : int
             Niveau du personnage
         classe : str
-            Classe du personnage (la liste des races possibles est déterminée à partir de https://www.dnd5eapi.co/ )
+            Classe du personnage (la liste des races possibles déterminée à partir de https://www.dnd5eapi.co/ )
 
         Returns
         -------

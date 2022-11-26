@@ -5,22 +5,15 @@ from objets_metiers.partie import Partie
 
 class MaitreDeJeu(AbstractJoueur):
     ''' Un maître de jeu est un abstract joueur défini par son pseudo, son âge et la liste de scénario(s) qu'il crée
-        Attributes
-        ----------
-        pseudo : str
-            Le pseudo du maître de jeu
-        age : int
-            L'âge du maître de jeu
-        scénarios : liste
-            Liste de scénarios que crée le maître de jeu, il peut en avoir maximum 2, au départ elle est vide
-
-        Examples
-        ----------
-        Exemple d'utilisation
-        >>> c = MaitreDeJeu()
-        >>> c.scenarios()
-        >>> c.creer_scenario()
-        '''
+    Attributes
+    ----------
+    pseudo : str
+        Le pseudo du maître de jeu
+    age : int
+        L'âge du maître de jeu
+    scénarios : liste
+        Liste de scénarios que crée le maître de jeu, il peut en avoir maximum 2, au départ elle est vide
+    '''
 
     def __init__(self, pseudo, age, scenarios=[]):
         ''' Constructeur'''

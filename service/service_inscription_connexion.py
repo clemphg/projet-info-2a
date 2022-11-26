@@ -4,6 +4,9 @@ from dao.dao import DAO
 
 import hashlib
 
+from service.service_messages import ServiceMessages
+
+
 from objets_metiers.joueur import Joueur
 from objets_metiers.maitre_de_jeu import MaitreDeJeu
 from objets_metiers.organisateur import Organisateur
@@ -75,8 +78,6 @@ class ServiceInscriptionConnexion(metaclass=Singleton):
         elif type_de_profil=='Organisateur':
             res = DAO().creer_org(Organisateur(pseudo=pseudo),
                                   mot_de_passe=mdp_hache)
-
-        from service.service_messages import ServiceMessages
         ServiceMessages().message_inscription(pseudo)
         return res
 

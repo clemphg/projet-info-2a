@@ -13,7 +13,3 @@ class AbstractJoueur(ABC):
     @property
     def age(self):
         return self.__age
-
-    #@abstractmethod
-    #def desistement():
-    #    pass

@@ -76,8 +76,7 @@ VALUES
 (3,11 ),
 (4, 1),
 (4,5 ),
-(4,8 ),
-(4,12);
+(4,8 );
 
 INSERT INTO mdp (pseudo,mdp)
 VALUES

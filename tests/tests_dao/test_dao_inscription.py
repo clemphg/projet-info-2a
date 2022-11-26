@@ -8,7 +8,7 @@ import hashlib
 
 class TestDaoInscription(TestCase):
 
-    def test_peudo_libre_true(self):
+    def test_pseudo_libre_true(self):
         # GIVEN
         pseudo_a_tester = "soleil"
         # WHEN

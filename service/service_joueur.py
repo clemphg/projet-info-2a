@@ -11,9 +11,9 @@ from client.client_personnage import ClientPersonnage
 class ServiceJoueur(metaclass=Singleton):
 
     def messages(self, pseudo):
-         """Affichage des messages du joueur
+        """Affichage des messages du joueur
 
-         Retourne la liste des messages reçus par l'utilisateur à l'aide de son pseudo
+        Retourne la liste des messages reçus par l'utilisateur à l'aide de son pseudo
 
         Parameters
         ----------
@@ -27,9 +27,9 @@ class ServiceJoueur(metaclass=Singleton):
 
     def creation_personnage(self, perso):
         """Création d'un personnage
-        
-        Génère l'id du personnage et notifie à la base de données les différentes informations du personnage en question. 
-        
+
+        Génère l'id du personnage et notifie à la base de données les différentes informations du personnage en question.
+
         Parameters
         ----------
         perso : Personnage
@@ -45,7 +45,7 @@ class ServiceJoueur(metaclass=Singleton):
         return id
 
     def changer_classe_perso(self, perso, nvlle_classe):
-        """Changer la classe d'un personage 
+        """Changer la classe d'un personage
 
         Change la classe du personnage et notifie le changement à la base de données.
 
@@ -73,7 +73,7 @@ class ServiceJoueur(metaclass=Singleton):
         Returns
         -------
         Partie
-               Retourne les détails d'une partie.
+            Retourne les détails d'une partie.
         """
         return DAO().chercher_partie_par_id(id_partie)
 
@@ -83,18 +83,17 @@ class ServiceJoueur(metaclass=Singleton):
         Parameters
         ----------
         pseudo_joueur : str
-                       Le pseudonyme du joueur
-        
+            Le pseudonyme du joueur
+
         Returns
         -------
         list[ dict ]
-        
-              Retourne une liste de dictionnaire décrivant l'inscription aux différentes parties.
+            Retourne une liste de dictionnaire décrivant l'inscription aux différentes parties.
         """
         return DAO().liste_inscriptions_joueur(pseudo_joueur)
 
     def desinscription_personnage(self, id_perso, id_partie, pseudo_j):
-         """ Désinscription d'un personnage à une partie
+        """ Désinscription d'un personnage à une partie
 
         Parameters
         ----------
@@ -108,16 +107,16 @@ class ServiceJoueur(metaclass=Singleton):
         Returns
         -------
         bool
-        
+
             Retourne un True si la désinscription a bien été réalisée, sinon False. Notifie les changements à la base de données.
         """
-        
+
         res = DAO().desinscription_personnage(id_perso,id_partie)
         ServiceMessages().message_desinscription_partie(pseudo_j, id_partie, id_perso)
         return res
 
     def liste_creneaux_dispos(self, joueur):
-     """ Accès à la liste des crénaux disponibles pour un joueur
+        """ Accès à la liste des crénaux disponibles pour un joueur
 
         Parameters
         ----------
@@ -126,24 +125,24 @@ class ServiceJoueur(metaclass=Singleton):
         Returns
         -------
         list[ int ]
-        
+
             Retourne la liste des créneaux disponibles pour un joueur.
         """
         creneaux_dispos = DAO().liste_creneaux_dispos_joueur(joueur)
         return creneaux_dispos
 
     def parties_dispos_creneau(self, id_creneau):
-         """ Accès à la liste des parties pour lesquels il y a moins de 4 joueurs, à l'aide d'un créneau
+        """ Accès à la liste des parties pour lesquels il y a moins de 4 joueurs, à l'aide d'un créneau
 
         Parameters
         ----------
         id_creneau : int
-                   L'id du créneau 
+                   L'id du créneau
 
         Returns
         -------
         list[ Partie ]
-        
+
             Retourne la liste des parties disponibles pour un créneau.
         """
         parties = DAO().chercher_parties_par_creneau(id_creneau)
@@ -152,16 +151,16 @@ class ServiceJoueur(metaclass=Singleton):
         return parties_ok
 
     def persos_niv_sup_a(self, joueur, niveau):
-         """ Accès à la liste des personnages du joueur dont le niveau est supérieur ou égal à un niveau minimum requis
+        """ Accès à la liste des personnages du joueur dont le niveau est supérieur ou égal à un niveau minimum requis
         Parameters
         ----------
         niveau : int
-        joueur: Joueur 
+        joueur: Joueur
 
         Returns
         -------
         list[Personnage]
-        
+
             Retourne une liste de personnages dont le niveau est supérieur ou égal au niveau minimum requis, retourne none s'il  n'y a aucun personnage qui respecte la condition.
         """
         l_res = []
@@ -174,13 +173,13 @@ class ServiceJoueur(metaclass=Singleton):
             return None
 
     def inscription_perso(self, id_perso, id_partie, pseudo_j):
-         """ Inscription d'un personnage d'un joueur à une partie
+        """ Inscription d'un personnage d'un joueur à une partie
         Parameters
         ----------
         id_perso : int
                   L'id du personnage que le joueur souhaite inscrire à une partie
         id_partie : int
-                  L'id de la partie pour laquelle le joueur souhaite inscrire son personnage 
+                  L'id de la partie pour laquelle le joueur souhaite inscrire son personnage
         pseudo_j: str
                 Le pseudonyme du Joueur
 

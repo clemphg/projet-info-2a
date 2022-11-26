@@ -451,7 +451,10 @@ class DAO(metaclass=Singleton):
                 "id" : personnage.id
                 })
             res=cursor.fetchone()
-        return res
+        if res:
+            return True
+        else:
+            return False
 
     def verifier_pseudo_libre(self, pseudo):
         """Teste si un pseudo est déjà utilisé ou non
@@ -587,7 +590,10 @@ class DAO(metaclass=Singleton):
             , {"id": partie.id})
             sup_partie=cursor.fetchone()
 
-        return sup_partie and sup_inscription
+        if sup_partie and sup_inscription:
+            return True
+        else:
+            return False
 
     def supprimer_scenario(self,scenario:Scenario):
         """Suprimer un scenario de la table de donnée
@@ -648,7 +654,10 @@ class DAO(metaclass=Singleton):
                 "id_perso" : perso.id,
                 })
             inscription=cursor.fetchone()
-        return inscription
+        if inscription:
+            return True
+        else:
+            return False
 
     def liste_inscriptions_joueur(self, pseudo):
         """Liste des inscriptions d'un joueur

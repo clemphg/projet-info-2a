@@ -11,60 +11,56 @@ class TestDaoPersonnage(TestCase):
         test=DAO().liste_personnages()
         #THEN
         self.assertIsInstance(test[1],Personnage)
-        
-    
-    
+
+
+
     def test_creer_personnage(self):
         # On donne un  Personage
-        perso=Personnage(id=None,"Knight20",20,"demi_orc",102,"barbare","Aimee20")
+        perso=Personnage(id=None,nom="Knight20",age=20,race="Hal-Orc",niveau=102,classe="Barbarian",pseudo_j="Aimee20")
         # WHEN
-        tets=DAO().creer_perso(perso)
+        res=DAO().creer_perso(perso)
         #THEN
-        self.assertTrue(test)
-        
+        self.assertIsInstance(res, int)
+
 
     def test_chercher_par_id_perso(self):
-        # On donne un id valide
-        id_val=1
+        #GIVEN
+        perso=Personnage(1,'Elyanna', 200,'Elf',200, 'Wizard','Rebecca70')
         # WHEN
-        test=DAO().chercher_par_id_perso(id_val)
-        result=Personnage(1,'Elyanna', 200,'elf',200, 'enchantresse','Rebecca70')
-        #THEN 
-        self.assertEqual(result[1],test[1])
-    
-    
+        res=DAO().chercher_par_id_perso(perso.id)
+        #THEN
+        self.assertEqual(perso.id,res.id)
+        self.assertEqual(perso.nom,res.nom)
+        self.assertEqual(perso.age,res.age)
+        self.assertEqual(perso.race,res.race)
+        self.assertEqual(perso.niveau,res.niveau)
+        self.assertEqual(perso.race,res.race)
+
+
     def test_inscription_personnage(self):
-        #on donne un id_perso, id-partie valide
-        inscrip=(2,1)
+        #GIVEN
+        id_partie = 4
+        id_perso = 12
         # WHEN
-        test=DAO().inscription_personnage(inscip)
+        test=DAO().inscription_personnage(id_perso, id_partie)
         #THEN
         self.assertTrue(test)
 
     def test_maj_classe(self):
-        # On donne une nouvelle classe et la classe actuelle du personange
-        nouvelle_c="combattant"
-        perso= Personnage(9, 'Amor', 20, 'humain', 200,'enchantresse','Marielle90')
+        # GIVEN
+        nouvelle_c="Fighter"
+        perso= Personnage(9, 'Amor', 20, 'Human', 200,'Rogue','Marielle90')
         # WHEN
         test=DAO().maj_classe(perso,nouvelle_c)
-        #THEN 
-        self.assertTrue(test)
-       
-    def test_supprimer_perso(self):
-        #On donne un perso a supprimer
-        perso=Personnage(4,'Blondinet', 200, 'nain', 50, 'enchanteur','Aimee20')
-        #WHEN 
-        test=DAO().supprimer_personnage(perso)
-        #THEN 
+        #THEN
         self.assertTrue(test)
 
-    
 
 
-    
-
-        
-        
 
 
-    
+
+
+
+
+

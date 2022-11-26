@@ -84,13 +84,13 @@ Please be aware that you will have to re-initialise completely your database if 
 
 If players and gamemasters can create an account by themselves, organisers's accounts must be created prior to launching the app.
 
-You have to execute the **ajout_organisateurs.py** file to enter their pseudonyms and passwords into the database. Follow the instructions given to you in the terminal. Please keep passwords into a password safe of some sort (such as KeePass, Bitwarden or Dashlane) as it will not be possible to recover a lost password.
+You have to execute the **ajout_organisateurs.py** (at the root of the project) file to enter their pseudonyms and passwords into the database. Follow the instructions given to you in the terminal. Please keep passwords into a password safe of some sort (such as KeePass, Bitwarden or Dashlane) as it will not be possible to recover a lost password.
 
 #### Games time slots
 
 Game time slots are defined using your DBMS's SQL query tool. You can take the insert query for the **creneaux table** into **db_test_remplissage.sql** as an example.
 
-You can also update the maximum number of games for each time slot in the file **service/service_maitre_de_jeu**.
+You can also update the maximum number of games for each time slot in the **.env** file.
 
 A configuration file (config.json) would be adapted to define quickly the environment variables, such as the maximum number of games per time slot or time slots themselves.
 ## Commands<a name="commands" />

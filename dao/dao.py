@@ -193,6 +193,51 @@ class DAO(metaclass=Singleton):
             partie.id = cursor.fetchone()['id_partie']
         return partie.id
 
+    def creer_org(self, org: Organisateur, mot_de_passe):
+        """Ajouter un organisateur en base
+
+        Parameters
+        ----------
+        org : Organisateur
+            Organisateur à ajouter dans la base
+        mot_de_passe : str
+            Mot de passe haché de l'organisateur
+
+        Returns
+        -------
+        bool
+            True si l'organisateur a bien été ajouté, false sinon
+        """
+        with self.__connection.cursor() as cursor :
+            cursor.execute("INSERT INTO organisateur (pseudo_organisateur)"
+            "VALUES (%(pseudo)s);"
+            ,{
+                "pseudo" : org.pseudo
+                })
+
+            cursor.execute("INSERT INTO mdp (pseudo, mdp)"
+            "VALUES (%(pseudo)s,%(mdp)s);"
+            ,{
+                "pseudo" : org.pseudo,
+                "mdp" : mot_de_passe,
+                })
+
+            # on vérifie que le mj a bien été ajouté
+            cursor.execute("SELECT COUNT(*) FROM organisateur WHERE pseudo_organisateur = %(pseudo)s;"
+            ,{
+                "pseudo" : org.pseudo,
+                })
+            test1 = cursor.fetchone()['count']
+            cursor.execute("SELECT COUNT(*) FROM mdp WHERE pseudo = %(pseudo)s;"
+            ,{
+                "pseudo" : org.pseudo,
+                })
+            test2 = cursor.fetchone()['count']
+        if test1==1 and test2==1:
+            return True
+        else:
+            return False
+
     def chercher_par_pseudo_j(self,pseudo_j):
         """Chercher un joueur selon son pseudo
 

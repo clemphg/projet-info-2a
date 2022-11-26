@@ -6,6 +6,7 @@ import hashlib
 
 from objets_metiers.joueur import Joueur
 from objets_metiers.maitre_de_jeu import MaitreDeJeu
+from objets_metiers.organisateur import Organisateur
 class ServiceInscriptionConnexion(metaclass=Singleton):
 
     def verifier_pseudo_libre(self, pseudo_a_tester):
@@ -55,7 +56,7 @@ class ServiceInscriptionConnexion(metaclass=Singleton):
         mdp : str
             Mot de passe du nouvel utilisateur
         type_de_profil : str
-            Type du nouvel utilisateur ('Joueur' ou 'Maître de jeu')
+            Type du nouvel utilisateur ('Joueur', 'Maître de jeu' ou 'Organisateur')
 
         Returns
         -------
@@ -71,6 +72,9 @@ class ServiceInscriptionConnexion(metaclass=Singleton):
             res = DAO().creer_mj(MaitreDeJeu(pseudo=pseudo,
                                        age=age),
                            mot_de_passe=mdp_hache)
+        elif type_de_profil=='Organisateur':
+            res = DAO().creer_org(Organisateur(pseudo=pseudo),
+                                  mot_de_passe=mdp_hache)
 
         from service.service_messages import ServiceMessages
         ServiceMessages().message_inscription(pseudo)

@@ -84,7 +84,7 @@ Please be aware that you will have to re-initialise completely your database if 
 
 If players and gamemasters can create an account by themselves, organisers's accounts must be created prior to launching the app.
 
-You have to use the designated script to enter their pseudonyms and passwords into the database. Please keep passwords into a password safe of some sort (such as KeePass, Bitwarden or Dashlane) as it will not be possible to recover a lost password.
+You have to execute the **ajout_organisateurs.py** file to enter their pseudonyms and passwords into the database. Follow the instructions given to you in the terminal. Please keep passwords into a password safe of some sort (such as KeePass, Bitwarden or Dashlane) as it will not be possible to recover a lost password.
 
 #### Games time slots
 

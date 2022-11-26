@@ -1,5 +1,3 @@
-import imp
-from pprint import pprint
 import regex
 
 from PyInquirer import Separator, prompt

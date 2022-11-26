@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from PyInquirer import Separator, prompt
 
 from vues.session import Session
@@ -30,7 +28,7 @@ class VuePartiesJoueur(AbstractVue):
         ]
 
     def display_info(self):
-        " Permet d'afficher la liste des personnages inscrits à la liste des parties auxquelles le joueur est inscrit. Il sera affiché pour chaque personnage: le créneau de la partie, l'id de la partie, le maître du jeu, le scénario, le niveau minimum requis du scénario, le nom du personnage et son niveau. Si la liste des inscriptions est vide, le message suivant s'affiche: 'Vous n'avez aucun personnage inscrit à une partie. Vous pouvez en inscrire un via l'onglet 'M'inscrire à une partie du menu principal'" 
+        " Permet d'afficher la liste des personnages inscrits à la liste des parties auxquelles le joueur est inscrit. Il sera affiché pour chaque personnage: le créneau de la partie, l'id de la partie, le maître du jeu, le scénario, le niveau minimum requis du scénario, le nom du personnage et son niveau. Si la liste des inscriptions est vide, le message suivant s'affiche: 'Vous n'avez aucun personnage inscrit à une partie. Vous pouvez en inscrire un via l'onglet 'M'inscrire à une partie du menu principal'"
         print("--- Liste des inscriptions de mes personnages ---\n")
         # à remplacer par un appel à un service
         inscriptions = ServiceJoueur().liste_parties(Session().utilisateur.pseudo)

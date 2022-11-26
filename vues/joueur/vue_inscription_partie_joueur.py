@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from PyInquirer import Separator, prompt
 
 #importation des vues

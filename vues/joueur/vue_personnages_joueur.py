@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from PyInquirer import Separator, prompt
 from objets_metiers.personnage import Personnage
 

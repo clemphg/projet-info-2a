@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import regex
 from PyInquirer import Separator, prompt
 from prompt_toolkit.validation import ValidationError, Validator

@@ -5,3 +5,6 @@ psycopg2
 PyInquirer
 requests
 hashlib
+unittest
+regex
+prompt_toolkit

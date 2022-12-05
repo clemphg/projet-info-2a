@@ -22,12 +22,14 @@ INSERT INTO organisateur (pseudo_organisateur)
 
 INSERT INTO personnage (nom, age, niveau, race, classe, pseudo_j)
  VALUES
- ('Elyanna', 150, 200,'Elf', 'Wizard','Aurore');
+ ('Mercredi', 102, 60,'Elf', 'Paladin','Ilona0706');
+ ('Vendredi', 34, 53,'Dwarf', 'Fighter','Aurore');
+ ('Elyanna', 150, 60,'Elf', 'Wizard','Aurore');
 
 INSERT INTO scenario (nom, descrip, niveau, pseudo_mj)
  VALUES
- ('Désert de cadavres','Le jeu se déroulera dans un désert infesté de scorpions mortels', 150,'Baptiste'),
- ('Volcan enflammé',' Le jeu se déroulera dans un volcan en éruption', 200,'Baptiste');
+ ('Désert de cadavres','Le jeu se déroulera dans un désert infesté de scorpions mortels', 50,'Baptiste'),
+ ('Volcan enflammé',' Le jeu se déroulera dans un volcan en éruption', 25,'Baptiste');
 
 INSERT INTO mdp (pseudo,mdp)
 VALUES
@@ -40,8 +42,8 @@ INSERT INTO journal (pseudo,date,msg)
 VALUES
 ('Ilona0706', '06/12/2022 08:00', 'Inscription sur la plateforme.'),
 ('Baptiste', '06/12/2022 09:00', 'Inscription sur la plateforme.'),
-('Baptiste', '06/12/2022 09:07', 'Création du scénario 1 (Désert de cadavres, niveau minimum : 150).'),
-('Baptiste', '06/12/2022 09:10', 'Création du scénario 2 (Volcan enflammé, niveau minimum : 200).'),
+('Baptiste', '06/12/2022 09:07', 'Création du scénario 1 (Désert de cadavres, niveau minimum : 50).'),
+('Baptiste', '06/12/2022 09:10', 'Création du scénario 2 (Volcan enflammé, niveau minimum : 25).'),
 ('Aurore', '06/12/2022 08:00', 'Inscription sur la plateforme.'),
-('Aurore', '06/12/2022 08:05', 'Création du personnage 1 (Alyanna, 150 ans, niveau 200, Elf, Wizard).'),
+('Aurore', '06/12/2022 08:05', 'Création du personnage 1 (Elyanna, 150 ans, niveau 60, Elf, Wizard).'),
 ('Clementine', '06/12/2022 08:00', 'Inscription sur la plateforme.');

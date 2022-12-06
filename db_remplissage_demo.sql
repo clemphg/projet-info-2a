@@ -22,8 +22,8 @@ INSERT INTO organisateur (pseudo_organisateur)
 
 INSERT INTO personnage (nom, age, niveau, race, classe, pseudo_j)
  VALUES
- ('Mercredi', 102, 60,'Elf', 'Paladin','Ilona0706');
- ('Vendredi', 34, 53,'Dwarf', 'Fighter','Aurore');
+ ('Mercredi', 102, 60,'Elf', 'Paladin','Ilona0706'),
+ ('Vendredi', 34, 53,'Dwarf', 'Fighter','Aurore'),
  ('Elyanna', 150, 60,'Elf', 'Wizard','Aurore');
 
 INSERT INTO scenario (nom, descrip, niveau, pseudo_mj)
